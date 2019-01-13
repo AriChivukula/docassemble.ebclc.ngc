@@ -1,26 +1,104 @@
 modules:
   - docassemble.base.util
 ---
+imports:
+- datetime
+---
 metadata:
   title: Name and Gender Change
 ---
 field: get_started
 question: |
-  Welcome to this demo of a digital Name and Gender Change form! THIS IS NOT LEGAL ADVICE. You can see the [code](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml) or click on to continue!
+  Welcome to this demo of a digital Name and Gender Change form! [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml)
 continue button label: Get Started
 ---
 question: |
-  Petitioner Full Name
+  Current Petitioner Information
 subquestion: |
-  Please enter your current legal name.
+  Please enter your current legal information.
 fields:
-- Petitioner Full Name: petitioner_full_name
+- Name: petitioner_full_name
+- AKA 1: petitioner_full_name2
+  required: False
+- AKA 2: petitioner_full_name3
+  required: False
+- AKA 3: petitioner_full_name4
+  required: False
+- Address: petitioner_number_and_street
+- City: petitioner_city
+- Zip: petitioner_zip
+- Telephone: petitioner_phone_number
+  required: False
+- Email: petitioner_email
+  required: False
+- Place of Birth: petitioner_pob
+- Date of Birth: petitioner_dob
+- Assigned Gender at Birth: petitioner_agab
+  choices:
+  - Male
+  - Female
+---
+question: |
+  Future Petitioner Information
+subquestion: |
+  Please enter the answers you wish to change your legal information to.
+fields:
+- Name: new_name
+- Gender: new_gender
+  choices:
+  - Female
+  - Male
+  - Non-Binary
+---
+question: |
+  Court Information
+subquestion: |
+  Please enter the contact information for the applicable California Superior Court Branch.
+fields:
+- County: court_county
+- Address: court_address
+- City: court_city
+- Zip: court_zip
+- Branch: court_branch
 ---
 mandatory: True
 code: |
-  get_started
-  petitioner_full_name
-  all_done
+  petitioner_full_name = petitioner_full_name.upper()
+  petitioner_full_name2 = petitioner_full_name2.upper()
+  petitioner_full_name3 = petitioner_full_name3.upper()
+  petitioner_full_name4 = petitioner_full_name4.upper()
+  petitioner_full_name_w_akas = petitioner_full_name
+  if petitioner_full_name2:
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
+  if petitioner_full_name3:
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
+  if petitioner_full_name4:
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
+  petitioner_number_and_street = petitioner_number_and_street.upper()
+  petitioner_city = petitioner_city.upper()
+  petitioner_pob = petitioner_pob.upper()
+  check_box5 = False
+  check_box6 = False
+  if petitioner_agab == "Male":
+      check_box5 = True
+  if petitioner_agab == "Female":
+      check_box6 = True
+  new_name = new_name.upper()
+  female_check = False
+  male_check = False
+  nonbinary_check = False
+  if new_gender == "Female":
+      female_check = True
+  if new_gender == "Male":
+      male_check = True
+  if new_gender == "Non-Binary":
+      nonbinary_check = True
+  court_county = court_county.upper()
+  court_address = court_address.upper()
+  court_city = court_city.upper()
+  court_city_and_zip = court_city + ", " + court_zip
+  court_branch = court_branch.upper()
+  date1 = datetime.date.today().strftime('%m/%d/%Y')
 ---
 mandatory: True
 question: |
@@ -32,6 +110,51 @@ attachment:
   fields:
     - Petitioner Full Name: |
         ${ petitioner_full_name }
+    - Petitioner Full Name2: |
+        ${ petitioner_full_name2 }
+    - Petitioner Full Name3: |
+        ${ petitioner_full_name3 }
+    - Petitioner Full Name4: |
+        ${ petitioner_full_name4 }
+    - Petitioner Full Name w/AKAs: |
+        ${ petitioner_full_name_w_akas }
+    - Petitioner Number and Street: |
+        ${ petitioner_number_and_street }
+    - Petitioner City: |
+        ${ petitioner_city }
+    - STATE: CA
+    - Petitioner Zip: |
+        ${ petitioner_zip }
+    - Petitioner Phone Number: |
+        ${ petitioner_phone_number }
+    - Petitioner E-mail: |
+        ${ petitioner_email }
+    - Petitioner POB: |
+        ${ petitioner_pob }
+    - Petitioner DOB: |
+        ${ petitioner_dob }
+    - Check Box5: |
+        ${ check_box5 }
+    - Check Box6: |
+        ${ check_box6 }
+    - Petitioner New Name: |
+        ${ new_name }
+    - Female Check: |
+        ${ female_check }
+    - Male Check: |
+        ${ male_check }
+    - Nonbinary Check: |
+        ${ nonbinary_check }
+    - County: |
+        ${ court_county }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
+    - Date1_af_date: |
+        ${ date1 }
 sets: all_done
 ---
 question: |
