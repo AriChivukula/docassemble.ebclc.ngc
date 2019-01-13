@@ -16,14 +16,19 @@ subquestion: |
 fields:
 - Name: petitioner_full_name
 - AKA 1: petitioner_full_name2
+  required: False
 - AKA 2: petitioner_full_name3
+  required: False
 - AKA 3: petitioner_full_name4
+  required: False
 - Address: petitioner_number_and_street
 - City: petitioner_city
 - State: petitioner_state
 - Zip: petitioner_zip
 - Telephone: petitioner_phone_number
+  required: False
 - Email: petitioner_email
+  required: False
 - Place of Birth: petitioner_pob
 - Date of Birth: petitioner_dob
 - Assigned Gender at Birth: petitioner_agab
@@ -33,15 +38,6 @@ fields:
 ---
 mandatory: True
 code: |
-  get_started
-  petitioner_full_name
-  petitioner_number_and_street
-  petitioner_city
-  petitioner_state
-  petitioner_zip
-  petitioner_pob
-  petitioner_dob
-  petitioner_agab
   check_box5 = False
   check_box6 = False
   if petitioner_agab == "Male":
@@ -55,7 +51,6 @@ code: |
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name3;
   if petitioner_full_name4:
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name4;
-  all_done
 ---
 mandatory: True
 question: |
