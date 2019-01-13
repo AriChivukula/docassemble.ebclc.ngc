@@ -26,7 +26,6 @@ fields:
   required: False
 - Address: petitioner_number_and_street
 - City: petitioner_city
-- State: petitioner_state
 - Zip: petitioner_zip
 - Telephone: petitioner_phone_number
   required: False
@@ -38,6 +37,17 @@ fields:
   choices:
   - Male
   - Female
+---
+question: |
+  Court Information
+subquestion: |
+  Please enter the contact information for the applicable California Superior Court Branch.
+fields:
+- County: court_county
+- Address: court_address
+- City: court_city
+- Zip: court_zip
+- Branch: court_branch
 ---
 mandatory: True
 code: |
@@ -62,6 +72,11 @@ code: |
       check_box5 = True
   if petitioner_agab == "Female":
       check_box6 = True
+  court_county = court_county.upper()
+  court_address = court_address.upper()
+  court_city = court_city.upper()
+  court_city_and_zip = court_city + ", " + court_zip
+  court_branch = court_branch.upper()
   date1 = datetime.date.today().strftime('%m/%d/%Y')
 ---
 mandatory: True
@@ -86,8 +101,7 @@ attachment:
         ${ petitioner_number_and_street }
     - Petitioner City: |
         ${ petitioner_city }
-    - STATE: |
-        ${ petitioner_state }
+    - STATE: CA
     - Petitioner Zip: |
         ${ petitioner_zip }
     - Petitioner Phone Number: |
@@ -102,6 +116,14 @@ attachment:
         ${ check_box5 }
     - Check Box6: |
         ${ check_box6 }
+    - County: |
+        ${ court_county }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
     - Date1_af_date: |
         ${ date1 }
 sets: all_done
