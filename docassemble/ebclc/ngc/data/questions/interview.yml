@@ -26,6 +26,10 @@ fields:
 - Email: petitioner_email
 - Place of Birth: petitioner_pob
 - Date of Birth: petitioner_dob
+- Assigned Gender at Birth: petitioner_agab
+  choices:
+  - Male
+  - Female
 ---
 mandatory: True
 code: |
@@ -37,6 +41,13 @@ code: |
   petitioner_zip
   petitioner_pob
   petitioner_dob
+  petitioner_agab
+  check_box5 = false
+  check_box6 = false
+  if petitioner_agab == "Male":
+      check_box5 = true
+  if petitioner_agab == "Female":
+      check_box6 = true
   petitioner_full_name_w_akas = petitioner_full_name
   if petitioner_full_name2:
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name2;
@@ -80,6 +91,10 @@ attachment:
         ${ petitioner_pob }
     - Petitioner DOB: |
         ${ petitioner_dob }
+    - Check Box5: |
+        ${ check_box5 }
+    - Check Box6: |
+        ${ check_box6 }
 sets: all_done
 ---
 question: |
