@@ -1,11 +1,11 @@
 modules:
   - docassemble.base.util
 ---
+imports:
+- datetime
+---
 metadata:
   title: Name and Gender Change
----
-import:
-  - datetime
 ---
 field: get_started
 question: |
