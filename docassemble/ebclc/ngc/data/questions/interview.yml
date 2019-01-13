@@ -6,7 +6,7 @@ metadata:
 ---
 field: get_started
 question: |
-  Welcome to this demo of a digital Name and Gender Change form! [THIS IS NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml)
+  Welcome to this demo of a digital Name and Gender Change form! [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml)
 continue button label: Get Started
 ---
 question: |
