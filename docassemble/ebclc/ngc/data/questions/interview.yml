@@ -76,7 +76,6 @@ code: |
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name4
   petitioner_number_and_street = petitioner_number_and_street.upper()
   petitioner_city = petitioner_city.upper()
-  petitioner_state = petitioner_state.upper()
   petitioner_pob = petitioner_pob.upper()
   check_box5 = False
   check_box6 = False
