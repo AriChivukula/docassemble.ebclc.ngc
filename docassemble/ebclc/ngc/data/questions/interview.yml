@@ -42,12 +42,12 @@ code: |
   petitioner_pob
   petitioner_dob
   petitioner_agab
-  check_box5 = false
-  check_box6 = false
+  check_box5 = False
+  check_box6 = False
   if petitioner_agab == "Male":
-      check_box5 = true
+      check_box5 = True
   if petitioner_agab == "Female":
-      check_box6 = true
+      check_box6 = True
   petitioner_full_name_w_akas = petitioner_full_name
   if petitioner_full_name2:
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name2;
