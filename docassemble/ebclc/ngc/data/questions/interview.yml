@@ -16,10 +16,18 @@ subquestion: |
 fields:
 - Petitioner Full Name: petitioner_full_name
 ---
+question: |
+  Petitioner Number and Street
+subquestion: |
+  Please enter your street address.
+fields:
+- Petitioner Number and Street: petitioner_number_and_street
+---
 mandatory: True
 code: |
   get_started
   petitioner_full_name
+  petitioner_number_and_street
   all_done
 ---
 mandatory: True
@@ -32,6 +40,8 @@ attachment:
   fields:
     - Petitioner Full Name: |
         ${ petitioner_full_name }
+    - Petitioner Number and Street |
+        ${ petitioner_number_and_street }
 sets: all_done
 ---
 question: |
