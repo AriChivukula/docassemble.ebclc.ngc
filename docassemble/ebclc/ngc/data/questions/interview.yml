@@ -69,11 +69,11 @@ code: |
   petitioner_full_name4 = petitioner_full_name4.upper()
   petitioner_full_name_w_akas = petitioner_full_name
   if petitioner_full_name2:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name2
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
   if petitioner_full_name3:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name3
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
   if petitioner_full_name4:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name4
+      petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
   petitioner_number_and_street = petitioner_number_and_street.upper()
   petitioner_city = petitioner_city.upper()
   petitioner_pob = petitioner_pob.upper()
