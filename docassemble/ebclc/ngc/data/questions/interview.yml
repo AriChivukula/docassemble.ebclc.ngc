@@ -39,6 +39,18 @@ fields:
   - Female
 ---
 question: |
+  Future Petitioner Information
+subquestion: |
+  Please enter the answers you wish to change your legal information to.
+fields:
+- Name: new_name
+- Gender: new_gender
+  choices:
+  - Female
+  - Male
+  - Non-Binary
+---
+question: |
   Court Information
 subquestion: |
   Please enter the contact information for the applicable California Superior Court Branch.
@@ -72,6 +84,16 @@ code: |
       check_box5 = True
   if petitioner_agab == "Female":
       check_box6 = True
+  new_name = new_name.upper()
+  female_check = False
+  male_check = False
+  nonbinary_check = False
+  if new_gender == "Female":
+      female_check = True
+  if new_gender == "Male":
+      male_check = True
+  if new_gender == "Non-Binary":
+      nonbinary_check = True
   court_county = court_county.upper()
   court_address = court_address.upper()
   court_city = court_city.upper()
@@ -116,6 +138,14 @@ attachment:
         ${ check_box5 }
     - Check Box6: |
         ${ check_box6 }
+    - Petitioner New Name: |
+        ${ new_name }
+    - Female Check: |
+        ${ female_check }
+    - Male Check: |
+        ${ male_check }
+    - Nonbinary Check: |
+        ${ nonbinary_check }
     - County: |
         ${ court_county }
     - Court Address: |
