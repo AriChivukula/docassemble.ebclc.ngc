@@ -6,7 +6,7 @@ metadata:
 ---
 field: get_started
 question: |
-  Welcome to this demo of a digital Name and Gender Change form! THIS IS NOT LEGAL ADVICE. You can see the [code](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml) or click on to continue!
+  Welcome to this demo of a digital Name and Gender Change form! THIS IS NOT LEGAL ADVICE.
 continue button label: Get Started
 ---
 question: |
