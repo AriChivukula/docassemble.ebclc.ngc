@@ -4,6 +4,9 @@ modules:
 metadata:
   title: Name and Gender Change
 ---
+import:
+- datetime
+---
 field: get_started
 question: |
   Welcome to this demo of a digital Name and Gender Change form! [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml)
@@ -46,11 +49,12 @@ code: |
       check_box6 = True
   petitioner_full_name_w_akas = petitioner_full_name
   if petitioner_full_name2:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name2;
+      petitioner_full_name_w_akas += "AKA " + petitioner_full_name2
   if petitioner_full_name3:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name3;
+      petitioner_full_name_w_akas += "AKA " + petitioner_full_name3
   if petitioner_full_name4:
-      petitioner_full_name_w_akas += "AKA " + petitioner_full_name4;
+      petitioner_full_name_w_akas += "AKA " + petitioner_full_name4
+  date1 = datetime.date.today().strftime('%m/%d/%Y')
 ---
 mandatory: True
 question: |
@@ -90,6 +94,8 @@ attachment:
         ${ check_box5 }
     - Check Box6: |
         ${ check_box6 }
+    - Date1_af_date: |
+        ${ date1 }
 sets: all_done
 ---
 question: |
