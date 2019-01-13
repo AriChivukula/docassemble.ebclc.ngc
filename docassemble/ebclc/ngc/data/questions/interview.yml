@@ -72,7 +72,7 @@ attachment:
         ${ petitioner_full_name3 }
     - Petitioner Full Name4: |
         ${ petitioner_full_name4 }
-    - Petitioner Full Name w/ AKAs: |
+    - Petitioner Full Name w/AKAs: |
         ${ petitioner_full_name_w_akas }
     - Petitioner Number and Street: |
         ${ petitioner_number_and_street }
