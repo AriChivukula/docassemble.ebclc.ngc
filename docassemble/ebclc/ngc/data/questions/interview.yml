@@ -24,6 +24,8 @@ fields:
 - Zip: petitioner_zip
 - Telephone: petitioner_phone_number
 - Email: petitioner_email
+- Place of Birth: petitioner_pob
+- Date of Birth: petitioner_dob
 ---
 mandatory: True
 code: |
@@ -33,6 +35,8 @@ code: |
   petitioner_city
   petitioner_state
   petitioner_zip
+  petitioner_pob
+  petitioner_dob
   petitioner_full_name_w_akas = petitioner_full_name
   if petitioner_full_name2:
       petitioner_full_name_w_akas += "AKA " + petitioner_full_name2;
@@ -72,6 +76,10 @@ attachment:
         ${ petitioner_phone_number }
     - Petitioner E-mail: |
         ${ petitioner_email }
+    - Petitioner POB: |
+        ${ petitioner_pob }
+    - Petitioner DOB: |
+        ${ petitioner_dob }
 sets: all_done
 ---
 question: |
