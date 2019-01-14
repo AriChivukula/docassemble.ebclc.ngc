@@ -63,6 +63,7 @@ fields:
 ---
 mandatory: True
 code: |
+  get_started
   petitioner_full_name = petitioner_full_name.upper()
   petitioner_full_name2 = petitioner_full_name2.upper()
   petitioner_full_name3 = petitioner_full_name3.upper()
