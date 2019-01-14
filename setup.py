@@ -48,7 +48,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.ebclc.ngc',
-      version='0.0.1',
+      version='0.0.2',
       description=('EBCLC Name and Gender Change'),
       long_description=read("README.md"),
       long_description_content_type='text/markdown',
