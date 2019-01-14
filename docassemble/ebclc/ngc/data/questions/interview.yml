@@ -37,6 +37,9 @@ fields:
   choices:
   - Male
   - Female
+validation code: |
+  if len(petitioner_zip) != 5:
+    validation_error("Invalid zip")
 ---
 question: |
   Future Petitioner Information
@@ -60,6 +63,9 @@ fields:
 - City: court_city
 - Zip: court_zip
 - Branch: court_branch
+validation code: |
+  if len(court_zip) != 5:
+    validation_error("Invalid zip")
 ---
 mandatory: True
 code: |
