@@ -88,7 +88,6 @@ code: |
   petitioner_city = petitioner_city.upper()
   petitioner_state = "CA"
   petitioner_pob = petitioner_pob.upper()
-  petitioner_dob = petitioner_dob.strftime('%m/%d/%Y')
   check_box5 = False
   check_box6 = False
   if petitioner_agab == "Male":
