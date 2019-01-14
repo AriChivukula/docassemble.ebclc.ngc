@@ -77,6 +77,7 @@ code: |
       petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
   petitioner_number_and_street = petitioner_number_and_street.upper()
   petitioner_city = petitioner_city.upper()
+  petitioner_state = "CA"
   petitioner_pob = petitioner_pob.upper()
   check_box5 = False
   check_box6 = False
@@ -97,7 +98,7 @@ code: |
   court_county = court_county.upper()
   court_address = court_address.upper()
   court_city = court_city.upper()
-  court_city_and_zip = court_city + ", " + court_zip
+  court_city_and_zip = court_city + ", CA " + court_zip
   court_branch = court_branch.upper()
   date1 = datetime.date.today().strftime('%m/%d/%Y')
 ---
@@ -123,7 +124,8 @@ attachment:
         ${ petitioner_number_and_street }
     - Petitioner City: |
         ${ petitioner_city }
-    - STATE: CA
+    - STATE: |
+        ${ petitioner_state }
     - Petitioner Zip: |
         ${ petitioner_zip }
     - Petitioner Phone Number: |
