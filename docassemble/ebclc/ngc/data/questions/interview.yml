@@ -35,6 +35,7 @@ fields:
   required: False
 - Place of Birth: petitioner_pob
 - Date of Birth: petitioner_dob
+  datatype: date
 - Assigned Gender at Birth: petitioner_agab
   choices:
   - Male
@@ -87,6 +88,7 @@ code: |
   petitioner_city = petitioner_city.upper()
   petitioner_state = "CA"
   petitioner_pob = petitioner_pob.upper()
+  petitioner_dob = petitioner_dob.strftime('%m/%d/%Y')
   check_box5 = False
   check_box6 = False
   if petitioner_agab == "Male":
