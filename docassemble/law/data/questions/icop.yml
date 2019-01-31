@@ -56,30 +56,24 @@ fields:
   choices:
   - Yes
   - No
----
-question: |
-  Representation
-subquestion: |
-  Please enter information for ${detainee_name}'s representation!
-fields:
-- Name: representation_name
----
-question: |
-  Continuance
-subquestion: |
-  Please enter information on ${detainee_name}'s continuance to find representation!
-fields:
-- Was it granted?: continuance_granted
+- Who?: detainee_representation_info
+  show if:
+    variable: detainee_representation
+    is: Yes
+- Was a continuance to find representation granted?: detainee_representation_continuance
   choices:
   - Yes
   - No
-- How Long?: continuance_length
   show if:
-    variable: continuance_granted
+    variable: detainee_representation
+    is: No
+- How Long?: detainee_representation_continuance_length
+  show if:
+    variable: detainee_representation_continuance
     is: Yes
-- Why?: continuance_denial_reason
+- Why?: detainee_representation_continuance_denial
   show if:
-    variable: continuance_granted
+    variable: detainee_representation_continuance
     is: No
 ---
 question: |
@@ -111,6 +105,10 @@ fields:
   choices:
   - Yes
   - No
+- How so?: context_interpretation_info
+  show if:
+    variable: context_interpretation
+    is: Yes
 - Where there signs the detainee suffers from mental illness?: context_illness
   choices:
   - Yes
@@ -184,14 +182,10 @@ code: |
   get_started
   you_name
   proceeding_when
-  if detainee_representation == "Yes":
-    representation_name
-  elif detainee_representation == "No":
-    continuance_granted
   context_judge
-  if detainee_representation == "Yes":
+  if proceeding_type == "master":
     outcomes_relief
-  elif detainee_representation == "No":
+  elif proceeding_type == "bond":
     outcomes_bond
   comments
 ---
