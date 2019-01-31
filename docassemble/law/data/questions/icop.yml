@@ -79,7 +79,7 @@ fields:
 question: |
   Context
 subquestion: |
-  Please enter information on what you observe!
+  Please enter information on what you observe in ${proceeding_case}!
 fields:
 - Did the detainee have trouble communicating with the judge?: context_judge
   choices:
@@ -125,15 +125,12 @@ fields:
 question: |
   Outcomes
 subquestion: |
-  Please enter information on results!
+  Please enter information on outcomes in ${proceeding_case}!
 fields:
 - Did detainee file any application for relief?: outcomes_relief
   choices:
   - Yes
   - No
-  show if:
-    variable: proceeding_type
-    is: master
 - What were they?: outcomes_relief_info
   show if:
     variable: outcomes_relief
@@ -142,13 +139,16 @@ fields:
   show if:
     variable: outcomes_relief
     is: Yes
+---
+question: |
+  Outcomes
+subquestion: |
+  Please enter information on outcomes in ${proceeding_case}!
+fields:
 - Did IJ grant bond?: outcomes_bond
   choices:
   - Yes
   - No
-  show if:
-    variable: proceeding_type
-    is: bond
 - Amount: outcomes_bond_info
   show if:
     variable: outcomes_bond
@@ -157,16 +157,21 @@ fields:
   show if:
     variable: outcomes_bond
     is: No
-- Next Hearing: outcomes_next
+---
+question: |
+  Next
+subquestion: |
+  Please enter information on the next hearing (if there is one)!
+- Next Hearing: next_date
   datatype: datetime
   required: False
-- Type: outcomes_next_type
+- Type: next_type
   choices:
   - Individual
   - Master
   - Bond
   js show if: |
-    val("outcomes_next")
+    val("next_date")
 ---
 question: |
   Comments
@@ -188,6 +193,7 @@ code: |
     outcomes_relief
   elif proceeding_type == "bond":
     outcomes_bond
+  next_date
   comments
   do_exit
 ---
