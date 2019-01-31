@@ -1,5 +1,5 @@
 modules:
-  - docassemble.base.util
+- docassemble.base.util
 ---
 metadata:
   title: ICOP Observation Form
@@ -40,6 +40,16 @@ question: |
 subquestion: |
   Please enter information for detainee in proceeding ${proceeding_case}!
 - Name: detainee_name
+- How did they appear?: detainee_appearance
+  choices:
+  - In Person: ip
+  - Video Conference: vtc
+- Languages Spoken: detainee_languages
+- Where are they being detained?: detainee_location
+  choices:
+  - Sacramento/Yuba: yuba
+  - Meta Verde: mv
+  - CoCo: cc
 - Do they have representation?: detainee_representation
   choices:
   - Yes: yes
@@ -63,15 +73,36 @@ fields:
   - How Long?: continuance_length
     show if:
       variable: continuance_granted
-      is: Yes
+      is: yes
   - Why?: continuance_denial_reason
     show if:
       variable: continuance_granted
-      is: No
+      is: no
+--
+question: |
+  Context
+subquestion: |
+  Please enter information on what you observe!
+fields:
+  - Did the detainee have trouble communicating with the judge?: context_communication
+    choices:
+      - Yes
+      - No
+  - How so?: context_communication_info
+    show if:
+      variable: context_communication
+      is: yes
 ---
 mandatory: True
 code: |
   get_started
+  you_name
+  proceeding_when
+  if detainee_representation == "yes":
+    representation_name
+  elif detainee_representation == "no":
+    continuance_granted
+  context_communication
   all_done
 ---
 mandatory: True
