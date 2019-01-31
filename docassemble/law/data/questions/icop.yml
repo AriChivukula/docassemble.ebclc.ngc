@@ -34,7 +34,7 @@ subquestion: |
   choices:
   - Master Calendar: master
   - Bond Hearing: bond
---
+---
 question: |
   Detainee
 subquestion: |
@@ -54,13 +54,13 @@ subquestion: |
   choices:
   - Yes: yes
   - No: no
---
+---
 question: |
   Representation
 subquestion: |
   Please enter information for ${detainee_name}'s representation!
 - Name: representation_name
---
+---
 question: |
   Continuance
 subquestion: |
@@ -78,7 +78,7 @@ fields:
     show if:
       variable: continuance_granted
       is: no
---
+---
 question: |
   Context
 subquestion: |
