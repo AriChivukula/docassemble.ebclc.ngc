@@ -167,8 +167,8 @@ fields:
   - Individual
   - Master
   - Bond
-  show if:
-    variable: outcomes_next
+  js show if: |
+    val("outcomes_next")
 ---
 question: |
   Comments
