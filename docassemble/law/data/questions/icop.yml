@@ -25,6 +25,7 @@ question: |
   Proceeding
 subquestion: |
   Please enter information on the proceeding you're observing ${you_name}!
+fields:
 - When: proceeding_when
   datatype: datetime
 - Judge: proceeding_judge
@@ -39,6 +40,7 @@ question: |
   Detainee
 subquestion: |
   Please enter information for detainee in proceeding ${proceeding_case}!
+fields:
 - Name: detainee_name
 - How did they appear?: detainee_appearance
   choices:
@@ -59,6 +61,7 @@ question: |
   Representation
 subquestion: |
   Please enter information for ${detainee_name}'s representation!
+fields:
 - Name: representation_name
 ---
 question: |
