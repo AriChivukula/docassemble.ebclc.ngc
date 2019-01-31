@@ -106,15 +106,6 @@ code: |
   elif detainee_representation == "no":
     continuance_granted
   context_communication
-  all_done
----
-mandatory: True
-question: |
-  You can download or email a copy of your responses!
-attachment:
-  name: UNOFFICIAL FORM
-  filename: unofficial-form
-sets: all_done
 ---
 question: |
   Thanks for volunteering ${you_name}
