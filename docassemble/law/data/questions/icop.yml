@@ -136,10 +136,39 @@ fields:
   show if:
     variable: proceeding_type
     is: master
-- Did detainee file any application for relief?: outcomes_relief_info
+- What were they?: outcomes_relief_info
   show if:
     variable: outcomes_relief
-    is: master
+    is: Yes
+- What is the deadline?: outcomes_relief_deadline
+  show if:
+    variable: outcomes_relief
+    is: Yes
+- Did IJ grant bond?: outcomes_bond
+  choices:
+  - Yes
+  - No
+  show if:
+    variable: proceeding_type
+    is: bond
+- Amount: outcomes_bond_info
+  show if:
+    variable: outcomes_bond
+    is: Yes
+- Reason: outcomes_bond_denied
+  show if:
+    variable: outcomes_bond
+    is: No
+- Next Hearing: outcomes_next
+  datatype: datetime
+  required: False
+- Type: outcomes_next_type
+  choices:
+  - Individual
+  - Master
+  - Bond
+  show if:
+    variable: outcomes_next
 ---
 mandatory: True
 code: |
@@ -151,6 +180,10 @@ code: |
   elif detainee_representation == "No":
     continuance_granted
   context_judge
+  if detainee_representation == "Yes":
+    outcomes_relief
+  elif detainee_representation == "No":
+    outcomes_bond
 ---
 question: |
   Thanks for volunteering ${you_name}
