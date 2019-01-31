@@ -1,0 +1,87 @@
+modules:
+  - docassemble.base.util
+---
+metadata:
+  title: ICOP Observation Form
+---
+field: get_started
+question: |
+  This demo helps you fill out the ICOP Observation Form!
+subquestion: |
+  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)
+continue button label: Get Started
+---
+question: |
+  You
+subquestion: |
+  Please enter the observer's (your) information!
+fields:
+- Name: you_name
+- School/Firm/etc.: you_assoc
+- Phone: you_phone
+- Email: you_email
+---
+question: |
+  Proceeding
+subquestion: |
+  Please enter information on the proceeding you're observing ${you_name}!
+- When: proceeding_when
+  datatype: datetime
+- Judge: proceeding_judge
+- Case: proceeding_case
+  default: A-
+- Type: proceeding_type
+  choices:
+  - Master Calendar: master
+  - Bond Hearing: bond
+--
+question: |
+  Detainee
+subquestion: |
+  Please enter information for detainee in proceeding ${proceeding_case}!
+- Name: detainee_name
+- Do they have representation?: detainee_representation
+  choices:
+  - Yes: yes
+  - No: no
+--
+question: |
+  Representation
+subquestion: |
+  Please enter information for ${detainee_name}'s representation!
+- Name: representation_name
+--
+question: |
+  Continuance
+subquestion: |
+  Please enter information on ${detainee_name}'s continuance to find representation!
+fields:
+  - Was it granted?: continuance_granted
+    choices:
+      - Yes
+      - No
+  - How Long?: continuance_length
+    show if:
+      variable: continuance_granted
+      is: Yes
+  - Why?: continuance_denial_reason
+    show if:
+      variable: continuance_granted
+      is: No
+---
+mandatory: True
+code: |
+  get_started
+  all_done
+---
+mandatory: True
+question: |
+  You can download or email a copy of your responses!
+attachment:
+  name: UNOFFICIAL FORM
+  filename: unofficial-form
+sets: all_done
+---
+question: |
+  Thanks for volunteering ${you_name}
+sets: do_exit
