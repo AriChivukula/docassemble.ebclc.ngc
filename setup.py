@@ -47,18 +47,18 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
                 out.setdefault(package, []).append(prefix+name)
     return out
 
-setup(name='docassemble.ebclc.ngc',
-      version='0.0.2',
-      description=('EBCLC Name and Gender Change'),
+setup(name='docassemble.law',
+      version='0.0.3',
+      description=('Legal Automation Workshop'),
       long_description=read("README.md"),
       long_description_content_type='text/markdown',
       author='Ari Chivukula',
       author_email='ari.c@berkeley.edu',
       license='MIT',
-      url='https://ebclc.org/',
+      url='https://github.com/AriChivukula/docassemble.law/',
       packages=find_packages(),
       namespace_packages = ['docassemble'],
       install_requires = [],
       zip_safe = False,
-      package_data=find_package_data(where='docassemble/ebclc/ngc', package='docassemble.ebclc.ngc'),
+      package_data=find_package_data(where='docassemble/law', package='docassemble.law'),
   )
