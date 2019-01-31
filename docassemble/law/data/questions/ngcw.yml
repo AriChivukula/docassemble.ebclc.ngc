@@ -11,7 +11,7 @@ field: get_started
 question: |
   This demo helps you fill out the forms to obtain a court order for name & gender change!
 subquestion: |
-  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.ebclc.ngc/blob/master/docassemble/ebclc/ngc/data/questions/interview.yml)
+  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/ngcw.yml)
 continue button label: Get Started
 ---
 question: |
