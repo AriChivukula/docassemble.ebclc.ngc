@@ -170,6 +170,15 @@ fields:
   show if:
     variable: outcomes_next
 ---
+question: |
+  Comments
+subquestion: |
+  Please enter anything else we should know!
+fields:
+- Anything Else: comments
+  datatype: area
+  required: false
+---
 mandatory: True
 code: |
   get_started
@@ -184,6 +193,7 @@ code: |
     outcomes_relief
   elif detainee_representation == "No":
     outcomes_bond
+  comments
 ---
 question: |
   Thanks for volunteering ${you_name}
