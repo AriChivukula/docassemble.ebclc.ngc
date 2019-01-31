@@ -162,6 +162,7 @@ question: |
   Next
 subquestion: |
   Please enter information on the next hearing (if there is one)!
+fields:
 - Next Hearing: next_date
   datatype: datetime
   required: False
