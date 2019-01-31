@@ -182,12 +182,14 @@ code: |
   get_started
   you_name
   proceeding_when
+  detainee_name
   context_judge
   if proceeding_type == "master":
     outcomes_relief
   elif proceeding_type == "bond":
     outcomes_bond
   comments
+  do_exit
 ---
 question: |
   Thanks for volunteering ${you_name}
