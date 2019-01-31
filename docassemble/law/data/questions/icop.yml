@@ -54,8 +54,8 @@ fields:
   - CoCo: cc
 - Do they have representation?: detainee_representation
   choices:
-  - Yes: yes
-  - No: no
+  - Yes
+  - No
 ---
 question: |
   Representation
@@ -76,11 +76,11 @@ fields:
   - How Long?: continuance_length
     show if:
       variable: continuance_granted
-      is: yes
+      is: Yes
   - Why?: continuance_denial_reason
     show if:
       variable: continuance_granted
-      is: no
+      is: No
 ---
 question: |
   Context
@@ -94,16 +94,16 @@ fields:
   - How so?: context_communication_info
     show if:
       variable: context_communication
-      is: yes
+      is: Yes
 ---
 mandatory: True
 code: |
   get_started
   you_name
   proceeding_when
-  if detainee_representation == "yes":
+  if detainee_representation == "Yes":
     representation_name
-  elif detainee_representation == "no":
+  elif detainee_representation == "No":
     continuance_granted
   context_communication
 ---
