@@ -69,32 +69,77 @@ question: |
 subquestion: |
   Please enter information on ${detainee_name}'s continuance to find representation!
 fields:
-  - Was it granted?: continuance_granted
-    choices:
-      - Yes
-      - No
-  - How Long?: continuance_length
-    show if:
-      variable: continuance_granted
-      is: Yes
-  - Why?: continuance_denial_reason
-    show if:
-      variable: continuance_granted
-      is: No
+- Was it granted?: continuance_granted
+  choices:
+  - Yes
+  - No
+- How Long?: continuance_length
+  show if:
+    variable: continuance_granted
+    is: Yes
+- Why?: continuance_denial_reason
+  show if:
+    variable: continuance_granted
+    is: No
 ---
 question: |
   Context
 subquestion: |
   Please enter information on what you observe!
 fields:
-  - Did the detainee have trouble communicating with the judge?: context_communication
-    choices:
-      - Yes
-      - No
-  - How so?: context_communication_info
-    show if:
-      variable: context_communication
-      is: Yes
+- Did the detainee have trouble communicating with the judge?: context_judge
+  choices:
+  - Yes
+  - No
+- How so?: context_judge_info
+  show if:
+    variable: context_judge
+    is: Yes
+- Did the detainee have trouble communicating with anyone else?: context_anyone
+  choices:
+  - Yes
+  - No
+- With who?: context_anyone_who
+  show if:
+    variable: context_anyone
+    is: Yes
+- How so?: context_anyone_info
+  show if:
+    variable: context_anyone
+    is: Yes
+- Where there issues with interpretation?: context_interpretation
+  choices:
+  - Yes
+  - No
+- Where there signs the detainee suffers from mental illness?: context_illness
+  choices:
+  - Yes
+  - No
+- How so?: context_illness_info
+  show if:
+    variable: context_illness
+    is: Yes
+- How was it addressed?: context_illness_addressed
+  show if:
+    variable: context_illness
+    is: Yes
+---
+question: |
+  Outcomes
+subquestion: |
+  Please enter information on results!
+fields:
+- Did detainee file any application for relief?: outcomes_relief
+  choices:
+  - Yes
+  - No
+  show if:
+    variable: proceeding_type
+    is: master
+- Did detainee file any application for relief?: outcomes_relief_info
+  show if:
+    variable: outcomes_relief
+    is: master
 ---
 mandatory: True
 code: |
@@ -105,7 +150,7 @@ code: |
     representation_name
   elif detainee_representation == "No":
     continuance_granted
-  context_communication
+  context_judge
 ---
 question: |
   Thanks for volunteering ${you_name}
