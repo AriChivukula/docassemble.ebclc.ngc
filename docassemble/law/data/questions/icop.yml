@@ -1,6 +1,6 @@
 ---
 modules:
-  - docassemble.base.util
+- docassemble.base.util
 ---
 metadata:
   title: ICOP Observation Form
@@ -61,7 +61,7 @@ fields:
   show if:
     variable: detainee_representation
     is: Yes
-- Was a continuance to find representation granted?: detainee_continuance
+- Was a continuance to find representation granted?: detainee_representation_continuance
   choices:
   - Yes
   - No
@@ -70,12 +70,12 @@ fields:
     is: No
 - How Long?: detainee_continuance_length
   show if:
-    variable: detainee_continuance
+    variable: detainee_representation_continuance
     is: Yes
 - Why?: detainee_continuance_denial
   show if:
-    variable: detainee_continuance
-    is: Yes
+    variable: detainee_representation_continuance
+    is: No
 ---
 question: |
   Context
