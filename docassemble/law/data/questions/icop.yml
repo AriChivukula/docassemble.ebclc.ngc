@@ -55,27 +55,27 @@ fields:
   - CoCo: cc
 - Do they have representation?: detainee_representation
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - Who?: detainee_representation_info
   show if:
     variable: detainee_representation
-    is: True
+    is: Yes
 - Was a continuance to find representation granted?: detainee_continuance
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
   show if:
     variable: detainee_representation
-    is: False
+    is: No
 - How Long?: detainee_continuance_length
   show if:
     variable: detainee_continuance
-    is: True
+    is: Yes
 - Why?: detainee_continuance_denial
   show if:
     variable: detainee_continuance
-    is: False
+    is: Yes
 ---
 question: |
   Context
@@ -84,44 +84,44 @@ subquestion: |
 fields:
 - Did the detainee have trouble communicating with the judge?: context_judge
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - How so?: context_judge_info
   show if:
     variable: context_judge
-    is: True
+    is: Yes
 - Did the detainee have trouble communicating with anyone?: context_anyone
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - With who?: context_anyone_who
   show if:
     variable: context_anyone
-    is: True
+    is: Yes
 - How so?: context_anyone_info
   show if:
     variable: context_anyone
-    is: True
+    is: Yes
 - Where there issues with interpretation?: context_interpretation
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - How so?: context_interpretation_info
   show if:
     variable: context_interpretation
-    is: True
+    is: Yes
 - Where there signs the detainee suffers from mental illness?: context_illness
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - How so?: context_illness_info
   show if:
     variable: context_illness
-    is: True
+    is: Yes
 - How was it addressed?: context_illness_addressed
   show if:
     variable: context_illness
-    is: True
+    is: Yes
 ---
 question: |
   Outcomes
@@ -130,16 +130,16 @@ subquestion: |
 fields:
 - Did detainee file any application for relief?: outcomes_relief
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - What were they?: outcomes_relief_info
   show if:
     variable: outcomes_relief
-    is: True
+    is: Yes
 - What is the deadline?: outcomes_relief_deadline
   show if:
     variable: outcomes_relief
-    is: True
+    is: Yes
 ---
 question: |
   Outcomes
@@ -148,16 +148,16 @@ subquestion: |
 fields:
 - Did IJ grant bond?: outcomes_bond
   choices:
-  - Yes: True
-  - No: False
+  - Yes
+  - No
 - Amount: outcomes_bond_info
   show if:
     variable: outcomes_bond
-    is: True
+    is: Yes
 - Reason: outcomes_bond_denied
   show if:
     variable: outcomes_bond
-    is: False
+    is: No
 ---
 question: |
   Next
@@ -166,7 +166,7 @@ subquestion: |
 fields:
 - Next Hearing: next_date
   datatype: datetime
-  required: False
+  required: false
 - Type: next_type
   choices:
   - Individual
