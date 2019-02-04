@@ -1,3 +1,5 @@
 language: node_js
 if: type = push
-script: npx yamllint
+script:
+- npm install -g yaml-lint
+- yamllint **/*.yml
