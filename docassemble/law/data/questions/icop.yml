@@ -72,7 +72,7 @@ fields:
   show if:
     variable: detainee_representation_continuance
     is: Yes
-- Why?: detainee_continuance_denial
+- Why?: detainee_representation_continuance_denial
   show if:
     variable: detainee_representation_continuance
     is: No
@@ -90,7 +90,7 @@ fields:
   show if:
     variable: context_judge
     is: Yes
-- Did the detainee have trouble communicating with anyone?: context_anyone
+- Did the detainee have trouble communicating with anyone else?: context_anyone
   choices:
   - Yes
   - No
