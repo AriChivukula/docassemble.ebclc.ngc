@@ -1,3 +1,4 @@
+---
 modules:
   - docassemble.base.util
 ---
@@ -16,172 +17,172 @@ question: |
 subquestion: |
   Please enter the observer's (your) information!
 fields:
-- Name: you_name
-- School/Firm/etc.: you_assoc
-- Phone: you_phone
-- Email: you_email
+  - Name: you_name
+  - School/Firm/etc.: you_assoc
+  - Phone: you_phone
+  - Email: you_email
 ---
 question: |
   Proceeding
 subquestion: |
   Please enter information on the proceeding you're observing ${you_name}!
 fields:
-- When: proceeding_when
-  datatype: datetime
-- Judge: proceeding_judge
-- Case: proceeding_case
-  default: A-
-- Type: proceeding_type
-  choices:
-  - Master Calendar: master
-  - Bond Hearing: bond
+  - When: proceeding_when
+    datatype: datetime
+  - Judge: proceeding_judge
+  - Case: proceeding_case
+    default: A-
+  - Type: proceeding_type
+    choices:
+      - Master Calendar: master
+      - Bond Hearing: bond
 ---
 question: |
   Detainee
 subquestion: |
   Please enter information for detainee in proceeding ${proceeding_case}!
 fields:
-- Name: detainee_name
-- How did they appear?: detainee_appearance
-  choices:
-  - In Person: ip
-  - Video Conference: vtc
-- Languages Spoken: detainee_languages
-- Where are they being detained?: detainee_location
-  choices:
-  - Sacramento/Yuba: yuba
-  - Meta Verde: mv
-  - CoCo: cc
-- Do they have representation?: detainee_representation
-  choices:
-  - Yes
-  - No
-- Who?: detainee_representation_info
-  show if:
-    variable: detainee_representation
-    is: Yes
-- Was a continuance to find representation granted?: detainee_representation_continuance
-  choices:
-  - Yes
-  - No
-  show if:
-    variable: detainee_representation
-    is: No
-- How Long?: detainee_representation_continuance_length
-  show if:
-    variable: detainee_representation_continuance
-    is: Yes
-- Why?: detainee_representation_continuance_denial
-  show if:
-    variable: detainee_representation_continuance
-    is: No
+  - Name: detainee_name
+  - How did they appear?: detainee_appearance
+    choices:
+      - In Person: ip
+      - Video Conference: vtc
+  - Languages Spoken: detainee_languages
+  - Where are they being detained?: detainee_location
+    choices:
+      - Sacramento/Yuba: yuba
+      - Meta Verde: mv
+      - CoCo: cc
+  - Do they have representation?: detainee_representation
+    choices:
+      - Yes
+      - No
+  - Who?: detainee_representation_info
+    show if:
+      variable: detainee_representation
+      is: Yes
+  - Was a continuance to find representation granted?: detainee_representation_continuance
+    choices:
+      - Yes
+      - No
+    show if:
+      variable: detainee_representation
+      is: No
+  - How Long?: detainee_representation_continuance_length
+    show if:
+      variable: detainee_representation_continuance
+      is: Yes
+  - Why?: detainee_representation_continuance_denial
+    show if:
+      variable: detainee_representation_continuance
+      is: No
 ---
 question: |
   Context
 subquestion: |
   Please enter information on what you observe in ${proceeding_case}!
 fields:
-- Did the detainee have trouble communicating with the judge?: context_judge
-  choices:
-  - Yes
-  - No
-- How so?: context_judge_info
-  show if:
-    variable: context_judge
-    is: Yes
-- Did the detainee have trouble communicating with anyone else?: context_anyone
-  choices:
-  - Yes
-  - No
-- With who?: context_anyone_who
-  show if:
-    variable: context_anyone
-    is: Yes
-- How so?: context_anyone_info
-  show if:
-    variable: context_anyone
-    is: Yes
-- Where there issues with interpretation?: context_interpretation
-  choices:
-  - Yes
-  - No
-- How so?: context_interpretation_info
-  show if:
-    variable: context_interpretation
-    is: Yes
-- Where there signs the detainee suffers from mental illness?: context_illness
-  choices:
-  - Yes
-  - No
-- How so?: context_illness_info
-  show if:
-    variable: context_illness
-    is: Yes
-- How was it addressed?: context_illness_addressed
-  show if:
-    variable: context_illness
-    is: Yes
+  - Did the detainee have trouble communicating with the judge?: context_judge
+    choices:
+      - Yes
+      - No
+  - How so?: context_judge_info
+    show if:
+      variable: context_judge
+      is: Yes
+  - Did the detainee have trouble communicating with anyone else?: context_anyone
+    choices:
+      - Yes
+      - No
+  - With who?: context_anyone_who
+    show if:
+      variable: context_anyone
+      is: Yes
+  - How so?: context_anyone_info
+    show if:
+      variable: context_anyone
+      is: Yes
+  - Where there issues with interpretation?: context_interpretation
+    choices:
+      - Yes
+      - No
+  - How so?: context_interpretation_info
+    show if:
+      variable: context_interpretation
+      is: Yes
+  - Where there signs the detainee suffers from mental illness?: context_illness
+    choices:
+      - Yes
+      - No
+  - How so?: context_illness_info
+    show if:
+      variable: context_illness
+      is: Yes
+  - How was it addressed?: context_illness_addressed
+    show if:
+      variable: context_illness
+      is: Yes
 ---
 question: |
   Outcomes
 subquestion: |
   Please enter information on outcomes in ${proceeding_case}!
 fields:
-- Did detainee file any application for relief?: outcomes_relief
-  choices:
-  - Yes
-  - No
-- What were they?: outcomes_relief_info
-  show if:
-    variable: outcomes_relief
-    is: Yes
-- What is the deadline?: outcomes_relief_deadline
-  show if:
-    variable: outcomes_relief
-    is: Yes
+  - Did detainee file any application for relief?: outcomes_relief
+    choices:
+      - Yes
+      - No
+  - What were they?: outcomes_relief_info
+    show if:
+      variable: outcomes_relief
+      is: Yes
+  - What is the deadline?: outcomes_relief_deadline
+    show if:
+      variable: outcomes_relief
+     is: Yes
 ---
 question: |
   Outcomes
 subquestion: |
   Please enter information on outcomes in ${proceeding_case}!
 fields:
-- Did IJ grant bond?: outcomes_bond
-  choices:
-  - Yes
-  - No
-- Amount: outcomes_bond_info
-  show if:
-    variable: outcomes_bond
-    is: Yes
-- Reason: outcomes_bond_denied
-  show if:
-    variable: outcomes_bond
-    is: No
+  - Did IJ grant bond?: outcomes_bond
+    choices:
+      - Yes
+      - No
+  - Amount: outcomes_bond_info
+    show if:
+      variable: outcomes_bond
+      is: Yes
+  - Reason: outcomes_bond_denied
+    show if:
+      variable: outcomes_bond
+      is: No
 ---
 question: |
   Next
 subquestion: |
   Please enter information on the next hearing (if there is one)!
 fields:
-- Next Hearing: next_date
-  datatype: datetime
-  required: False
-- Type: next_type
-  choices:
-  - Individual
-  - Master
-  - Bond
-  js show if: |
-    val("next_date")
+  - Next Hearing: next_date
+    datatype: datetime
+    required: False
+  - Type: next_type
+    choices:
+      - Individual
+      - Master
+      - Bond
+    js show if: |
+      val("next_date")
 ---
 question: |
   Comments
 subquestion: |
   Please enter anything else we should know!
 fields:
-- Anything Else: comments
-  datatype: area
-  required: false
+  - Anything Else: comments
+    datatype: area
+    required: false
 ---
 mandatory: True
 code: |
