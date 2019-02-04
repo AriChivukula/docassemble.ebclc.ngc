@@ -1,8 +1,9 @@
+---
 modules:
   - docassemble.base.util
 ---
 imports:
-- datetime
+  - datetime
 ---
 metadata:
   title: Name and/or Gender Change
@@ -19,27 +20,27 @@ question: |
 subquestion: |
   Please enter your current legal information.
 fields:
-- Name: petitioner_full_name
-- AKA 1: petitioner_full_name2
-  required: False
-- AKA 2: petitioner_full_name3
-  required: False
-- AKA 3: petitioner_full_name4
-  required: False
-- Address: petitioner_number_and_street
-- City: petitioner_city
-- Zip: petitioner_zip
-- Telephone: petitioner_phone_number
-  required: False
-- Email: petitioner_email
-  required: False
-- Place of Birth: petitioner_pob
-- Date of Birth: petitioner_dob
-  datatype: date
-- Assigned Gender at Birth: petitioner_agab
-  choices:
-  - Male
-  - Female
+  - Name: petitioner_full_name
+  - AKA 1: petitioner_full_name2
+    required: False
+  - AKA 2: petitioner_full_name3
+    required: False
+  - AKA 3: petitioner_full_name4
+    required: False
+  - Address: petitioner_number_and_street
+  - City: petitioner_city
+  - Zip: petitioner_zip
+  - Telephone: petitioner_phone_number
+    required: False
+  - Email: petitioner_email
+    required: False
+  - Place of Birth: petitioner_pob
+  - Date of Birth: petitioner_dob
+    datatype: date
+  - Assigned Gender at Birth: petitioner_agab
+    choices:
+      - Male
+      - Female
 validation code: |
   if len(petitioner_zip) != 5:
     validation_error("Invalid zip")
@@ -49,23 +50,23 @@ question: |
 subquestion: |
   Please enter the answers you wish to change your legal information to.
 fields:
-- Name: new_name
-- Gender: new_gender
-  choices:
-  - Female
-  - Male
-  - Non-Binary
+  - Name: new_name
+  - Gender: new_gender
+    choices:
+      - Female
+      - Male
+      - Non-Binary
 ---
 question: |
   Court Information
 subquestion: |
   Please enter the contact information for the applicable California Superior Court Branch.
 fields:
-- County: court_county
-- Address: court_address
-- City: court_city
-- Zip: court_zip
-- Branch: court_branch
+  - County: court_county
+  - Address: court_address
+  - City: court_city
+  - Zip: court_zip
+  - Branch: court_branch
 validation code: |
   if len(court_zip) != 5:
     validation_error("Invalid zip")
