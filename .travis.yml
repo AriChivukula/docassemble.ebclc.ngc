@@ -3,5 +3,5 @@ node_js:
 - "node"
 if: type = push
 script:
-- npm install -g yaml-lint
-- yamllint **/*.yml
+- npm install -g js-yaml
+- js-yaml **/*.yml
