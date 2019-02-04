@@ -1,5 +1,6 @@
+---
 modules:
-  - docassemble.base.util
+- docassemble.base.util
 ---
 metadata:
   title: ICOP Observation Form
@@ -181,7 +182,7 @@ subquestion: |
 fields:
 - Anything Else: comments
   datatype: area
-  required: false
+  required: False
 ---
 mandatory: True
 code: |
