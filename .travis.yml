@@ -3,5 +3,5 @@ python:
 - "3.6"
 if: type = push
 script:
-- pip3 install --user yamllint
+- pip3 install yamllint
 - yamllint docassemble/law/data/questions
