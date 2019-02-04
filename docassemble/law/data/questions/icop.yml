@@ -68,14 +68,14 @@ fields:
   show if:
     variable: detainee_representation
     is: No
-- How Long?: detainee_continuance_length
+- How Long?: detainee_representation_continuance_length
   show if:
     variable: detainee_representation_continuance
     is: Yes
 - Why?: detainee_continuance_denial
   show if:
     variable: detainee_representation_continuance
-    is: Yes
+    is: No
 ---
 question: |
   Context
