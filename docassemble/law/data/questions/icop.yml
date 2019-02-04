@@ -166,7 +166,7 @@ subquestion: |
 fields:
 - Next Hearing: next_date
   datatype: datetime
-  required: false
+  required: False
 - Type: next_type
   choices:
   - Individual
@@ -182,7 +182,7 @@ subquestion: |
 fields:
 - Anything Else: comments
   datatype: area
-  required: false
+  required: False
 ---
 mandatory: True
 code: |
