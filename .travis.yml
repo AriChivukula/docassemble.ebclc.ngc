@@ -1,7 +1,7 @@
-language: node_js
-node_js:
-- "node"
+language: python
+python:
+- "3.6"
 if: type = push
 script:
-- npm install -g js-yaml
-- js-yaml **/*.yml
+- pip3 install --user yamllint
+- yamllint docassemble/law/data/questions
