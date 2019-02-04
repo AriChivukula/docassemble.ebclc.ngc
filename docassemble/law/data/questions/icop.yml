@@ -91,7 +91,7 @@ fields:
     show if:
       variable: context_judge
       is: True
-  - Did the detainee have trouble communicating with anyone else?: context_anyone
+  - Did the detainee have trouble communicating with anyone?: context_anyone
     choices:
       - Yes: True
       - No: False
