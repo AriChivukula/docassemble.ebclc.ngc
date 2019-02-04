@@ -75,7 +75,7 @@ fields:
 - Why?: detainee_continuance_denial
   show if:
     variable: detainee_representation_continuance
-    is: No
+    is: Yes
 ---
 question: |
   Context
