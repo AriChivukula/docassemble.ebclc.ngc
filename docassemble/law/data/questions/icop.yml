@@ -8,9 +8,8 @@ metadata:
 field: get_started
 question: |
   This demo helps you fill out the ICOP Observation Form!
-subquestion: >
-  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/
-  docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)
+subquestion: |
+  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)
 continue button label: Get Started
 ---
 question: |
