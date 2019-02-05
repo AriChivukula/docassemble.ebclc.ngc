@@ -26,9 +26,9 @@ buttons:
 - Name & Gender Change
 - Other
 ---
-field: cannot_help
 code: |
-  error = "We only assist with name and/or name changes at this time."
+    cannot_help = "Yes"
+    error = "We only assist with name and/or name changes at this time."
 ---
 field: minor_check
 question: |
@@ -39,9 +39,9 @@ buttons:
 - Yes
 - No
 ---
-field: is_minor
 code: |
-  error = "We are unable to assist minors with a ${help_type} at this time."
+    is_minor = "Yes"
+    error = "We are unable to assist minors with a ${help_type} at this time."
 ---
 field: record_check
 question: |
@@ -52,9 +52,9 @@ buttons:
 - Yes
 - No
 ---
-field: has_record
 code: |
-  error = "We are unable to assist with your ${help_type} at this time."
+    has_record = "Yes"
+    error = "We are unable to assist with your ${help_type} at this time."
 ---
 question: |
   Current Petitioner Information
@@ -378,8 +378,8 @@ attachment:
   - Date1_af_date: |
       ${ date1 }
 ---
-field: thanks
 code: |
+  thanks = "Yes"
   error = "Thanks!"
 ---
 mandatory: True
