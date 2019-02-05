@@ -127,6 +127,7 @@ fields:
   - San Mateo
   - Santa Clara
   - Solano
+  - Sonoma
   - Other
 - Other County: court_county_custom
   js show if: |
@@ -210,21 +211,26 @@ code: |
       court_branch = "Historic Courthouse"
       court_zip = "94559"
     elif court_county == "San Francisco":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "400 McAllister St"
+      court_city = "San Francisco"
+      court_branch = "Civic Center Courthouse"
+      court_zip = "94102"
     elif court_county == "San Mateo":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "400 County Center"
+      court_city = "Redwood City"
+      court_branch = "Hall of Justice"
+      court_zip = "94063"
     elif court_county == "Santa Clara":
+      court_address = "191 North First Street"
+      court_city = "San Jose"
+      court_branch = "Downtown Superior Courthouse"
+      court_zip = "95113"
+    elif court_county == "Solano":
       court_address = ""
       court_city = ""
       court_branch = ""
       court_zip = ""
-    elif court_county == "Solano":
+    elif court_county == "Sonoma":
       court_address = ""
       court_city = ""
       court_branch = ""
