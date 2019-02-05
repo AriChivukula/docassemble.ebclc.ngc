@@ -226,15 +226,15 @@ code: |
       court_branch = "Downtown Superior Courthouse"
       court_zip = "95113"
     elif court_county == "Solano":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "580 Texas Street"
+      court_city = "Fairfield"
+      court_branch = "Old Solano Courthouse"
+      court_zip = "94533"
     elif court_county == "Sonoma":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "600 Administration Drive"
+      court_city = "Santa Rosa"
+      court_branch = "Hall of Justice"
+      court_zip = "95403"
     else:
       court_county = court_county_custom
     court_county = court_county.upper()
