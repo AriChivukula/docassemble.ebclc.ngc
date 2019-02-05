@@ -119,7 +119,7 @@ attachment:
   name: UNOFFICIAL FORM
   filename: unofficial-form
   pdf template file: |
-    Name and Gender Change Forms with Fee Waiver - Fall 2018.pdf
+    name_and_gender_change.pdf
   fields:
   - Petitioner Full Name: |
       ${ petitioner_full_name }
