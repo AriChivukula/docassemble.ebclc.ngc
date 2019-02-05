@@ -27,10 +27,8 @@ buttons:
 - Other
 ---
 field: cannot_help
-question: |
-  We only assist with name and/or name changes at this time.
-buttons:
-- Restart: restart
+code: |
+  error = "We only assist with name and/or name changes at this time."
 ---
 field: minor_check
 question: |
@@ -42,10 +40,8 @@ buttons:
 - No
 ---
 field: is_minor
-question: |
-  We are unable to assist minors with a ${help_type} at this time.
-buttons:
-- Restart: restart
+code: |
+  error = "We are unable to assist minors with a ${help_type} at this time."
 ---
 field: record_check
 question: |
@@ -57,10 +53,8 @@ buttons:
 - No
 ---
 field: has_record
-question: |
-  We are unable to assist with your ${help_type} at this time.
-buttons:
-- Restart: restart
+code: |
+  error = "We are unable to assist with your ${help_type} at this time."
 ---
 question: |
   Current Petitioner Information
@@ -248,8 +242,8 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-buttons:
-- Restart: restart
+code: |
+  error = "Thanks!"
 ---
 field: name_form
 question: |
@@ -303,8 +297,8 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-buttons:
-- Restart: restart
+code: |
+  error = "Thanks!"
 ---
 field: gender_form
 question: |
@@ -350,5 +344,11 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+code: |
+  error = "Thanks!"
+---
+mandatory: True
+question: |
+  ${error}
 buttons:
 - Restart: restart
