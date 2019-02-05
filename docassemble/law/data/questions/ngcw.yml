@@ -131,19 +131,19 @@ fields:
   - Other
 - Other County: court_county_custom
   js show if: |
-    val("court_county") !== "Other"
+    val("court_county") === "Other"
 - Address: court_address
   js show if: |
-    val("court_county") !== "Other"
+    val("court_county") === "Other"
 - City: court_city
   js show if: |
-    val("court_county") !== "Other"
+    val("court_county") === "Other"
 - Zip: court_zip
   js show if: |
-    val("court_county") !== "Other"
+    val("court_county") === "Other"
 - Branch: court_branch
   js show if: |
-    val("court_county") !== "Other"
+    val("court_county") === "Other"
 ---
 mandatory: True
 code: |
