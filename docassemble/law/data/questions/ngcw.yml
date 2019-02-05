@@ -70,10 +70,16 @@ fields:
 - Name: petitioner_full_name
 - AKA 1: petitioner_full_name2
   required: False
+  js show if: |
+    val("help_type") !== "Gender Change"
 - AKA 2: petitioner_full_name3
   required: False
+  js show if: |
+    val("help_type") !== "Gender Change"
 - AKA 3: petitioner_full_name4
   required: False
+  js show if: |
+    val("help_type") !== "Gender Change"
 - Address: petitioner_number_and_street
 - City: petitioner_city
 - Zip: petitioner_zip
@@ -82,8 +88,12 @@ fields:
 - Email: petitioner_email
   required: False
 - Place of Birth: petitioner_pob
+  js show if: |
+    val("help_type") !== "Gender Change"
 - Date of Birth: petitioner_dob
   datatype: date
+  js show if: |
+    val("help_type") !== "Gender Change"
 - Assigned Gender at Birth: petitioner_agab
   choices:
   - Male
@@ -98,11 +108,15 @@ subquestion: |
   Please enter the answers you wish to change your legal information to.
 fields:
 - Name: new_name
+  js show if: |
+    val("help_type") !== "Gender Change"
 - Gender: new_gender
   choices:
   - Female
   - Male
   - Non-Binary
+  js show if: |
+    val("help_type") !== "Name Change"
 ---
 question: |
   Court Information
@@ -129,36 +143,40 @@ code: |
       has_record
   else:
     petitioner_full_name = petitioner_full_name.upper()
-    petitioner_full_name2 = petitioner_full_name2.upper()
-    petitioner_full_name3 = petitioner_full_name3.upper()
-    petitioner_full_name4 = petitioner_full_name4.upper()
-    petitioner_full_name_w_akas = petitioner_full_name
-    if petitioner_full_name2:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
-    if petitioner_full_name3:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
-    if petitioner_full_name4:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
+    if help_type != "Gender Change":
+      petitioner_full_name2 = petitioner_full_name2.upper()
+      petitioner_full_name3 = petitioner_full_name3.upper()
+      petitioner_full_name4 = petitioner_full_name4.upper()
+      petitioner_full_name_w_akas = petitioner_full_name
+      if petitioner_full_name2:
+          petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
+      if petitioner_full_name3:
+          petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
+      if petitioner_full_name4:
+          petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
     petitioner_number_and_street = petitioner_number_and_street.upper()
     petitioner_city = petitioner_city.upper()
     petitioner_state = "CA"
-    petitioner_pob = petitioner_pob.upper()
+    if help_type != "Gender Change":
+      petitioner_pob = petitioner_pob.upper()
     check_box5 = False
     check_box6 = False
     if petitioner_agab == "Male":
         check_box5 = True
     if petitioner_agab == "Female":
         check_box6 = True
-    new_name = new_name.upper()
-    female_check = False
-    male_check = False
-    nonbinary_check = False
-    if new_gender == "Female":
-        female_check = True
-    if new_gender == "Male":
-        male_check = True
-    if new_gender == "Non-Binary":
-        nonbinary_check = True
+    if help_type != "Gender Change":
+      new_name = new_name.upper()
+    if help_type != "Name Change":
+      female_check = False
+      male_check = False
+      nonbinary_check = False
+      if new_gender == "Female":
+          female_check = True
+      if new_gender == "Male":
+          male_check = True
+      if new_gender == "Non-Binary":
+          nonbinary_check = True
     court_county = court_county.upper()
     court_address = court_address.upper()
     court_city = court_city.upper()
@@ -273,12 +291,6 @@ attachment:
       ${ check_box6 }
   - Petitioner New Name: |
       ${ new_name }
-  - Female Check: |
-      ${ female_check }
-  - Male Check: |
-      ${ male_check }
-  - Nonbinary Check: |
-      ${ nonbinary_check }
   - County: |
       ${ court_county }
   - Court Address: |
@@ -303,14 +315,6 @@ attachment:
   fields:
   - Petitioner Full Name: |
       ${ petitioner_full_name }
-  - Petitioner Full Name2: |
-      ${ petitioner_full_name2 }
-  - Petitioner Full Name3: |
-      ${ petitioner_full_name3 }
-  - Petitioner Full Name4: |
-      ${ petitioner_full_name4 }
-  - Petitioner Full Name w/AKAs: |
-      ${ petitioner_full_name_w_akas }
   - Petitioner Number and Street: |
       ${ petitioner_number_and_street }
   - Petitioner City: |
@@ -323,16 +327,10 @@ attachment:
       ${ petitioner_phone_number }
   - Petitioner E-mail: |
       ${ petitioner_email }
-  - Petitioner POB: |
-      ${ petitioner_pob }
-  - Petitioner DOB: |
-      ${ petitioner_dob }
   - Check Box5: |
       ${ check_box5 }
   - Check Box6: |
       ${ check_box6 }
-  - Petitioner New Name: |
-      ${ new_name }
   - Female Check: |
       ${ female_check }
   - Male Check: |
