@@ -15,6 +15,36 @@ subquestion: |
   [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/ngcw.yml)
 continue button label: Get Started
 ---
+field: minor_check
+question: |
+  Are you a minor?
+subquestion: |
+  Please inform us if you're under 18.
+choices:
+- Yes
+- No
+---
+field: is_minor
+question: |
+  We are unable to assist minors at this time.
+sets: do_exit
+---
+field: help_check
+question: |
+  How can we help you today?
+subquestion: |
+  Please inform us what services you are seeking assistance with.
+choices:
+- Gender Change
+- Name Change
+- Name & Gender Change
+- Other
+---
+field: cannot_help
+question: |
+  We only assist with name and/or name changes at this time.
+sets: do_exit
+---
 question: |
   Current Petitioner Information
 subquestion: |
@@ -74,43 +104,48 @@ validation code: |
 mandatory: True
 code: |
   get_started
-  petitioner_full_name = petitioner_full_name.upper()
-  petitioner_full_name2 = petitioner_full_name2.upper()
-  petitioner_full_name3 = petitioner_full_name3.upper()
-  petitioner_full_name4 = petitioner_full_name4.upper()
-  petitioner_full_name_w_akas = petitioner_full_name
-  if petitioner_full_name2:
-      petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
-  if petitioner_full_name3:
-      petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
-  if petitioner_full_name4:
-      petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
-  petitioner_number_and_street = petitioner_number_and_street.upper()
-  petitioner_city = petitioner_city.upper()
-  petitioner_state = "CA"
-  petitioner_pob = petitioner_pob.upper()
-  check_box5 = False
-  check_box6 = False
-  if petitioner_agab == "Male":
-      check_box5 = True
-  if petitioner_agab == "Female":
-      check_box6 = True
-  new_name = new_name.upper()
-  female_check = False
-  male_check = False
-  nonbinary_check = False
-  if new_gender == "Female":
-      female_check = True
-  if new_gender == "Male":
-      male_check = True
-  if new_gender == "Non-Binary":
-      nonbinary_check = True
-  court_county = court_county.upper()
-  court_address = court_address.upper()
-  court_city = court_city.upper()
-  court_city_and_zip = court_city + ", CA " + court_zip
-  court_branch = court_branch.upper()
-  date1 = datetime.date.today().strftime('%m/%d/%Y')
+  if minor_check == "Yes":
+      is_minor
+  elif help_check == "Other":
+      cannot_help
+  else:
+    petitioner_full_name = petitioner_full_name.upper()
+    petitioner_full_name2 = petitioner_full_name2.upper()
+    petitioner_full_name3 = petitioner_full_name3.upper()
+    petitioner_full_name4 = petitioner_full_name4.upper()
+    petitioner_full_name_w_akas = petitioner_full_name
+    if petitioner_full_name2:
+        petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
+    if petitioner_full_name3:
+        petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
+    if petitioner_full_name4:
+        petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
+    petitioner_number_and_street = petitioner_number_and_street.upper()
+    petitioner_city = petitioner_city.upper()
+    petitioner_state = "CA"
+    petitioner_pob = petitioner_pob.upper()
+    check_box5 = False
+    check_box6 = False
+    if petitioner_agab == "Male":
+        check_box5 = True
+    if petitioner_agab == "Female":
+        check_box6 = True
+    new_name = new_name.upper()
+    female_check = False
+    male_check = False
+    nonbinary_check = False
+    if new_gender == "Female":
+        female_check = True
+    if new_gender == "Male":
+        male_check = True
+    if new_gender == "Non-Binary":
+        nonbinary_check = True
+    court_county = court_county.upper()
+    court_address = court_address.upper()
+    court_city = court_city.upper()
+    court_city_and_zip = court_city + ", CA " + court_zip
+    court_branch = court_branch.upper()
+    date1 = datetime.date.today().strftime('%m/%d/%Y')
 ---
 mandatory: True
 question: |
