@@ -351,4 +351,4 @@ mandatory: True
 question: |
   ${error}
 buttons:
-- Restart: restart
+- Exit: exit
