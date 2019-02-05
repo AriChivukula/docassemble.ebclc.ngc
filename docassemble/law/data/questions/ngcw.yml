@@ -193,6 +193,7 @@ code: |
 field: name_and_gender_form
 question: |
   Here are your (nearly) completed forms! Don't forget to sign them.
+allow emailing: False
 attachment:
   name: Name & Gender Change
   filename: unofficial_name_and_gender_change
@@ -253,6 +254,7 @@ buttons:
 field: name_form
 question: |
   Here are your (nearly) completed forms! Don't forget to sign them.
+allow emailing: False
 attachment:
   name: Name Change
   filename: unofficial_name_change
@@ -307,6 +309,7 @@ buttons:
 field: gender_form
 question: |
   Here are your (nearly) completed forms! Don't forget to sign them.
+allow emailing: False
 attachment:
   name: Gender Change
   filename: unofficial_gender_change
