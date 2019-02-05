@@ -118,13 +118,31 @@ subquestion: |
   Please select the county you live in.
 fields:
 - County: court_county
+  choices:
+  - Alameda
+  - Contra Costa
+  - Marin
+  - Napa
+  - San Francisco
+  - San Mateo
+  - Santa Clara
+  - Solano
+  - Other
+- Other County: court_county_custom
+  js show if: |
+    val("court_county") !== "Other"
 - Address: court_address
+  js show if: |
+    val("court_county") !== "Other"
 - City: court_city
+  js show if: |
+    val("court_county") !== "Other"
 - Zip: court_zip
+  js show if: |
+    val("court_county") !== "Other"
 - Branch: court_branch
-validation code: |
-  if len(court_zip) != 5:
-    validation_error("Invalid zip")
+  js show if: |
+    val("court_county") !== "Other"
 ---
 mandatory: True
 code: |
@@ -171,6 +189,48 @@ code: |
           male_check = True
       if new_gender == "Non-Binary":
           nonbinary_check = True
+    if court_county == "Alameda":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "Contra Costa":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "Marin":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "Napa":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "San Francisco":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "San Mateo":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "Santa Clara":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    elif court_county == "Solano":
+      court_address = ""
+      court_city = ""
+      court_branch = ""
+      court_zip = ""
+    else:
+      court_county = court_county_custom
     court_county = court_county.upper()
     court_address = court_address.upper()
     court_city = court_city.upper()
