@@ -342,6 +342,41 @@ attachment:
   - Date1_af_date: |
       ${ date1 }
 ---
+field: fee_form
+question: |
+  Filling this (optional) form out lets you know if you qualify for a fee waiver.
+allow emailing: False
+attachment:
+  name: Fee Waiver
+  filename: unofficial_fee_waiver
+  pdf template file: |
+    fee_waiver.pdf
+  fields:
+  - Petitioner Full Name: |
+      ${ petitioner_full_name }
+  - Petitioner Number and Street: |
+      ${ petitioner_number_and_street }
+  - Petitioner City: |
+      ${ petitioner_city }
+  - STATE: |
+      ${ petitioner_state }
+  - Petitioner Zip: |
+      ${ petitioner_zip }
+  - Petitioner Phone Number: |
+      ${ petitioner_phone_number }
+  - Petitioner E-mail: |
+      ${ petitioner_email }
+  - County: |
+      ${ court_county }
+  - Court Address: |
+      ${ court_address }
+  - Court City and Zip: |
+      ${ court_city_and_zip }
+  - Court Branch Name: |
+      ${ court_branch }
+  - Date1_af_date: |
+      ${ date1 }
+---
 field: thanks
 code: |
   error = "Thanks!"
