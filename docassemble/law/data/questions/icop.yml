@@ -197,8 +197,9 @@ code: |
     outcomes_bond
   next_date
   comments
-  do_exit
 ---
+mandatory: True
 question: |
   Thanks for volunteering ${you_name}
-sets: do_exit
+buttons:
+- Exit: exit
