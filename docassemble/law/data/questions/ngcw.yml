@@ -6,11 +6,11 @@ imports:
 - datetime
 ---
 metadata:
-  title: Name and/or Gender Change
+  title: Name/Gender Change
 ---
 field: get_started
 question: |
-  This demo helps you fill out the forms to obtain a court order for name & gender change!
+  This demo helps you fill out the forms to obtain a court order for name and/or gender change!
 subquestion: |
   [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/ngcw.yml)
 continue button label: Get Started
@@ -169,8 +169,4 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-sets: all_done
----
-question: |
-  Process exited
 sets: do_exit
