@@ -30,7 +30,6 @@ field: cannot_help
 question: |
   We only assist with name and/or name changes at this time.
 buttons:
-- Exit: exit
 - Restart: restart
 ---
 field: minor_check
@@ -46,7 +45,6 @@ field: is_minor
 question: |
   We are unable to assist minors with a ${help_type} at this time.
 buttons:
-- Exit: exit
 - Restart: restart
 ---
 field: record_check
@@ -62,7 +60,6 @@ field: has_record
 question: |
   We are unable to assist with your ${help_type} at this time.
 buttons:
-- Exit: exit
 - Restart: restart
 ---
 question: |
@@ -233,7 +230,6 @@ attachment:
   - Date1_af_date: |
       ${ date1 }
 buttons:
-- Exit: exit
 - Restart: restart
 ---
 field: name_form
@@ -294,7 +290,6 @@ attachment:
   - Date1_af_date: |
       ${ date1 }
 buttons:
-- Exit: exit
 - Restart: restart
 ---
 field: gender_form
@@ -355,5 +350,4 @@ attachment:
   - Date1_af_date: |
       ${ date1 }
 buttons:
-- Exit: exit
 - Restart: restart
