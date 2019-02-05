@@ -183,6 +183,7 @@ code: |
         gender_form
     else:
         name_and_gender_form
+    fee_form
     thanks
 ---
 field: name_and_gender_form
