@@ -190,25 +190,25 @@ code: |
       if new_gender == "Non-Binary":
           nonbinary_check = True
     if court_county == "Alameda":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "1225 Fallon St"
+      court_city = "Oakland"
+      court_branch = "Rene C. Davidson Courthouse"
+      court_zip = "94612"
     elif court_county == "Contra Costa":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "725 Court St"
+      court_city = "Martinez"
+      court_branch = "Wakefield Taylor Courthouse"
+      court_zip = "94553"
     elif court_county == "Marin":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "3501 Civic Center Drive"
+      court_city = "San Rafael"
+      court_branch = "Civic Center Hall of Justice"
+      court_zip = "94903"
     elif court_county == "Napa":
-      court_address = ""
-      court_city = ""
-      court_branch = ""
-      court_zip = ""
+      court_address = "825 Brown St"
+      court_city = "Napa"
+      court_branch = "Historic Courthouse"
+      court_zip = "94559"
     elif court_county == "San Francisco":
       court_address = ""
       court_city = ""
