@@ -29,7 +29,7 @@ question: |
   We are unable to assist minors at this time.
 sets: do_exit
 ---
-field: help_check
+field: help_type
 question: |
   How can we help you today?
 subquestion: |
@@ -43,6 +43,20 @@ buttons:
 field: cannot_help
 question: |
   We only assist with name and/or name changes at this time.
+sets: do_exit
+---
+field: record_check
+question: |
+  Are you prohibited from or required to seek approval before pursuing ${help_type}?
+subquestion: |
+  Reasons include: current incarceration, probation, parole, sex offender registration, etc.
+buttons:
+- Yes
+- No
+---
+field: has_record
+question: |
+  We are unable to assist with your ${help_type} at this time.
 sets: do_exit
 ---
 question: |
@@ -106,8 +120,10 @@ code: |
   get_started
   if minor_check == "Yes":
       is_minor
-  elif help_check == "Other":
+  elif help_type == "Other":
       cannot_help
+  elif record_check == "Yes":
+      has_record
   else:
     petitioner_full_name = petitioner_full_name.upper()
     petitioner_full_name2 = petitioner_full_name2.upper()
