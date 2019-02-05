@@ -179,10 +179,13 @@ code: |
     date1 = datetime.date.today().strftime('%m/%d/%Y')
     if help_type == "Name Change":
         name_form
+        thanks
     elif help_type == "Gender Change":
         gender_form
+        thanks
     else:
         name_and_gender_form
+        thanks
 ---
 field: name_and_gender_form
 question: |
@@ -242,8 +245,6 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-code: |
-  error = "Thanks!"
 ---
 field: name_form
 question: |
@@ -297,8 +298,6 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-code: |
-  error = "Thanks!"
 ---
 field: gender_form
 question: |
@@ -344,6 +343,8 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+---
+field: thanks
 code: |
   error = "Thanks!"
 ---
