@@ -20,7 +20,7 @@ question: |
   Are you a minor?
 subquestion: |
   Please inform us if you're under 18.
-choices:
+buttons:
 - Yes
 - No
 ---
@@ -34,7 +34,7 @@ question: |
   How can we help you today?
 subquestion: |
   Please inform us what services you are seeking assistance with.
-choices:
+buttons:
 - Gender Change
 - Name Change
 - Name & Gender Change
