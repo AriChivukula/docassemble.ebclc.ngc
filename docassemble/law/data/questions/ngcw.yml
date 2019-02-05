@@ -179,13 +179,11 @@ code: |
     date1 = datetime.date.today().strftime('%m/%d/%Y')
     if help_type == "Name Change":
         name_form
-        thanks
     elif help_type == "Gender Change":
         gender_form
-        thanks
     else:
         name_and_gender_form
-        thanks
+    thanks
 ---
 field: name_and_gender_form
 question: |
