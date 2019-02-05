@@ -115,7 +115,7 @@ fields:
 question: |
   Court Information
 subquestion: |
-  Please enter the contact information for the applicable California Superior Court Branch.
+  Please select the county you live in.
 fields:
 - County: court_county
 - Address: court_address
