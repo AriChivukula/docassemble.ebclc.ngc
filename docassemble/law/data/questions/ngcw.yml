@@ -115,16 +115,35 @@ fields:
 question: |
   Court Information
 subquestion: |
-  Please enter the contact information for the applicable California Superior Court Branch.
+  Please select the county you live in.
 fields:
 - County: court_county
+  choices:
+  - Alameda
+  - Contra Costa
+  - Marin
+  - Napa
+  - San Francisco
+  - San Mateo
+  - Santa Clara
+  - Solano
+  - Sonoma
+  - Other
+- Other County: court_county_custom
+  js show if: |
+    val("court_county") === "Other"
 - Address: court_address
+  js show if: |
+    val("court_county") === "Other"
 - City: court_city
+  js show if: |
+    val("court_county") === "Other"
 - Zip: court_zip
+  js show if: |
+    val("court_county") === "Other"
 - Branch: court_branch
-validation code: |
-  if len(court_zip) != 5:
-    validation_error("Invalid zip")
+  js show if: |
+    val("court_county") === "Other"
 ---
 mandatory: True
 code: |
@@ -171,6 +190,53 @@ code: |
           male_check = True
       if new_gender == "Non-Binary":
           nonbinary_check = True
+    if court_county == "Alameda":
+      court_address = "1225 Fallon St"
+      court_city = "Oakland"
+      court_branch = "Rene C. Davidson Courthouse"
+      court_zip = "94612"
+    elif court_county == "Contra Costa":
+      court_address = "725 Court St"
+      court_city = "Martinez"
+      court_branch = "Wakefield Taylor Courthouse"
+      court_zip = "94553"
+    elif court_county == "Marin":
+      court_address = "3501 Civic Center Drive"
+      court_city = "San Rafael"
+      court_branch = "Civic Center Hall of Justice"
+      court_zip = "94903"
+    elif court_county == "Napa":
+      court_address = "825 Brown St"
+      court_city = "Napa"
+      court_branch = "Historic Courthouse"
+      court_zip = "94559"
+    elif court_county == "San Francisco":
+      court_address = "400 McAllister St"
+      court_city = "San Francisco"
+      court_branch = "Civic Center Courthouse"
+      court_zip = "94102"
+    elif court_county == "San Mateo":
+      court_address = "400 County Center"
+      court_city = "Redwood City"
+      court_branch = "Hall of Justice"
+      court_zip = "94063"
+    elif court_county == "Santa Clara":
+      court_address = "191 North First Street"
+      court_city = "San Jose"
+      court_branch = "Downtown Superior Courthouse"
+      court_zip = "95113"
+    elif court_county == "Solano":
+      court_address = "580 Texas Street"
+      court_city = "Fairfield"
+      court_branch = "Old Solano Courthouse"
+      court_zip = "94533"
+    elif court_county == "Sonoma":
+      court_address = "600 Administration Drive"
+      court_city = "Santa Rosa"
+      court_branch = "Hall of Justice"
+      court_zip = "95403"
+    else:
+      court_county = court_county_custom
     court_county = court_county.upper()
     court_address = court_address.upper()
     court_city = court_city.upper()
