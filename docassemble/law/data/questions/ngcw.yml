@@ -29,7 +29,9 @@ buttons:
 field: cannot_help
 question: |
   We only assist with name and/or name changes at this time.
-sets: do_exit
+buttons:
+- Exit: exit
+- Restart: restart
 ---
 field: minor_check
 question: |
@@ -43,7 +45,9 @@ buttons:
 field: is_minor
 question: |
   We are unable to assist minors with a ${help_type} at this time.
-sets: do_exit
+buttons:
+- Exit: exit
+- Restart: restart
 ---
 field: record_check
 question: |
@@ -57,7 +61,9 @@ buttons:
 field: has_record
 question: |
   We are unable to assist with your ${help_type} at this time.
-sets: do_exit
+buttons:
+- Exit: exit
+- Restart: restart
 ---
 question: |
   Current Petitioner Information
@@ -226,6 +232,9 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+buttons:
+- Exit: exit
+- Restart: restart
 ---
 field: name_form
 question: |
@@ -284,6 +293,9 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+buttons:
+- Exit: exit
+- Restart: restart
 ---
 field: gender_form
 question: |
@@ -342,4 +354,6 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-sets: do_exit
+buttons:
+- Exit: exit
+- Restart: restart
