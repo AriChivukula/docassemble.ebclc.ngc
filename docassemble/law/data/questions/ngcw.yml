@@ -64,16 +64,13 @@ fields:
 - Name: petitioner_full_name
 - AKA 1: petitioner_full_name2
   required: False
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - AKA 2: petitioner_full_name3
   required: False
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - AKA 3: petitioner_full_name4
   required: False
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - Address: petitioner_number_and_street
 - City: petitioner_city
 - Zip: petitioner_zip
@@ -82,12 +79,10 @@ fields:
 - Email: petitioner_email
   required: False
 - Place of Birth: petitioner_pob
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - Date of Birth: petitioner_dob
   datatype: date
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - Assigned Gender at Birth: petitioner_agab
   choices:
   - Male
@@ -99,15 +94,13 @@ subquestion: |
   Please enter the answers you wish to change your legal information to.
 fields:
 - Name: new_name
-  js show if: |
-    val("help_type") != "Gender Change"
+  js hide if: val("help_type") == "Gender Change"
 - Gender: new_gender
   choices:
   - Female
   - Male
   - Non-Binary
-  js show if: |
-    val("help_type") != "Name Change"
+  js hide if: val("help_type") == "Name Change"
 ---
 question: |
   Court Information
@@ -127,20 +120,15 @@ fields:
   - Sonoma
   - Other
 - Other County: court_county_custom
-  js show if: |
-    val("court_county") === "Other"
+  js show if: val("court_county") == "Other"
 - Address: court_address
-  js show if: |
-    val("court_county") === "Other"
+  js show if: val("court_county") == "Other"
 - City: court_city
-  js show if: |
-    val("court_county") === "Other"
+  js show if: val("court_county") == "Other"
 - Zip: court_zip
-  js show if: |
-    val("court_county") === "Other"
+  js show if: val("court_county") == "Other"
 - Branch: court_branch
-  js show if: |
-    val("court_county") === "Other"
+  js show if: val("court_county") == "Other"
 ---
 mandatory: True
 code: |
