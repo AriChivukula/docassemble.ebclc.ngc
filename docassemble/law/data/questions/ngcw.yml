@@ -317,7 +317,7 @@ attachment:
   name: Name Change
   filename: unofficial_name_change
   pdf template file: |
-    gender_change.pdf
+    name_change.pdf
   fields:
   - Petitioner Full Name: |
       ${ petitioner_full_name }
@@ -369,7 +369,7 @@ attachment:
   name: Gender Change
   filename: unofficial_gender_change
   pdf template file: |
-    name_change.pdf
+    gender_change.pdf
   fields:
   - Petitioner Full Name: |
       ${ petitioner_full_name }
