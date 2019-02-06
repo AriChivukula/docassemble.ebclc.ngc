@@ -47,7 +47,7 @@ field: record_check
 question: |
   Are you prohibited from or required to seek approval before pursuing a ${help_type}?
 subquestion: |
-  Reasons include: current incarceration, probation, parole, sex offender registration, etc.
+  Reasons include: sex offender registration, etc.
 buttons:
 - Yes
 - No
