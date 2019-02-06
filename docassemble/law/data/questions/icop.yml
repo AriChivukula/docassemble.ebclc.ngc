@@ -27,8 +27,10 @@ question: |
 subquestion: |
   Please enter information on the proceeding you're observing ${you_name}!
 fields:
-- When: proceeding_when
-  datatype: datetime
+- When: proceeding_date
+  datatype: date
+- When: proceeding_time
+  datatype: time
 - Judge: proceeding_judge
 - Case: proceeding_case
   default: A-
@@ -193,7 +195,7 @@ mandatory: True
 code: |
   get_started
   you_name
-  proceeding_when
+  proceeding_date
   detainee_name
   context_anyone
   if proceeding_type == "master":
