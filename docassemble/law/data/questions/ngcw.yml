@@ -62,6 +62,23 @@ subquestion: |
   Please enter your current legal information.
 fields:
 - Name: petitioner_full_name
+- Address: petitioner_number_and_street
+- City: petitioner_city
+- Zip: petitioner_zip
+- Telephone: petitioner_phone_number
+  required: False
+- Email: petitioner_email
+  required: False
+- Assigned Gender at Birth: petitioner_agab
+  choices:
+  - Male
+  - Female
+---
+question: |
+  Additional Petitioner Information
+subquestion: |
+  Please enter your additional legal information.
+fields:
 - AKA 1: petitioner_full_name2
   required: False
   js hide if: val("help_type") == "Gender Change"
@@ -71,36 +88,27 @@ fields:
 - AKA 3: petitioner_full_name4
   required: False
   js hide if: val("help_type") == "Gender Change"
-- Address: petitioner_number_and_street
-- City: petitioner_city
-- Zip: petitioner_zip
-- Telephone: petitioner_phone_number
-  required: False
-- Email: petitioner_email
-  required: False
 - Place of Birth: petitioner_pob
-  js hide if: val("help_type") == "Gender Change"
 - Date of Birth: petitioner_dob
   datatype: date
-  js hide if: val("help_type") == "Gender Change"
-- Assigned Gender at Birth: petitioner_agab
-  choices:
-  - Male
-  - Female
 ---
 question: |
-  Future Petitioner Information
+  Future Petitioner Name
 subquestion: |
-  Please enter the answers you wish to change your legal information to.
+  Please enter the name you wish to go by legally.
 fields:
 - Name: new_name
-  js hide if: val("help_type") == "Gender Change"
+---
+question: |
+  Future Petitioner Gender
+subquestion: |
+  Please enter the gender you wish to go by legally.
+fields:
 - Gender: new_gender
   choices:
   - Female
   - Male
   - Non-Binary
-  js hide if: val("help_type") == "Name Change"
 ---
 question: |
   Court Information
