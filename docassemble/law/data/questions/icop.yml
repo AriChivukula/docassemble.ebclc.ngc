@@ -53,10 +53,16 @@ fields:
   - Sacramento/Yuba: yuba
   - Meta Verde: mv
   - CoCo: cc
+  - Other: other
+- Other Location: detainee_location_custom
+  show if:
+    variable: detainee_location
+    is: other
 - Do they have representation?: detainee_representation
   choices:
   - Yes
   - No
+  - Unknown
 - Who?: detainee_representation_info
   show if:
     variable: detainee_representation
@@ -65,6 +71,7 @@ fields:
   choices:
   - Yes
   - No
+  - Unknown
   show if:
     variable: detainee_representation
     is: No
@@ -82,18 +89,11 @@ question: |
 subquestion: |
   Please enter information on what you observe in ${proceeding_case}!
 fields:
-- Did the detainee have trouble communicating with the judge?: context_judge
+- Did the detainee have trouble communicating with anyone?: context_anyone
   choices:
   - Yes
   - No
-- How so?: context_judge_info
-  show if:
-    variable: context_judge
-    is: Yes
-- Did the detainee have trouble communicating with anyone else?: context_anyone
-  choices:
-  - Yes
-  - No
+  - Unknown
 - With who?: context_anyone_who
   show if:
     variable: context_anyone
@@ -106,6 +106,7 @@ fields:
   choices:
   - Yes
   - No
+  - Unknown
 - How so?: context_interpretation_info
   show if:
     variable: context_interpretation
@@ -114,6 +115,7 @@ fields:
   choices:
   - Yes
   - No
+  - Unknown
 - How so?: context_illness_info
   show if:
     variable: context_illness
@@ -132,6 +134,7 @@ fields:
   choices:
   - Yes
   - No
+  - Unknown
 - What were they?: outcomes_relief_info
   show if:
     variable: outcomes_relief
@@ -150,6 +153,7 @@ fields:
   choices:
   - Yes
   - No
+  - Unknown
 - Amount: outcomes_bond_info
   show if:
     variable: outcomes_bond
@@ -172,6 +176,7 @@ fields:
   - Individual
   - Master
   - Bond
+  - Unknown
   js show if: |
     val("next_date")
 ---
@@ -190,7 +195,7 @@ code: |
   you_name
   proceeding_when
   detainee_name
-  context_judge
+  context_anyone
   if proceeding_type == "master":
     outcomes_relief
   elif proceeding_type == "bond":
