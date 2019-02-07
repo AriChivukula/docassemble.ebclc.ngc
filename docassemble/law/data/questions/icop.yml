@@ -105,8 +105,8 @@ fields:
   - Other
 - ${detainee_title_location_other}: detainee_input_location_other
   show if:
-    variable: detainee_location
-    is: other
+    variable: detainee_input_location
+    is: Other
 - ${detainee_title_representation}: detainee_input_representation
   choices:
   - Yes
@@ -280,7 +280,7 @@ mandatory: True
 code: |
   outcome_output_relief = "N/A"
   outcome_output_relief_info = "N/A"
-  outcome_output_relief_info = "N/A"
+  outcome_output_relief_deadline = "N/A"
   outcomes_output_bond = "N/A"
   outcome_output_bond_amount = "N/A"
   outcome_output_bond_denial = "N/A"
@@ -288,7 +288,7 @@ code: |
     outcome_output_relief = outcome_input_relief
     if outcome_output_relief == "Yes":
       outcome_output_relief_info = outcome_input_relief_info
-      outcome_output_relief_info = outcome_input_relief_info
+      outcome_output_relief_deadline = outcome_input_relief_deadline
   elif proceeding_output_type == "Bond":
     outcomes_output_bond = outcomes_input_bond
     if outcomes_output_bond == "Yes":
