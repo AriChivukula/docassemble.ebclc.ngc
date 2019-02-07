@@ -296,22 +296,40 @@ code: |
     elif outcomes_output_bond == "No":
       outcome_output_bond_denial = outcome_input_bond_denial
 ---
+mandatory: True
+code: |
+  hearing_title = "Hearing Information"
+  hearing_title_date = "Date"
+  hearing_title_time = "Time"
+  hearing_title_type = "Type"
+---
 question: |
-  Next
+  ${hearing_title}
 subquestion: |
   Please enter information on the next hearing (if there is one)!
 fields:
-- Next Hearing: next_date
-  datatype: datetime
+- ${hearing_title_date}: hearing_input_date
+  datatype: date
   required: False
-- Type: next_type
+- ${hearing_title_time}: hearing_input_time
+  datatype: time
+  required: False
+- ${hearing_title_type}: hearing_input_type
   choices:
   - Individual
   - Master
   - Bond
   - Unknown
   js show if: |
-    val("next_date")
+    val("hearing_input_time") || val("hearing_input_date")
+---
+mandatory: True
+code: |
+  hearing_output_date = hearing_input_date
+  hearing_output_time = hearing_input_time
+  hearing_output_type = "N/A"
+  if hearing_output_date or hearing_output_time:
+    hearing_output_type = hearing_input_type
 ---
 question: |
   Comments
@@ -324,7 +342,6 @@ fields:
 ---
 mandatory: True
 code: |
-  next_date
   comments
 ---
 mandatory: True
@@ -404,6 +421,13 @@ attachment:
     ${outcome_output_bond_amount}
     ## ${outcome_title_bond_denial}
     ${outcome_output_bond_denial}
+    # ${hearing_title}
+    ## ${hearing_title_date}
+    ${hearing_output_date}
+    ## ${hearing_title_time}
+    ${hearing_output_time}
+    ## ${hearing_title_type}
+    ${hearing_output_type}
 ---
 mandatory: True
 question: |
