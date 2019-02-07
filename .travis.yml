@@ -7,5 +7,5 @@ script:
 - yamllint docassemble/law/data/questions
 deploy:
   provider: pypi
-  user: $PYPI_USER
-  password: $PYPI_SECRET
+  user: "$PYPI_USER"
+  password: "$PYPI_SECRET"
