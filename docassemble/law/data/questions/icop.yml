@@ -331,18 +331,21 @@ code: |
   if hearing_output_date or hearing_output_time:
     hearing_output_type = hearing_input_type
 ---
+mandatory: True
+code: |
+  other_title = "Other Information"
+---
 question: |
-  Comments
+  ${other_title}
 subquestion: |
   Please enter anything else we should know!
-fields:
-- Anything Else: comments
-  datatype: area
-  required: False
+field: other_input
+datatype: area
+required: False
 ---
 mandatory: True
 code: |
-  comments
+  other_output = other_input
 ---
 mandatory: True
 question: Please download and review your completed form!
@@ -428,6 +431,8 @@ attachment:
     ${hearing_output_time}
     ## ${hearing_title_type}
     ${hearing_output_type}
+    # ${other_title}
+    ## ${other_output}
 ---
 mandatory: True
 question: |
