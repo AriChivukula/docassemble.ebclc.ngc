@@ -156,46 +156,77 @@ code: |
   if detainee_output_representation_continuance == "No":
     detainee_output_representation_continuance_denial = detainee_input_representation_continuance_denial
 ---
+mandatory: True
+code: |
+  context_title = "Context Information"
+  context_title_anyone = "Did the detainee have trouble communicating with anyone?"
+  context_title_anyone_who = "With who?"
+  context_title_anyone_info = "How so?"
+  context_title_interpretation = "Did the detainee have issues with interpretation?"
+  context_title_interpretation_info = "How so?"
+  context_title_illness = "Did the detainee show signs of suffering from mental illness?"
+  context_title_illness_info = "How so?"
+  context_title_illness_addressed = "How was it addressed?"
+---
 question: |
-  Context
+  ${context_title}
 subquestion: |
   Please enter information on what you observe in ${proceeding_case}!
 fields:
-- Did the detainee have trouble communicating with anyone?: context_anyone
+- ${context_title_anyone}: context_input_anyone
   choices:
   - Yes
   - No
   - Unknown
-- With who?: context_anyone_who
+- ${context_title_anyone_who}: context_input_anyone_who
   show if:
-    variable: context_anyone
+    variable: context_input_anyone
     is: Yes
-- How so?: context_anyone_info
+- ${context_title_anyone_info}: context_input_anyone_info
   show if:
-    variable: context_anyone
+    variable: context_input_anyone
     is: Yes
-- Where there issues with interpretation?: context_interpretation
+- ${context_title_interpretation}: context_input_interpretation
   choices:
   - Yes
   - No
   - Unknown
-- How so?: context_interpretation_info
+- ${context_title_interpretation_info}: context_input_interpretation_info
   show if:
-    variable: context_interpretation
+    variable: context_input_interpretation
     is: Yes
-- Where there signs the detainee suffers from mental illness?: context_illness
+- ${context_title_illness}: context_input_illness
   choices:
   - Yes
   - No
   - Unknown
-- How so?: context_illness_info
+- ${context_title_illness_info}: context_input_illness_info
   show if:
-    variable: context_illness
+    variable: context_input_illness
     is: Yes
-- How was it addressed?: context_illness_addressed
+- ${context_title_illness_addressed}: context_input_illness_addressed
   show if:
-    variable: context_illness
+    variable: context_input_illness
     is: Yes
+---
+mandatory: True
+code: |
+  context_output_anyone = context_input_anyone
+  context_output_anyone_who = "N/A"
+  context_output_anyone_info = "N/A"
+  if context_output_anyone == "Yes":
+    context_output_anyone_who = context_input_anyone_who
+    context_output_anyone_info = context_input_anyone_info
+  context_output_interpretation = context_input_interpretation
+  context_output_interpretation_info = "N/A"
+  if context_output_interpretation == "Yes":
+    context_output_interpretation_info = context_input_interpretation_info
+  context_output_illness = context_input_illness
+  context_output_illness_info = "N/A"
+  context_output_illness_addressed = "N/A"
+  if context_output_illness == "Yes":
+    context_output_illness_info = context_input_illness_info
+    context_output_illness_addressed = context_input_illness_addressed
 ---
 question: |
   Outcomes
@@ -263,7 +294,6 @@ fields:
 ---
 mandatory: True
 code: |
-  context_anyone
   if proceeding_type == "master":
     outcomes_relief
   elif proceeding_type == "bond":
@@ -318,6 +348,23 @@ attachment:
     ${detainee_output_representation_continuance_length}
     ## ${detainee_title_representation_continuance_denial}
     ${detainee_output_representation_continuance_denial}
+    # ${context_title}
+    ## ${context_title_anyone}
+    ${context_output_anyone}
+    ## ${context_title_anyone_who}
+    ${context_output_anyone_who}
+    ## ${context_title_anyone_info}
+    ${context_output_anyone_info}
+    ## ${context_title_interpretation}
+    ${context_output_interpretation}
+    ## ${context_title_interpretation_info}
+    ${context_output_interpretation_info}
+    ## ${context_title_illness}
+    ${context_output_illness}
+    ## ${context_title_illness_info}
+    ${context_output_illness_info}
+    ## ${context_title_illness_addressed}
+    ${context_output_illness_addressed}
 ---
 mandatory: True
 question: |
