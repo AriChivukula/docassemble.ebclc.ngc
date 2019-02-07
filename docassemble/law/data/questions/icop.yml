@@ -20,10 +20,6 @@ code: |
   you_title_assoc = "School/Firm/etc."
   you_title_phone = "Phone"
   you_title_email = "EMail"
-  you_output_name = "N/A"
-  you_output_assoc = "N/A"
-  you_output_phone = "N/A"
-  you_output_email = "N/A"
 ---
 question: |
   ${you_title}
@@ -42,22 +38,39 @@ code: |
   you_output_phone = you_input_phone
   you_output_email = you_input_email
 ---
+mandatory: True
+code: |
+  proceeding_title = "Proceeding Information"
+  proceeding_title_date = "Date"
+  proceeding_title_time = "Time"
+  proceeding_title_judge = "Judge"
+  proceeding_title_case = "Case"
+  proceeding_title_type = "Type"
+---
 question: |
-  Proceeding
+  ${proceeding_title}
 subquestion: |
   Please enter information on the proceeding you're observing ${you_name}!
 fields:
-- When: proceeding_date
+- ${proceeding_title_date}: proceeding_input_date
   datatype: date
-- When: proceeding_time
+- ${proceeding_title_time}: proceeding_input_time
   datatype: time
-- Judge: proceeding_judge
-- Case: proceeding_case
+- ${proceeding_title_judge}: proceeding_input_judge
+- ${proceeding_title_case}: proceeding_input_case
   default: A-
-- Type: proceeding_type
+- ${proceeding_title_type}: proceeding_input_type
   choices:
   - Master Calendar: master
   - Bond Hearing: bond
+---
+mandatory: True
+code: |
+  proceeding_output_date = proceeding_input_date
+  proceeding_output_time = proceeding_input_time
+  proceeding_output_judge = proceeding_input_judge
+  proceeding_output_case = proceeding_input_case
+  proceeding_output_type = proceeding_input_type
 ---
 question: |
   Detainee
@@ -213,7 +226,6 @@ fields:
 ---
 mandatory: True
 code: |
-  proceeding_date
   detainee_name
   context_anyone
   if proceeding_type == "master":
@@ -238,6 +250,17 @@ attachment:
     ${you_output_phone}
     ## ${you_title_email}
     ${you_output_email}
+    # ${proceeding_title}
+    ## ${proceeding_title_date}
+    ${proceeding_output_date}
+    ## ${proceeding_title_time}
+    ${proceeding_output_time}
+    ## ${proceeding_title_judge}
+    ${proceeding_output_judge}
+    ## ${proceeding_title_case}
+    ${proceeding_output_case}
+    ## ${proceeding_title_type}
+    ${proceeding_output_type}
 ---
 mandatory: True
 question: |
