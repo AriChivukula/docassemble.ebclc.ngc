@@ -262,18 +262,18 @@ question: |
 subquestion: |
   Please enter information on outcomes for ${detainee_output_name}'s case (${proceeding_output_case})!
 fields:
-- ${outcome_title_bond}: outcomes_input_bond
+- ${outcome_title_bond}: outcome_input_bond
   choices:
   - Yes
   - No
   - Unknown
 - ${outcome_title_bond_amount}: outcome_input_bond_amount
   show if:
-    variable: outcomes_input_bond
+    variable: outcome_input_bond
     is: Yes
 - ${outcome_title_bond_denial}: outcome_input_bond_denial
   show if:
-    variable: outcomes_input_bond
+    variable: outcome_input_bond
     is: No
 ---
 mandatory: True
@@ -281,7 +281,7 @@ code: |
   outcome_output_relief = "N/A"
   outcome_output_relief_info = "N/A"
   outcome_output_relief_deadline = "N/A"
-  outcomes_output_bond = "N/A"
+  outcome_output_bond = "N/A"
   outcome_output_bond_amount = "N/A"
   outcome_output_bond_denial = "N/A"
   if proceeding_output_type == "Master":
@@ -290,10 +290,10 @@ code: |
       outcome_output_relief_info = outcome_input_relief_info
       outcome_output_relief_deadline = outcome_input_relief_deadline
   elif proceeding_output_type == "Bond":
-    outcomes_output_bond = outcomes_input_bond
-    if outcomes_output_bond == "Yes":
+    outcome_output_bond = outcome_input_bond
+    if outcome_output_bond == "Yes":
       outcome_output_bond_amount = outcome_input_bond_amount
-    elif outcomes_output_bond == "No":
+    elif outcome_output_bond == "No":
       outcome_output_bond_denial = outcome_input_bond_denial
 ---
 mandatory: True
@@ -338,10 +338,10 @@ code: |
 question: |
   ${other_title}
 subquestion: |
-  Please enter anything else we should know!
-field: other_input
-datatype: area
-required: False
+  Please enter anything else we should know ${you_output_name}!
+fields:
+- Comment: other_input
+  datatype: area
 ---
 mandatory: True
 code: |
