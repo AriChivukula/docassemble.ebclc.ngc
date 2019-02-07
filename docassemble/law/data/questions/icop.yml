@@ -5,6 +5,7 @@ modules:
 metadata:
   title: ICOP Observation Form
 ---
+mandatory: True
 field: get_started
 question: |
   This demo helps you fill out the ICOP Observation Form!
@@ -12,15 +13,34 @@ subquestion: |
   [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)
 continue button label: Get Started
 ---
+mandatory: True
+code: |
+  you_title = "Your Information"
+  you_title_name = "Name"
+  you_title_assoc = "School/Firm/etc."
+  you_title_phone = "Phone"
+  you_title_email = "EMail"
+  you_output_name = "N/A"
+  you_output_assoc = "N/A"
+  you_output_phone = "N/A"
+  you_output_email = "N/A"
+---
 question: |
-  You
+  ${you_title}
 subquestion: |
   Please enter the observer's (your) information!
 fields:
-- Name: you_name
-- School/Firm/etc.: you_assoc
-- Phone: you_phone
-- Email: you_email
+- ${you_title_name}: you_input_name
+- ${you_title_assoc}: you_input_assoc
+- ${you_title_phone}: you_input_phone
+- ${you_title_email}: you_input_email
+---
+mandatory: True
+code: |
+  you_output_name = you_input_name
+  you_output_assoc = you_input_assoc
+  you_output_phone = you_input_phone
+  you_output_email = you_input_email
 ---
 question: |
   Proceeding
@@ -193,8 +213,6 @@ fields:
 ---
 mandatory: True
 code: |
-  get_started
-  you_name
   proceeding_date
   detainee_name
   context_anyone
@@ -211,7 +229,15 @@ attachment:
 - name: ICOP Observation Form
   filename: unofficial_icop
   content: |
-    Hello, world!
+    # ${you_title}
+    ## ${you_title_name}
+    ${you_output_name}
+    ## ${you_title_assoc}
+    ${you_output_assoc}
+    ## ${you_title_phone}
+    ${you_output_phone}
+    ## ${you_title_email}
+    ${you_output_email}
 ---
 mandatory: True
 question: |
