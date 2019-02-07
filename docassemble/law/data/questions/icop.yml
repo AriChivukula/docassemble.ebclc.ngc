@@ -206,6 +206,14 @@ code: |
   comments
 ---
 mandatory: True
+question: Please download and review your completed form!
+attachment:
+- name: ICOP Observation Form
+  filename: unofficial_icop
+  content: |
+    Hello, world!
+---
+mandatory: True
 question: |
   Thanks for volunteering ${you_name}
 buttons:
