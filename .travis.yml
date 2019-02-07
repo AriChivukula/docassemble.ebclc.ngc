@@ -1,8 +1,9 @@
 language: python
 python:
-- "3.6"
+- "3.7"
 if: type = push
 script:
+- pip3 install --upgrade setuptools pip
 - pip3 install yamllint
 - yamllint docassemble/law/data/questions
 deploy:
