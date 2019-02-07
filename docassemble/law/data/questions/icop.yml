@@ -228,43 +228,73 @@ code: |
     context_output_illness_info = context_input_illness_info
     context_output_illness_addressed = context_input_illness_addressed
 ---
+mandatory: True
+code: |
+  outcome_title = "Outcome Information"
+  outcome_title_relief = "Did detainee file any application for relief?"
+  outcome_title_relief_info = "What were they?"
+  outcome_title_relief_deadline = "What is the deadline?"
+  outcome_title_bond = "Did IJ grant bond?"
+  outcome_title_bond_amount = "Amount"
+  outcome_title_bond_denial = "Reason"
+---
 question: |
-  Outcomes
+  ${outcome_title}
 subquestion: |
   Please enter information on outcomes in ${proceeding_case}!
 fields:
-- Did detainee file any application for relief?: outcomes_relief
+- ${outcome_title_relief}: outcome_input_relief
   choices:
   - Yes
   - No
   - Unknown
-- What were they?: outcomes_relief_info
+- ${outcome_title_relief_info}: outcome_input_relief_info
   show if:
-    variable: outcomes_relief
+    variable: outcome_input_relief
     is: Yes
-- What is the deadline?: outcomes_relief_deadline
+- ${outcome_title_relief_deadline}: outcome_input_relief_deadline
   show if:
-    variable: outcomes_relief
+    variable: outcome_input_relief
     is: Yes
 ---
 question: |
-  Outcomes
+  ${outcome_title}
 subquestion: |
   Please enter information on outcomes in ${proceeding_case}!
 fields:
-- Did IJ grant bond?: outcomes_bond
+- ${outcome_title_bond}: outcomes_input_bond
   choices:
   - Yes
   - No
   - Unknown
-- Amount: outcomes_bond_info
+- ${outcome_title_bond_amount}: outcome_input_bond_amount
   show if:
-    variable: outcomes_bond
+    variable: outcomes_input_bond
     is: Yes
-- Reason: outcomes_bond_denied
+- ${outcome_title_bond_denial}: outcome_input_bond_denial
   show if:
-    variable: outcomes_bond
+    variable: outcomes_input_bond
     is: No
+---
+mandatory: True
+code: |
+  outcome_output_relief = "N/A"
+  outcome_output_relief_info = "N/A"
+  outcome_output_relief_info = "N/A"
+  outcomes_output_bond = "N/A"
+  outcome_output_bond_amount = "N/A"
+  outcome_output_bond_denial = "N/A"
+  if proceeding_output_type == "Master":
+    outcome_output_relief = outcome_input_relief
+    if outcome_output_relief == "Yes":
+      outcome_output_relief_info = outcome_input_relief_info
+      outcome_output_relief_info = outcome_input_relief_info
+  elif proceeding_output_type == "Bond":
+    outcomes_output_bond = outcomes_input_bond
+    if outcomes_output_bond == "Yes":
+      outcome_output_bond_amount = outcome_input_bond_amount
+    elif outcomes_output_bond == "No":
+      outcome_output_bond_denial = outcome_input_bond_denial
 ---
 question: |
   Next
@@ -294,10 +324,6 @@ fields:
 ---
 mandatory: True
 code: |
-  if proceeding_type == "master":
-    outcomes_relief
-  elif proceeding_type == "bond":
-    outcomes_bond
   next_date
   comments
 ---
@@ -365,6 +391,19 @@ attachment:
     ${context_output_illness_info}
     ## ${context_title_illness_addressed}
     ${context_output_illness_addressed}
+    # ${outcome_title}
+    ## ${outcome_title_relief}
+    ${outcome_output_relief}
+    ## ${outcome_title_relief_info}
+    ${outcome_output_relief_info}
+    ## ${outcome_title_relief_deadline}
+    ${outcome_output_relief_deadline}
+    ## ${outcome_title_bond}
+    ${outcome_output_bond}
+    ## ${outcome_title_bond_amount}
+    ${outcome_output_bond_amount}
+    ## ${outcome_title_bond_denial}
+    ${outcome_output_bond_denial}
 ---
 mandatory: True
 question: |
