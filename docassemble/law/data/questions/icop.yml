@@ -356,81 +356,117 @@ attachment:
     # ${you_title}
     ## ${you_title_name}
     ${you_output_name}
+    
     ## ${you_title_assoc}
     ${you_output_assoc}
+    
     ## ${you_title_phone}
     ${you_output_phone}
+    
     ## ${you_title_email}
     ${you_output_email}
+    
     # ${proceeding_title}
     ## ${proceeding_title_date}
     ${proceeding_output_date}
+    
     ## ${proceeding_title_time}
     ${proceeding_output_time}
+    
     ## ${proceeding_title_judge}
     ${proceeding_output_judge}
+    
     ## ${proceeding_title_case}
     ${proceeding_output_case}
+    
     ## ${proceeding_title_type}
     ${proceeding_output_type}
+    
     # ${detainee_title}
     ## ${detainee_title_name}
     ${detainee_output_name}
+    
     ## ${detainee_title_appearance}
     ${detainee_output_appearance}
+    
     ## ${detainee_title_languages}
     ${detainee_output_languages}
+    
     ## ${detainee_title_location}
     ${detainee_output_location}
+    
     ## ${detainee_title_location_other}
     ${detainee_output_location_other}
+    
     ## ${detainee_title_representation}
     ${detainee_output_representation}
+    
     ## ${detainee_title_representation_who}
     ${detainee_output_representation_who}
+    
     ## ${detainee_title_representation_continuance}
     ${detainee_output_representation_continuance}
+    
     ## ${detainee_title_representation_continuance_length}
     ${detainee_output_representation_continuance_length}
+    
     ## ${detainee_title_representation_continuance_denial}
     ${detainee_output_representation_continuance_denial}
+    
     # ${context_title}
     ## ${context_title_anyone}
     ${context_output_anyone}
+    
     ## ${context_title_anyone_who}
     ${context_output_anyone_who}
+    
     ## ${context_title_anyone_info}
     ${context_output_anyone_info}
+    
     ## ${context_title_interpretation}
     ${context_output_interpretation}
+    
     ## ${context_title_interpretation_info}
     ${context_output_interpretation_info}
+    
     ## ${context_title_illness}
     ${context_output_illness}
+    
     ## ${context_title_illness_info}
     ${context_output_illness_info}
+    
     ## ${context_title_illness_addressed}
     ${context_output_illness_addressed}
+    
     # ${outcome_title}
     ## ${outcome_title_relief}
     ${outcome_output_relief}
+    
     ## ${outcome_title_relief_info}
     ${outcome_output_relief_info}
+    
     ## ${outcome_title_relief_deadline}
     ${outcome_output_relief_deadline}
+    
     ## ${outcome_title_bond}
     ${outcome_output_bond}
+    
     ## ${outcome_title_bond_amount}
     ${outcome_output_bond_amount}
+    
     ## ${outcome_title_bond_denial}
     ${outcome_output_bond_denial}
+    
     # ${hearing_title}
     ## ${hearing_title_date}
     ${hearing_output_date}
+    
     ## ${hearing_title_time}
     ${hearing_output_time}
+    
     ## ${hearing_title_type}
     ${hearing_output_type}
+    
     # ${other_title}
     ## ${other_output}
 ---
