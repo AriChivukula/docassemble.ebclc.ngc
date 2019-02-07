@@ -50,7 +50,7 @@ code: |
 question: |
   ${proceeding_title}
 subquestion: |
-  Please enter information on the proceeding you're observing ${you_name}!
+  Please enter information on the proceeding you're observing ${you_output_name}!
 fields:
 - ${proceeding_title_date}: proceeding_input_date
   datatype: date
@@ -89,7 +89,7 @@ code: |
 question: |
   ${detainee_title}
 subquestion: |
-  Please enter information for detainee in proceeding ${proceeding_case}!
+  Please enter information for detainee in proceeding ${proceeding_output_case}!
 fields:
 - ${detainee_title_name}: detainee_input_name
 - ${detainee_title_appearance}: detainee_input_appearance
@@ -171,7 +171,7 @@ code: |
 question: |
   ${context_title}
 subquestion: |
-  Please enter information on what you observe in ${proceeding_case}!
+  Please enter information on what you observe in ${detainee_output_name}'s case (${proceeding_output_case})!
 fields:
 - ${context_title_anyone}: context_input_anyone
   choices:
@@ -241,7 +241,7 @@ code: |
 question: |
   ${outcome_title}
 subquestion: |
-  Please enter information on outcomes in ${proceeding_case}!
+  Please enter information on outcomes for ${detainee_output_name}'s case (${proceeding_output_case})!
 fields:
 - ${outcome_title_relief}: outcome_input_relief
   choices:
@@ -260,7 +260,7 @@ fields:
 question: |
   ${outcome_title}
 subquestion: |
-  Please enter information on outcomes in ${proceeding_case}!
+  Please enter information on outcomes for ${detainee_output_name}'s case (${proceeding_output_case})!
 fields:
 - ${outcome_title_bond}: outcomes_input_bond
   choices:
@@ -306,7 +306,7 @@ code: |
 question: |
   ${hearing_title}
 subquestion: |
-  Please enter information on the next hearing (if there is one)!
+  Please enter information on the next hearing for ${detainee_output_name}'s case (${proceeding_output_case})!
 fields:
 - ${hearing_title_date}: hearing_input_date
   datatype: date
