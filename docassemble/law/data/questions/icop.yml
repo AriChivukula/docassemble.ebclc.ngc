@@ -352,6 +352,7 @@ question: Please download and review your completed form!
 attachment:
 - name: ICOP Observation Form
   filename: unofficial_icop
+  variable name: unofficial_icop
   content: |
     # ${you_title}
     ## ${you_title_name}
@@ -469,6 +470,9 @@ attachment:
     
     # ${other_title}
     ## ${other_output}
+---
+code: |
+  sent_ok = send_email(to=["sf.icop@gmail.com"], template="", attachments=[unofficial_icop])
 ---
 mandatory: True
 question: |
