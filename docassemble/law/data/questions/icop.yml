@@ -72,52 +72,89 @@ code: |
   proceeding_output_case = proceeding_input_case
   proceeding_output_type = proceeding_input_type
 ---
+mandatory: True
+code: |
+  detainee_title = "Detainee Information"
+  detainee_title_name = "Name"
+  detainee_title_appearance = "How did they appear?"
+  detainee_title_languages = "Languages Spoken"
+  detainee_title_location = "Where are they being detained?"
+  detainee_title_location_other = "Other Location"
+  detainee_title_representation = "Do they have representation?"
+  detainee_title_representation_who = "Who?"
+  detainee_title_representation_continuance = "Was a continuance to find representation granted?"
+  detainee_title_representation_continuance_length = "How Long?"
+  detainee_title_representation_continuance_denial = "Why?"
+---
 question: |
-  Detainee
+  ${detainee_title}
 subquestion: |
   Please enter information for detainee in proceeding ${proceeding_case}!
 fields:
-- Name: detainee_name
-- How did they appear?: detainee_appearance
+- ${detainee_title_name}: detainee_input_name
+- ${detainee_title_appearance}: detainee_input_appearance
   choices:
-  - In Person: ip
-  - Video Conference: vtc
-- Languages Spoken: detainee_languages
-- Where are they being detained?: detainee_location
+  - In Person
+  - Video Conference
+- ${detainee_title_languages}: detainee_input_languages
+- ${detainee_title_location}: detainee_input_location
   choices:
-  - Sacramento/Yuba: yuba
-  - Meta Verde: mv
-  - CoCo: cc
-  - Other: other
-- Other Location: detainee_location_custom
+  - Sacramento/Yuba
+  - Meta Verde
+  - CoCo
+  - Other
+- ${detainee_title_location_other}: detainee_input_location_other
   show if:
     variable: detainee_location
     is: other
-- Do they have representation?: detainee_representation
+- ${detainee_title_representation}: detainee_input_representation
   choices:
   - Yes
   - No
   - Unknown
-- Who?: detainee_representation_info
+- ${detainee_title_representation_who}: detainee_input_representation_who
   show if:
-    variable: detainee_representation
+    variable: detainee_input_representation
     is: Yes
-- Was a continuance to find representation granted?: detainee_representation_continuance
+- ${detainee_title_representation_continuance}: detainee_input_representation_continuance
   choices:
   - Yes
   - No
   - Unknown
   show if:
-    variable: detainee_representation
+    variable: detainee_input_representation
     is: No
-- How Long?: detainee_representation_continuance_length
+- ${detainee_title_representation_continuance_length}: detainee_input_representation_continuance_length
   show if:
-    variable: detainee_representation_continuance
+    variable: detainee_input_representation_continuance
     is: Yes
-- Why?: detainee_representation_continuance_denial
+- ${detainee_title_representation_continuance_denial}: detainee_input_representation_continuance_denial
   show if:
-    variable: detainee_representation_continuance
+    variable: detainee_input_representation_continuance
     is: No
+---
+mandatory: True
+code: |
+  detainee_output_name = detainee_input_name
+  detainee_output_appearance = detainee_input_appearance
+  detainee_output_languages = detainee_input_languages
+  detainee_output_location = detainee_input_location
+  detainee_output_location_other = "N/A"
+  if detainee_output_location == "Other":
+    detainee_output_location_other = detainee_input_location_other
+  detainee_output_representation = detainee_input_representation
+  detainee_output_representation_who = "N/A"
+  if detainee_output_representation == "Yes":
+    detainee_output_representation_who = detainee_input_representation_who
+  detainee_output_representation_continuance = "N/A"
+  if detainee_output_representation == "No":
+    detainee_output_representation_continuance = detainee_input_representation_continuance
+  detainee_output_representation_continuance_length = "N/A"
+  if detainee_output_representation_continuance == "Yes":
+    detainee_output_representation_continuance_length = detainee_input_representation_continuance_length
+  detainee_output_representation_continuance_denial = "N/A"
+  if detainee_output_representation_continuance == "No":
+    detainee_output_representation_continuance_denial = detainee_input_representation_continuance_denial
 ---
 question: |
   Context
@@ -226,7 +263,6 @@ fields:
 ---
 mandatory: True
 code: |
-  detainee_name
   context_anyone
   if proceeding_type == "master":
     outcomes_relief
@@ -261,6 +297,27 @@ attachment:
     ${proceeding_output_case}
     ## ${proceeding_title_type}
     ${proceeding_output_type}
+    # ${detainee_title}
+    ## ${detainee_title_name}
+    ${detainee_output_name}
+    ## ${detainee_title_appearance}
+    ${detainee_output_appearance}
+    ## ${detainee_title_languages}
+    ${detainee_output_languages}
+    ## ${detainee_title_location}
+    ${detainee_output_location}
+    ## ${detainee_title_location_other}
+    ${detainee_output_location_other}
+    ## ${detainee_title_representation}
+    ${detainee_output_representation}
+    ## ${detainee_title_representation_who}
+    ${detainee_output_representation_who}
+    ## ${detainee_title_representation_continuance}
+    ${detainee_output_representation_continuance}
+    ## ${detainee_title_representation_continuance_length}
+    ${detainee_output_representation_continuance_length}
+    ## ${detainee_title_representation_continuance_denial}
+    ${detainee_output_representation_continuance_denial}
 ---
 mandatory: True
 question: |
