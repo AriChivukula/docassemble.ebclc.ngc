@@ -100,7 +100,7 @@ fields:
 - ${detainee_title_location}: detainee_input_location
   choices:
   - Sacramento/Yuba
-  - Meta Verde
+  - Mesa Verde
   - CoCo
   - Other
 - ${detainee_title_location_other}: detainee_input_location_other
