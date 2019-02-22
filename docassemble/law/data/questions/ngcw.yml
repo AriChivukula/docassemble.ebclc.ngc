@@ -20,19 +20,10 @@ question: |
   How can we help you today?
 subquestion: |
   Please inform us what services you are seeking assistance with.
-buttons:
-- Gender Change
-- Name Change
-- Name & Gender Change
----
-field: minor_check
-question: |
-  Are you a minor?
-subquestion: |
-  Please inform us if you're under 18.
-buttons:
-- Yes
-- No
+choices:
+- Gender Change (18+ only)
+- Name Change (trans-identified 18+ only)
+- Name & Gender Change (18+ only)
 ---
 question: |
   Current Petitioner Information
@@ -59,13 +50,13 @@ subquestion: |
 fields:
 - AKA 1: petitioner_full_name2
   required: False
-  js hide if: val("help_type") == "Gender Change"
+  js hide if: val("help_type") == "Gender Change (18+ only)"
 - AKA 2: petitioner_full_name3
   required: False
-  js hide if: val("help_type") == "Gender Change"
+  js hide if: val("help_type") == "Gender Change (18+ only)"
 - AKA 3: petitioner_full_name4
   required: False
-  js hide if: val("help_type") == "Gender Change"
+  js hide if: val("help_type") == "Gender Change (18+ only)"
 - Place of Birth: petitioner_pob
 - Date of Birth: petitioner_dob
   datatype: date
@@ -120,10 +111,9 @@ mandatory: True
 code: |
   get_started
   help_type
-  minor_check
   petitioner_full_name = petitioner_full_name.upper()
   petitioner_full_name_w_akas = petitioner_full_name
-  if help_type != "Gender Change":
+  if help_type != "Gender Change (18+ only)":
     petitioner_full_name2 = petitioner_full_name2.upper()
     petitioner_full_name3 = petitioner_full_name3.upper()
     petitioner_full_name4 = petitioner_full_name4.upper()
@@ -136,7 +126,7 @@ code: |
   petitioner_number_and_street = petitioner_number_and_street.upper()
   petitioner_city = petitioner_city.upper()
   petitioner_state = "CA"
-  if help_type != "Gender Change":
+  if help_type != "Gender Change (18+ only)":
     petitioner_pob = petitioner_pob.upper()
   check_box5 = False
   check_box6 = False
@@ -144,9 +134,9 @@ code: |
       check_box5 = True
   if petitioner_agab == "Female":
       check_box6 = True
-  if help_type != "Gender Change":
+  if help_type != "Gender Change (18+ only)":
     new_name = new_name.upper()
-  if help_type != "Name Change":
+  if help_type != "Name Change (trans-identified 18+ only)":
     female_check = False
     male_check = False
     nonbinary_check = False
@@ -210,9 +200,9 @@ code: |
   court_branch = court_branch.upper()
   case_title = "In re: " + petitioner_full_name
   date1 = datetime.date.today().strftime('%m/%d/%Y')
-  if help_type == "Name Change":
+  if help_type == "Name Change (trans-identified 18+ only)":
       name_form
-  elif help_type == "Gender Change":
+  elif help_type == "Gender Change (18+ only)":
       gender_form
   else:
       name_and_gender_form
@@ -411,10 +401,11 @@ attachment:
 ---
 code: |
   thanks = "Yes"
-  error = "Thanks!"
+  message = "Thanks!"
 ---
 mandatory: True
 question: |
-  ${error}
+  ${message}
 buttons:
 - Exit: exit
+- Restart: restart
