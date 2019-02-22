@@ -198,7 +198,7 @@ code: |
   court_city = court_city.upper()
   court_city_and_zip = court_city + ", CA " + court_zip
   court_branch = court_branch.upper()
-  case_title = "In re: " + petitioner_full_name
+  case_name = "In re: " + petitioner_full_name
   date1 = datetime.date.today().strftime('%m/%d/%Y')
   documents_to_email = []
   email_subject = "Documents for "
@@ -410,8 +410,8 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
-  - case of title: |
-      ${ case_title }
+  - Case Name: |
+      ${ case_name }
 ---
 code: |
   thanks = "Yes"
