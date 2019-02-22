@@ -200,13 +200,19 @@ code: |
   court_branch = court_branch.upper()
   case_title = "In re: " + petitioner_full_name
   date1 = datetime.date.today().strftime('%m/%d/%Y')
+  documents_to_email = []
+  email_subject = "Documents for "
   if help_type == "Name Change (trans-identified 18+ only)":
-      name_form
+      documents_to_email.append(unofficial_name_change)
+      email_subject = email_subject + new_name
   elif help_type == "Gender Change (18+ only)":
-      gender_form
+      documents_to_email.append(unofficial_gender_change)
+      email_subject = email_subject + petitioner_full_name
   else:
-      name_and_gender_form
-  fee_form
+      documents_to_email.append(unofficial_name_and_gender_change)
+      email_subject = email_subject + new_name
+  documents_to_email.append(unofficial_fee_waiver)
+  send_email(to=["ngwberkeley@gmail.com", "ari.c@berkeley.edu"], subject=email_subject, body="See attached", attachments=documents_to_email)
   thanks
 ---
 field: name_and_gender_form
