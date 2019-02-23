@@ -222,7 +222,6 @@ attachment:
   name: Name & Gender Change (18+ only)
   filename: unofficial_name_and_gender_change
   description: Click continue to email these forms.
-  allow emailing: False
   variable name: unofficial_name_and_gender_change
   pdf template file: name_and_gender_change.pdf
   fields:
@@ -274,6 +273,7 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+allow emailing: False
 ---
 field: name_form
 question: |
@@ -282,7 +282,6 @@ attachment:
   name: Name Change (trans-identified 18+ only)
   filename: unofficial_name_change
   description: Click continue to email these forms.
-  allow emailing: False
   variable name: unofficial_name_change
   pdf template file: name_change.pdf
   fields:
@@ -328,6 +327,7 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+allow emailing: False
 ---
 field: gender_form
 question: |
@@ -336,7 +336,6 @@ attachment:
   name: Gender Change (18+ only)
   filename: unofficial_gender_change
   description: Click continue to email these forms.
-  allow emailing: False
   variable name: unofficial_gender_change
   pdf template file: gender_change.pdf
   fields:
@@ -374,6 +373,7 @@ attachment:
       ${ court_branch }
   - Date1_af_date: |
       ${ date1 }
+allow emailing: False
 ---
 field: fee_form
 question: |
@@ -382,7 +382,6 @@ attachment:
   name: Fee Waiver
   filename: unofficial_fee_waiver
   description: Click continue to email these forms.
-  allow emailing: False
   variable name: unofficial_fee_waiver
   pdf template file: fee_waiver.pdf
   fields:
@@ -412,6 +411,7 @@ attachment:
       ${ date1 }
   - Text59: |
       ${ case_name }
+allow emailing: False
 ---
 code: |
   thanks = "Yes"
