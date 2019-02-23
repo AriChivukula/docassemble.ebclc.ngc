@@ -15,6 +15,10 @@ continue button label: Get Started
 ---
 mandatory: True
 code: |
+  menu_items = [ action_menu_item('Review Answers', 'review_answers') ]
+---
+mandatory: True
+code: |
   you_title = "Your Information"
   you_title_name = "Name"
   you_title_assoc = "School/Firm/etc."
@@ -424,4 +428,20 @@ mandatory: True
 question: |
   Thanks for volunteering ${you_name}
 buttons:
+- Restart: restart
 - Exit: exit
+---
+event: review_answers
+question: |
+  Review Information
+subquestion: |
+  Click to revisit.
+review:
+- Your Information: you_input_name
+- Proceeding Information: proceeding_input_case
+- Detainee Information: detainee_input_name
+- Context Information: context_input_anyone
+- Outcome Information: outcome_input_relief
+- Outcome Information: outcome_input_bond
+- Hearing Information: hearing_input_date
+- Other Information: other_input
