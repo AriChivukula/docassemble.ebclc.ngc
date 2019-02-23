@@ -352,7 +352,8 @@ question: Please download and review your completed form!
 attachment:
 - name: ICOP Observation Form
   filename: unofficial_icop
-  variable name: unofficial_icop_var
+  description: Click continue to email this form.
+  variable name: unofficial_icop
   content: |
     # ${you_title}
 
@@ -411,10 +412,11 @@ attachment:
     # ${other_title}
 
     ${other_output}
+allow emailing: False
 ---
 mandatory: True
 code: |
-  sent_ok = send_email(to=["sf.icop@gmail.com"], template="", attachments=[unofficial_icop_var])
+  send_email(to=["sf.icop@gmail.com", you_output_email], subject="Hearing for " + detainee_output_name, body="See attached", attachments=[unofficial_icop])
 ---
 mandatory: True
 question: |
