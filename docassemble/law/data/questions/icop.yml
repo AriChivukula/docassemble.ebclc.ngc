@@ -6,6 +6,11 @@ metadata:
   title: ICOP Observation Form
 ---
 mandatory: True
+code: |
+  get_started
+  send_email(to=["sf.icop@gmail.com", you_output_email], subject="Hearing for " + detainee_output_name, body="See attached", attachments=[unofficial_icop])
+  all_done
+---
 field: get_started
 question: |
   This demo helps you fill out the ICOP Observation Form!
@@ -420,10 +425,7 @@ attachment:
 allow emailing: False
 ---
 mandatory: True
-code: |
-  send_email(to=["sf.icop@gmail.com", you_output_email], subject="Hearing for " + detainee_output_name, body="See attached", attachments=[unofficial_icop])
----
-mandatory: True
+field: all_done
 question: |
   Thanks for volunteering ${you_name}
 buttons:
