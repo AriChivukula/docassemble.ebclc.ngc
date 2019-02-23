@@ -30,6 +30,7 @@ fields:
 - ${you_title_assoc}: you_input_assoc
 - ${you_title_phone}: you_input_phone
 - ${you_title_email}: you_input_email
+  datatype: email
 ---
 mandatory: True
 code: |
