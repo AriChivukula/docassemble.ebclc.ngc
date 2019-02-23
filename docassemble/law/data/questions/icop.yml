@@ -427,7 +427,7 @@ allow emailing: False
 mandatory: True
 field: all_done
 question: |
-  Thanks for volunteering ${you_name}
+  Thanks for volunteering ${you_output_name}
 buttons:
 - Restart: restart
 - Exit: exit
