@@ -353,7 +353,6 @@ mandatory: True
 code: |
   other_output = other_input
 ---
-mandatory: True
 question: Please download and review your completed form!
 attachment:
 - name: ICOP Observation Form
