@@ -6,8 +6,11 @@ if: type = push
 script:
 - pip3 install --upgrade setuptools pip
 - pip3 install yamllint
+- sed -i $'s/\t/  /g' docassemble/law/data/questions/*.yml
+- sed -i $'s/___send_answers//g' docassemble/law/data/questions/*.yml
 - yamllint docassemble/law/data/questions
 deploy:
   provider: pypi
+  skip_cleanup: true
   user: "$PYPI_USER"
   password: "$PYPI_SECRET"
