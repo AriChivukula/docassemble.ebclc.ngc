@@ -7,7 +7,7 @@ script:
 - pip3 install --upgrade setuptools pip
 - pip3 install yamllint
 - sed -i $'s/\t/  /g' docassemble/law/data/questions/*.yml
-- sed -i $'s/___send_answers\(\)//g' docassemble/law/data/questions/*.yml
+- sed -i $'s/___send_answers/str/g' docassemble/law/data/questions/*.yml
 - yamllint docassemble/law/data/questions
 deploy:
   provider: pypi
