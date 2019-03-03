@@ -1,5 +1,5 @@
 ---
 extends: default
 rules:
-  line-length:
-    max: 10000
+  line-length: false
+  trailing-spaces: false
