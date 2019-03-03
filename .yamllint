@@ -3,3 +3,4 @@ extends: default
 rules:
   line-length: false
   trailing-spaces: false
+  truthy: false
