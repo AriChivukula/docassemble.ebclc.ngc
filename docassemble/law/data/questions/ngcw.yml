@@ -1,425 +1,602 @@
 ---
 modules:
-- docassemble.base.util
+	- docassemble.base.util
 ---
-imports:
-- datetime
+mandatory: True
+code: |
+	define("Today", today())
+---
+initial: True
+code: |
+  import datetime
+  import types
+  class FalseBoolean(object):
+    def primitive_value(self):
+      return False
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return False
+    def logical_and(self, arg):
+      return self
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (TrueBoolean() if arg.__nonzero__() else self)
+    def logical_not(self):
+      return TrueBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else TrueBoolean())
+  class TrueBoolean(object):
+    def primitive_value(self):
+      return True
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return True
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+    def logical_or(self, arg):
+      return self
+    def logical_not(self):
+      return FalseBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+  class Undefined(object):
+    def is_undefined(self):
+      return True
+    def __nonzero__(self):
+      return False
+    def primitive_value(self):
+      return False
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (self if arg.__nonzero__() else augment(False))
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (augment(True) if arg.__nonzero__() else self)
+    def logical_not(self):
+      return self
+    def logical_equals(self, arg):
+      return self
+    def all_true(self):
+      return self
+    def all_false(self):
+      return self
+    def any_true(self):
+      return self
+    def all_false(self):
+      return self
+    def __add__(self, other):
+      return self
+    def __mul__(self, other):
+      return self
+    def __sub__(self, other):
+      return self
+    def __div__(self, other):
+      return self
+    def __eq__(self, other):
+      return self
+    def __lt__(self, other):
+      return self
+    def __le__(self, other):
+      return self
+    def __gt__(self, other):
+      return self
+    def __ge__(self, other):
+      return self
+    def __ne__(self, other):
+      return self
+    def __len__(self):
+      return self
+  class Datetime(datetime.datetime):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Time(datetime.time):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.time(self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Float(float):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return float(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Integer(int):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return int(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class String(object):
+    def __init__(self, string):
+      self.string = string
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.string
+    def __len__(self):
+      return Integer(self.primitive_value().__len__())
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == (other.primitive_value()))
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < (other.primitive_value()))
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= (other.primitive_value()))
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > (other.primitive_value()))
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= (other.primitive_value()))
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != (other.primitive_value()))
+  class Dictionary(object):
+    def __init__(self, da_dict):
+      self.da_dict = da_dict
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.da_dict
+    def all_true(self):
+      return augment(self.da_dict.all_true())
+    def all_false(self):
+      return augment(self.da_dict.all_false())
+    def any_true(self):
+      return augment(self.da_dict.any_true())
+    def any_false(self):
+      return augment(self.da_dict.any_false())
+    def __str__(self):
+      return unicode(self.da_dict)
+  def augment(something):
+    string_type = type('a')
+    bool_type = type(True)
+    integer_type = type(1)
+    float_type = type(1.0)
+    time_type = type(datetime.time())
+    datetime_type = type(datetime.datetime(1, 1, 1))
+    my_type = type(something)
+    alt_type = something.__class__.__name__
+    if(my_type == string_type or alt_type == 'unicode'):
+      return String(something)
+    elif(my_type == bool_type):
+      if(something == True):
+        return TrueBoolean()
+      else:
+        return FalseBoolean()
+    elif(my_type == integer_type or alt_type == 'int'):
+      return Integer(something)
+    elif(my_type == float_type or alt_type == 'float'):
+      return Float(something)
+    elif(my_type == time_type):
+      return Time(something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(my_type == datetime_type or alt_type == 'DADateTime'):
+      return Datetime(something.year, something.month, something.day, something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(alt_type == 'DADict'):
+      return Dictionary(something)
+    raise Exception("Couldn't augment because type() is " + unicode(my_type) + " and alt type is " + alt_type + " and argument was " + unicode(something))
+  def ternary(condition, true_value, false_value):
+    if type(condition) == type(Undefined()):
+      return Undefined()
+    elif condition:
+      return true_value
+    else:
+      return false_value
+---
+initial: True
+code: |
+  import re
+  from bs4 import BeautifulSoup
+  from markdown import markdown
+
+  def markdown_to_plaintext(markdown_string):
+    html = markdown(markdown_string)
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)
+    soup = BeautifulSoup(html, "html.parser")
+    text = ''.join(soup.findAll(text=True))
+    return text
+---
+mandatory: True
+code: |
+	def ___define_until_idempotent():
+		original_dict = all_variables()
+		___define_all()
+		if all_variables() != original_dict:
+			re_run_logic()
+	def ___define_all():
+		vars = all_variables()
+
+		if ((not ("___shortcut_2_false" in vars)) and (("start" in vars))):
+			define("___shortcut_2_false", ((((augment(start) if ("start" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
+---
+initial: True
+code: |
+	___define_until_idempotent()
+---
+code: |
+	___shortcut_2_false = (start == False)
+---
+mandatory: True
+code: |
+	def passive_possible_variables():
+		return { 'Today': (raw(Today) if defined("Today") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
+---
+features:
+	debug: False
+	inverse navbar: False
 ---
 metadata:
-  title: Name/Gender Change
+	title: |
+		Name & Gender Change Workshop
 ---
-field: get_started
+mandatory: |
+	True
 question: |
-  This demo helps you fill out the forms to obtain a court order for name and/or gender change!
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
 subquestion: |
-  [THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/ngcw.yml)
-continue button label: Get Started
+	# **_[THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)_**
+field: start
+
+under: |
+
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+	${___send_answers()}
 ---
-field: help_type
+mandatory: |
+	True
 question: |
-  How can we help you today?
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
 subquestion: |
-  Please inform us what services you are seeking assistance with.
-choices:
-- Gender Change (18+ only)
-- Name Change (trans-identified 18+ only)
-- Name & Gender Change (18+ only)
----
-question: |
-  Current Petitioner Information
-subquestion: |
-  Please enter your current legal information.
-fields:
-- Name: petitioner_full_name
-- Address: petitioner_number_and_street
-- City: petitioner_city
-- Zip: petitioner_zip
-- Telephone: petitioner_phone_number
-  required: False
-- Email: petitioner_email
-  required: False
-- Assigned Gender at Birth: petitioner_agab
-  choices:
-  - Male
-  - Female
----
-question: |
-  Additional Petitioner Information
-subquestion: |
-  Please enter your additional legal information.
-fields:
-- AKA 1: petitioner_full_name2
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- AKA 2: petitioner_full_name3
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- AKA 3: petitioner_full_name4
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- Place of Birth: petitioner_pob
-- Date of Birth: petitioner_dob
-  datatype: date
----
-question: |
-  Future Petitioner Name
-subquestion: |
-  Please enter the name you wish to go by legally.
-fields:
-- Name: new_name
----
-question: |
-  Future Petitioner Gender
-subquestion: |
-  Please enter the gender you wish to go by legally.
-fields:
-- Gender: new_gender
-  choices:
-  - Female
-  - Male
-  - Non-Binary
----
-question: |
-  Court Information
-subquestion: |
-  Please select the county you live in.
-fields:
-- County: court_county
-  choices:
-  - Alameda
-  - Contra Costa
-  - Marin
-  - Napa
-  - San Francisco
-  - San Mateo
-  - Santa Clara
-  - Solano
-  - Sonoma
-  - Other
-- Other County: court_county_custom
-  js show if: val("court_county") == "Other"
-- Address: court_address
-  js show if: val("court_county") == "Other"
-- City: court_city
-  js show if: val("court_county") == "Other"
-- Zip: court_zip
-  js show if: val("court_county") == "Other"
-- Branch: court_branch
-  js show if: val("court_county") == "Other"
----
-mandatory: True
-code: |
-  get_started
-  help_type
-  petitioner_full_name = petitioner_full_name.upper()
-  petitioner_full_name_w_akas = petitioner_full_name
-  if help_type != "Gender Change (18+ only)":
-    petitioner_full_name2 = petitioner_full_name2.upper()
-    petitioner_full_name3 = petitioner_full_name3.upper()
-    petitioner_full_name4 = petitioner_full_name4.upper()
-    if petitioner_full_name2:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
-    if petitioner_full_name3:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
-    if petitioner_full_name4:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
-  petitioner_number_and_street = petitioner_number_and_street.upper()
-  petitioner_city = petitioner_city.upper()
-  petitioner_state = "CA"
-  if help_type != "Gender Change (18+ only)":
-    petitioner_pob = petitioner_pob.upper()
-  check_box5 = False
-  check_box6 = False
-  if petitioner_agab == "Male":
-      check_box5 = True
-  if petitioner_agab == "Female":
-      check_box6 = True
-  if help_type != "Gender Change (18+ only)":
-    new_name = new_name.upper()
-  if help_type != "Name Change (trans-identified 18+ only)":
-    female_check = False
-    male_check = False
-    nonbinary_check = False
-    if new_gender == "Female":
-        female_check = True
-    if new_gender == "Male":
-        male_check = True
-    if new_gender == "Non-Binary":
-        nonbinary_check = True
-  if court_county == "Alameda":
-    court_address = "1225 Fallon St"
-    court_city = "Oakland"
-    court_branch = "Rene C. Davidson Courthouse"
-    court_zip = "94612"
-  elif court_county == "Contra Costa":
-    court_address = "725 Court St"
-    court_city = "Martinez"
-    court_branch = "Wakefield Taylor Courthouse"
-    court_zip = "94553"
-  elif court_county == "Marin":
-    court_address = "3501 Civic Center Drive"
-    court_city = "San Rafael"
-    court_branch = "Civic Center Hall of Justice"
-    court_zip = "94903"
-  elif court_county == "Napa":
-    court_address = "825 Brown St"
-    court_city = "Napa"
-    court_branch = "Historic Courthouse"
-    court_zip = "94559"
-  elif court_county == "San Francisco":
-    court_address = "400 McAllister St"
-    court_city = "San Francisco"
-    court_branch = "Civic Center Courthouse"
-    court_zip = "94102"
-  elif court_county == "San Mateo":
-    court_address = "400 County Center"
-    court_city = "Redwood City"
-    court_branch = "Hall of Justice"
-    court_zip = "94063"
-  elif court_county == "Santa Clara":
-    court_address = "191 North First Street"
-    court_city = "San Jose"
-    court_branch = "Downtown Superior Courthouse"
-    court_zip = "95113"
-  elif court_county == "Solano":
-    court_address = "580 Texas Street"
-    court_city = "Fairfield"
-    court_branch = "Old Solano Courthouse"
-    court_zip = "94533"
-  elif court_county == "Sonoma":
-    court_address = "600 Administration Drive"
-    court_city = "Santa Rosa"
-    court_branch = "Hall of Justice"
-    court_zip = "95403"
-  else:
-    court_county = court_county_custom
-  court_county_final = court_county.upper()
-  court_address = court_address.upper()
-  court_city = court_city.upper()
-  court_city_and_zip = court_city + ", CA " + court_zip
-  court_branch = court_branch.upper()
-  case_name = "In re: " + petitioner_full_name
-  date1 = datetime.date.today().strftime('%m/%d/%Y')
-  documents_to_email = []
-  email_subject = "Documents for "
-  if help_type == "Name Change (trans-identified 18+ only)":
-      documents_to_email.append(unofficial_name_change)
-      email_subject = email_subject + new_name
-  elif help_type == "Gender Change (18+ only)":
-      documents_to_email.append(unofficial_gender_change)
-      email_subject = email_subject + petitioner_full_name
-  else:
-      documents_to_email.append(unofficial_name_and_gender_change)
-      email_subject = email_subject + new_name
-  documents_to_email.append(unofficial_fee_waiver)
-  send_email(to=["ngwberkeley@gmail.com", "ari.c@berkeley.edu"], subject=email_subject, body="See attached", attachments=documents_to_email)
-  thanks
----
-field: name_and_gender_form
-question: |
-  Here are your (nearly) completed forms! Don't forget to sign them.
-attachment:
-  name: Name & Gender Change (18+ only)
-  filename: unofficial_name_and_gender_change
-  description: Click continue to email these forms.
-  variable name: unofficial_name_and_gender_change
-  pdf template file: name_and_gender_change.pdf
-  fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Full Name2: |
-      ${ petitioner_full_name2 }
-  - Petitioner Full Name3: |
-      ${ petitioner_full_name3 }
-  - Petitioner Full Name4: |
-      ${ petitioner_full_name4 }
-  - Petitioner Full Name w/AKAs: |
-      ${ petitioner_full_name_w_akas }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Petitioner POB: |
-      ${ petitioner_pob }
-  - Petitioner DOB: |
-      ${ petitioner_dob }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Petitioner New Name: |
-      ${ new_name }
-  - Female Check: |
-      ${ female_check }
-  - Male Check: |
-      ${ male_check }
-  - Nonbinary Check: |
-      ${ nonbinary_check }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
+	# **Thanks for volunteering!**
+
+attachment code: |
+	filter(bool, [___name_and_gender_change_pdf_1040_attachment_1204, ___name_change_pdf_1039_attachment_1203, ___gender_change_pdf_1041_attachment_1205, ___fee_waiver_pdf_1042_attachment_1206])
 allow emailing: False
----
-field: name_form
-question: |
-  Here are your (nearly) completed forms! Don't forget to sign them.
-attachment:
-  name: Name Change (trans-identified 18+ only)
-  filename: unofficial_name_change
-  description: Click continue to email these forms.
-  variable name: unofficial_name_change
-  pdf template file: name_change.pdf
-  fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Full Name2: |
-      ${ petitioner_full_name2 }
-  - Petitioner Full Name3: |
-      ${ petitioner_full_name3 }
-  - Petitioner Full Name4: |
-      ${ petitioner_full_name4 }
-  - Petitioner Full Name w/AKAs: |
-      ${ petitioner_full_name_w_akas }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Petitioner POB: |
-      ${ petitioner_pob }
-  - Petitioner DOB: |
-      ${ petitioner_dob }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Petitioner New Name: |
-      ${ new_name }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
-allow emailing: False
----
-field: gender_form
-question: |
-  Here are your (nearly) completed forms! Don't forget to sign them.
-attachment:
-  name: Gender Change (18+ only)
-  filename: unofficial_gender_change
-  description: Click continue to email these forms.
-  variable name: unofficial_gender_change
-  pdf template file: gender_change.pdf
-  fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Female Check: |
-      ${ female_check }
-  - Male Check: |
-      ${ male_check }
-  - Nonbinary Check: |
-      ${ nonbinary_check }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
-allow emailing: False
----
-field: fee_form
-question: |
-  Filling this (optional) form out lets you know if you qualify for a fee waiver.
-attachment:
-  name: Fee Waiver
-  filename: unofficial_fee_waiver
-  description: Click continue to email these forms.
-  variable name: unofficial_fee_waiver
-  pdf template file: fee_waiver.pdf
-  fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
-  - Text59: |
-      ${ case_name }
-allow emailing: False
+under: |
+
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+	${___send_answers()}
 ---
 code: |
-  thanks = "Yes"
-  message = "Thanks!"
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1042
+		access_key = 'UggzHZIZHg'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___fee_waiver_pdf_1042_attachment_1206 = DAFileCollection()
+		___fee_waiver_pdf_1042_attachment_1206.pdf = DAFile()
+		___fee_waiver_pdf_1042_attachment_1206.pdf.initialize(extension="pdf")
+		if done:
+			___fee_waiver_pdf_1042_attachment_1206.pdf.from_url(filled_attachment_url)
+			___fee_waiver_pdf_1042_attachment_1206.info = {'name': 'fee_waiver', 'filename': 'fee_waiver', 'description': ''}
+		else:
+			___fee_waiver_pdf_1042_attachment_1206.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___fee_waiver_pdf_1042_attachment_1206.info = {'name': 'We encountered a problem', 'filename': 'fee_waiver', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___fee_waiver_pdf_1042_attachment_1206 = ''
 ---
-mandatory: True
-question: |
-  ${message}
-buttons:
-- Exit: exit
-- Restart: restart
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1041
+		access_key = '1CmHThudZv'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___gender_change_pdf_1041_attachment_1205 = DAFileCollection()
+		___gender_change_pdf_1041_attachment_1205.pdf = DAFile()
+		___gender_change_pdf_1041_attachment_1205.pdf.initialize(extension="pdf")
+		if done:
+			___gender_change_pdf_1041_attachment_1205.pdf.from_url(filled_attachment_url)
+			___gender_change_pdf_1041_attachment_1205.info = {'name': 'gender_change', 'filename': 'gender_change', 'description': ''}
+		else:
+			___gender_change_pdf_1041_attachment_1205.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___gender_change_pdf_1041_attachment_1205.info = {'name': 'We encountered a problem', 'filename': 'gender_change', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___gender_change_pdf_1041_attachment_1205 = ''
+---
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1040
+		access_key = 'dLilWy7iPq'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___name_and_gender_change_pdf_1040_attachment_1204 = DAFileCollection()
+		___name_and_gender_change_pdf_1040_attachment_1204.pdf = DAFile()
+		___name_and_gender_change_pdf_1040_attachment_1204.pdf.initialize(extension="pdf")
+		if done:
+			___name_and_gender_change_pdf_1040_attachment_1204.pdf.from_url(filled_attachment_url)
+			___name_and_gender_change_pdf_1040_attachment_1204.info = {'name': 'name_and_gender_change', 'filename': 'name_and_gender_change', 'description': ''}
+		else:
+			___name_and_gender_change_pdf_1040_attachment_1204.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___name_and_gender_change_pdf_1040_attachment_1204.info = {'name': 'We encountered a problem', 'filename': 'name_and_gender_change', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___name_and_gender_change_pdf_1040_attachment_1204 = ''
+---
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1039
+		access_key = 'SJEqpj1HV0'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___name_change_pdf_1039_attachment_1203 = DAFileCollection()
+		___name_change_pdf_1039_attachment_1203.pdf = DAFile()
+		___name_change_pdf_1039_attachment_1203.pdf.initialize(extension="pdf")
+		if done:
+			___name_change_pdf_1039_attachment_1203.pdf.from_url(filled_attachment_url)
+			___name_change_pdf_1039_attachment_1203.info = {'name': 'name_change', 'filename': 'name_change', 'description': ''}
+		else:
+			___name_change_pdf_1039_attachment_1203.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___name_change_pdf_1039_attachment_1203.info = {'name': 'We encountered a problem', 'filename': 'name_change', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___name_change_pdf_1039_attachment_1203 = ''
+---
+template: a_template_0fdf6a63ef21
+subject: |
+  
+content: |
+  
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Thank you for using this app. Your session is complete. ${___send_answers()}
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
