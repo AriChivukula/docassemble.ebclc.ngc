@@ -425,6 +425,8 @@ features:
 metadata:
 	title: |
 		Name & Gender Change Workshop
+	exit label: |
+		Powered by Community.lawyer, a public benefit company
 ---
 mandatory: |
 	True
@@ -435,9 +437,6 @@ subquestion: |
 field: start
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 mandatory: |
@@ -447,156 +446,20 @@ question: |
 subquestion: |
 	# **Thanks for volunteering!**
 
-attachment code: |
-	filter(bool, [___name_and_gender_change_pdf_1040_attachment_1204, ___name_change_pdf_1039_attachment_1203, ___gender_change_pdf_1041_attachment_1205, ___fee_waiver_pdf_1042_attachment_1206])
-allow emailing: False
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
+css: |
+  <style>
+    button[type='submit'] {
+      display: none;
+    }
+  </style>
 ---
-code: |
-	if True:
-		import requests
-		import json
-		import time
-		template_id = 1042
-		access_key = 'UggzHZIZHg'
-		drawn_variables = {}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		___fee_waiver_pdf_1042_attachment_1206 = DAFileCollection()
-		___fee_waiver_pdf_1042_attachment_1206.pdf = DAFile()
-		___fee_waiver_pdf_1042_attachment_1206.pdf.initialize(extension="pdf")
-		if done:
-			___fee_waiver_pdf_1042_attachment_1206.pdf.from_url(filled_attachment_url)
-			___fee_waiver_pdf_1042_attachment_1206.info = {'name': 'fee_waiver', 'filename': 'fee_waiver', 'description': ''}
-		else:
-			___fee_waiver_pdf_1042_attachment_1206.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			___fee_waiver_pdf_1042_attachment_1206.info = {'name': 'We encountered a problem', 'filename': 'fee_waiver', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		___fee_waiver_pdf_1042_attachment_1206 = ''
 ---
-code: |
-	if True:
-		import requests
-		import json
-		import time
-		template_id = 1041
-		access_key = '1CmHThudZv'
-		drawn_variables = {}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		___gender_change_pdf_1041_attachment_1205 = DAFileCollection()
-		___gender_change_pdf_1041_attachment_1205.pdf = DAFile()
-		___gender_change_pdf_1041_attachment_1205.pdf.initialize(extension="pdf")
-		if done:
-			___gender_change_pdf_1041_attachment_1205.pdf.from_url(filled_attachment_url)
-			___gender_change_pdf_1041_attachment_1205.info = {'name': 'gender_change', 'filename': 'gender_change', 'description': ''}
-		else:
-			___gender_change_pdf_1041_attachment_1205.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			___gender_change_pdf_1041_attachment_1205.info = {'name': 'We encountered a problem', 'filename': 'gender_change', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		___gender_change_pdf_1041_attachment_1205 = ''
----
-code: |
-	if True:
-		import requests
-		import json
-		import time
-		template_id = 1040
-		access_key = 'dLilWy7iPq'
-		drawn_variables = {}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		___name_and_gender_change_pdf_1040_attachment_1204 = DAFileCollection()
-		___name_and_gender_change_pdf_1040_attachment_1204.pdf = DAFile()
-		___name_and_gender_change_pdf_1040_attachment_1204.pdf.initialize(extension="pdf")
-		if done:
-			___name_and_gender_change_pdf_1040_attachment_1204.pdf.from_url(filled_attachment_url)
-			___name_and_gender_change_pdf_1040_attachment_1204.info = {'name': 'name_and_gender_change', 'filename': 'name_and_gender_change', 'description': ''}
-		else:
-			___name_and_gender_change_pdf_1040_attachment_1204.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			___name_and_gender_change_pdf_1040_attachment_1204.info = {'name': 'We encountered a problem', 'filename': 'name_and_gender_change', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		___name_and_gender_change_pdf_1040_attachment_1204 = ''
----
-code: |
-	if True:
-		import requests
-		import json
-		import time
-		template_id = 1039
-		access_key = 'SJEqpj1HV0'
-		drawn_variables = {}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		___name_change_pdf_1039_attachment_1203 = DAFileCollection()
-		___name_change_pdf_1039_attachment_1203.pdf = DAFile()
-		___name_change_pdf_1039_attachment_1203.pdf.initialize(extension="pdf")
-		if done:
-			___name_change_pdf_1039_attachment_1203.pdf.from_url(filled_attachment_url)
-			___name_change_pdf_1039_attachment_1203.info = {'name': 'name_change', 'filename': 'name_change', 'description': ''}
-		else:
-			___name_change_pdf_1039_attachment_1203.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			___name_change_pdf_1039_attachment_1203.info = {'name': 'We encountered a problem', 'filename': 'name_change', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		___name_change_pdf_1039_attachment_1203 = ''
----
-template: a_template_0fdf6a63ef21
-subject: |
-  
-content: |
-  
 ---
 mandatory: |
 	True
 question: ''
 subquestion: |
 	Thank you for using this app. Your session is complete. ${___send_answers()}
-
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
