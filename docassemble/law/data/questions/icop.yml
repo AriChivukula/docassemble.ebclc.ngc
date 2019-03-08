@@ -640,6 +640,8 @@ features:
 metadata:
 	title: |
 		Immigration Court Observation Form
+	exit label: |
+		Powered by Community.lawyer, a public benefit company
 ---
 mandatory: |
 	True
@@ -650,9 +652,6 @@ subquestion: |
 field: start
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 code: |
@@ -698,9 +697,6 @@ fields:
 		required: true
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 code: |
@@ -758,9 +754,6 @@ fields:
 			- "Master Calendar": "Master Calendar"
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 code: |
@@ -806,13 +799,13 @@ fields:
 	- html: |
 			<p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
 
-			<span hidden data-variable data-event-type='input' id='variable_4'/>
+			<span hidden data-variable id='variable_4'/>
 
 	- "${detainee_title_name}": detainee_output_name
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_name'/>
+			<span hidden data-variable id='detainee_output_name'/>
 
 	- "${detainee_title_appearance}": detainee_output_appearance
 		input type: dropdown
@@ -822,13 +815,13 @@ fields:
 			- "In Person": "In Person"
 			- "Video Conference": "Video Conference"
 		html: |
-			<span hidden data-variable data-event-type='change' id='detainee_output_appearance'/>
+			<span hidden data-variable id='detainee_output_appearance'/>
 
 	- "${detainee_title_languages}": detainee_output_languages
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_languages'/>
+			<span hidden data-variable id='detainee_output_languages'/>
 
 	- "${detainee_title_location}": detainee_output_location
 		input type: dropdown
@@ -840,13 +833,13 @@ fields:
 			- "Sacramento/Yuba": "Sacramento/Yuba"
 			- "Other": "Other"
 		html: |
-			<span hidden data-variable data-event-type='change' id='detainee_output_location'/>
+			<span hidden data-variable id='detainee_output_location'/>
 
 	- "${detainee_title_location_other}": detainee_output_location_other
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_location_other'/>
+			<span hidden data-variable id='detainee_output_location_other'/>
 
 	- "${detainee_title_representation}": detainee_output_representation
 		input type: dropdown
@@ -857,13 +850,13 @@ fields:
 			- "No": "No"
 			- "Unknown": "Unknown"
 		html: |
-			<span hidden data-variable data-event-type='change' id='detainee_output_representation'/>
+			<span hidden data-variable id='detainee_output_representation'/>
 
 	- "${detainee_title_representation_who}": detainee_output_representation_who
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_representation_who'/>
+			<span hidden data-variable id='detainee_output_representation_who'/>
 
 	- "${detainee_title_representation_continuance}": detainee_output_representation_continuance
 		input type: dropdown
@@ -874,27 +867,104 @@ fields:
 			- "No": "No"
 			- "Unknown": "Unknown"
 		html: |
-			<span hidden data-variable data-event-type='change' id='detainee_output_representation_continuance'/>
+			<span hidden data-variable id='detainee_output_representation_continuance'/>
 
 	- "${detainee_title_representation_continuance_length}": detainee_output_representation_continuance_length
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_representation_continuance_length'/>
+			<span hidden data-variable id='detainee_output_representation_continuance_length'/>
 
 	- "${detainee_title_representation_continuance_denial}": detainee_output_representation_continuance_denial
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='detainee_output_representation_continuance_denial'/>
+			<span hidden data-variable id='detainee_output_representation_continuance_denial'/>
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
+
 script: |
   <script>
+    // Polyfills for Internet Explorer
+    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
+    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
+    var concat = Function.bind.call(Function.call, Array.prototype.concat);
+    var keys = Reflect.ownKeys;
+
+    if (!Object.values) {
+      Object.values = function values(O) {
+        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+      };
+    }
+
+    if (!Object.entries) {
+      Object.entries = function entries(O) {
+        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+      };
+    }
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
     // Those fields which should be conditionally shown
     var detainee_output_location_other_field = $('#detainee_output_location_other').closest('.form-group');
 		var detainee_output_representation_who_field = $('#detainee_output_representation_who').closest('.form-group');
@@ -933,7 +1003,7 @@ script: |
     hideAllConditionalFields();
     findCurrentValuesForAllFields();
     conditionallyShowFieldsBasedOnValues();
-    assignFieldChangeListeners()
+    assignFieldChangeListeners();
 
     function hideAllConditionalFields() {
       for (var i = 0; i < showIfCallbacks.length; i++) {
@@ -957,7 +1027,8 @@ script: |
       });
     }
 
-    function showConditionalFieldsBasedOnCurrentValue(speed = null) {
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
       for (var i = 0; i < showIfCallbacks.length; i++) {
         var currentItem = showIfCallbacks[i];
         if (currentItem.shouldShow) {
@@ -1005,9 +1076,8 @@ script: |
     function assignFieldChangeListeners() {
       $('[data-variable]').each(function() {
         var field = $(this);
-        var eventType = field.data('event-type');
         var variableName = field.attr('id');
-        field.closest('.form-group').find('input, select, textarea').on(eventType, function() {
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
           calculateInputValue(this, variableName);
           calculateShouldShowValues();
           showConditionalFieldsBasedOnCurrentValue('fast');
@@ -1062,7 +1132,7 @@ fields:
 	- html: |
 			<p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-			<span hidden data-variable data-event-type='input' id='variable_5'/>
+			<span hidden data-variable id='variable_5'/>
 
 	- "${context_title_anyone}": context_output_anyone
 		input type: dropdown
@@ -1072,19 +1142,19 @@ fields:
 			- "Yes": "Yes"
 			- "No": "No"
 		html: |
-			<span hidden data-variable data-event-type='change' id='context_output_anyone'/>
+			<span hidden data-variable id='context_output_anyone'/>
 
 	- "${context_title_anyone_who}": context_output_anyone_who
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='context_output_anyone_who'/>
+			<span hidden data-variable id='context_output_anyone_who'/>
 
 	- "${context_title_anyone_info}": context_output_anyone_info
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='context_output_anyone_info'/>
+			<span hidden data-variable id='context_output_anyone_info'/>
 
 	- "${context_title_interpretation}": context_output_interpretation
 		input type: dropdown
@@ -1094,13 +1164,13 @@ fields:
 			- "Yes": "Yes"
 			- "No": "No"
 		html: |
-			<span hidden data-variable data-event-type='change' id='context_output_interpretation'/>
+			<span hidden data-variable id='context_output_interpretation'/>
 
 	- "${context_title_interpretation_info}": context_output_interpretation_info
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='context_output_interpretation_info'/>
+			<span hidden data-variable id='context_output_interpretation_info'/>
 
 	- "${context_title_illness}": context_output_illness
 		input type: dropdown
@@ -1110,27 +1180,104 @@ fields:
 			- "Yes": "Yes"
 			- "No": "No"
 		html: |
-			<span hidden data-variable data-event-type='change' id='context_output_illness'/>
+			<span hidden data-variable id='context_output_illness'/>
 
 	- "${context_title_illness_info}": context_output_illness_info
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='context_output_illness_info'/>
+			<span hidden data-variable id='context_output_illness_info'/>
 
 	- "${context_title_illness_addressed}": context_output_illness_addressed
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='context_output_illness_addressed'/>
+			<span hidden data-variable id='context_output_illness_addressed'/>
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
+
 script: |
   <script>
+    // Polyfills for Internet Explorer
+    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
+    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
+    var concat = Function.bind.call(Function.call, Array.prototype.concat);
+    var keys = Reflect.ownKeys;
+
+    if (!Object.values) {
+      Object.values = function values(O) {
+        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+      };
+    }
+
+    if (!Object.entries) {
+      Object.entries = function entries(O) {
+        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+      };
+    }
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
     // Those fields which should be conditionally shown
     var context_output_anyone_who_field = $('#context_output_anyone_who').closest('.form-group');
 		var context_output_anyone_info_field = $('#context_output_anyone_info').closest('.form-group');
@@ -1167,7 +1314,7 @@ script: |
     hideAllConditionalFields();
     findCurrentValuesForAllFields();
     conditionallyShowFieldsBasedOnValues();
-    assignFieldChangeListeners()
+    assignFieldChangeListeners();
 
     function hideAllConditionalFields() {
       for (var i = 0; i < showIfCallbacks.length; i++) {
@@ -1191,7 +1338,8 @@ script: |
       });
     }
 
-    function showConditionalFieldsBasedOnCurrentValue(speed = null) {
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
       for (var i = 0; i < showIfCallbacks.length; i++) {
         var currentItem = showIfCallbacks[i];
         if (currentItem.shouldShow) {
@@ -1239,9 +1387,8 @@ script: |
     function assignFieldChangeListeners() {
       $('[data-variable]').each(function() {
         var field = $(this);
-        var eventType = field.data('event-type');
         var variableName = field.attr('id');
-        field.closest('.form-group').find('input, select, textarea').on(eventType, function() {
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
           calculateInputValue(this, variableName);
           calculateShouldShowValues();
           showConditionalFieldsBasedOnCurrentValue('fast');
@@ -1290,7 +1437,7 @@ fields:
 	- html: |
 			<p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-			<span hidden data-variable data-event-type='input' id='variable_7'/>
+			<span hidden data-variable id='variable_7'/>
 
 	- "${outcome_title_bond}": outcome_output_bond
 		input type: dropdown
@@ -1301,27 +1448,104 @@ fields:
 			- "No": "No"
 			- "Unknown": "Unknown"
 		html: |
-			<span hidden data-variable data-event-type='change' id='outcome_output_bond'/>
+			<span hidden data-variable id='outcome_output_bond'/>
 
 	- "${outcome_title_bond_amount}": outcome_output_bond_amount
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='outcome_output_bond_amount'/>
+			<span hidden data-variable id='outcome_output_bond_amount'/>
 
 	- "${outcome_title_bond_denial}": outcome_output_bond_denial
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='outcome_output_bond_denial'/>
+			<span hidden data-variable id='outcome_output_bond_denial'/>
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
+
 script: |
   <script>
+    // Polyfills for Internet Explorer
+    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
+    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
+    var concat = Function.bind.call(Function.call, Array.prototype.concat);
+    var keys = Reflect.ownKeys;
+
+    if (!Object.values) {
+      Object.values = function values(O) {
+        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+      };
+    }
+
+    if (!Object.entries) {
+      Object.entries = function entries(O) {
+        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+      };
+    }
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
     // Those fields which should be conditionally shown
     var outcome_output_bond_amount_field = $('#outcome_output_bond_amount').closest('.form-group');
 		var outcome_output_bond_denial_field = $('#outcome_output_bond_denial').closest('.form-group');
@@ -1347,7 +1571,7 @@ script: |
     hideAllConditionalFields();
     findCurrentValuesForAllFields();
     conditionallyShowFieldsBasedOnValues();
-    assignFieldChangeListeners()
+    assignFieldChangeListeners();
 
     function hideAllConditionalFields() {
       for (var i = 0; i < showIfCallbacks.length; i++) {
@@ -1371,7 +1595,8 @@ script: |
       });
     }
 
-    function showConditionalFieldsBasedOnCurrentValue(speed = null) {
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
       for (var i = 0; i < showIfCallbacks.length; i++) {
         var currentItem = showIfCallbacks[i];
         if (currentItem.shouldShow) {
@@ -1419,9 +1644,8 @@ script: |
     function assignFieldChangeListeners() {
       $('[data-variable]').each(function() {
         var field = $(this);
-        var eventType = field.data('event-type');
         var variableName = field.attr('id');
-        field.closest('.form-group').find('input, select, textarea').on(eventType, function() {
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
           calculateInputValue(this, variableName);
           calculateShouldShowValues();
           showConditionalFieldsBasedOnCurrentValue('fast');
@@ -1449,7 +1673,7 @@ fields:
 	- html: |
 			<p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-			<span hidden data-variable data-event-type='input' id='variable_1'/>
+			<span hidden data-variable id='variable_1'/>
 
 	- "${outcome_title_relief}": outcome_output_relief
 		input type: dropdown
@@ -1460,27 +1684,104 @@ fields:
 			- "No": "No"
 			- "Unknown": "Unknown"
 		html: |
-			<span hidden data-variable data-event-type='change' id='outcome_output_relief'/>
+			<span hidden data-variable id='outcome_output_relief'/>
 
 	- "${outcome_title_relief_info}": outcome_output_relief_info
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='outcome_output_relief_info'/>
+			<span hidden data-variable id='outcome_output_relief_info'/>
 
 	- "${outcome_title_relief_deadline}": outcome_output_relief_deadline
 		datatype: text
 		required: true
 		html: |
-			<span hidden data-variable data-event-type='input' id='outcome_output_relief_deadline'/>
+			<span hidden data-variable id='outcome_output_relief_deadline'/>
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
+
 script: |
   <script>
+    // Polyfills for Internet Explorer
+    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
+    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
+    var concat = Function.bind.call(Function.call, Array.prototype.concat);
+    var keys = Reflect.ownKeys;
+
+    if (!Object.values) {
+      Object.values = function values(O) {
+        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+      };
+    }
+
+    if (!Object.entries) {
+      Object.entries = function entries(O) {
+        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+      };
+    }
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
     // Those fields which should be conditionally shown
     var outcome_output_relief_info_field = $('#outcome_output_relief_info').closest('.form-group');
 		var outcome_output_relief_deadline_field = $('#outcome_output_relief_deadline').closest('.form-group');
@@ -1506,7 +1807,7 @@ script: |
     hideAllConditionalFields();
     findCurrentValuesForAllFields();
     conditionallyShowFieldsBasedOnValues();
-    assignFieldChangeListeners()
+    assignFieldChangeListeners();
 
     function hideAllConditionalFields() {
       for (var i = 0; i < showIfCallbacks.length; i++) {
@@ -1530,7 +1831,8 @@ script: |
       });
     }
 
-    function showConditionalFieldsBasedOnCurrentValue(speed = null) {
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
       for (var i = 0; i < showIfCallbacks.length; i++) {
         var currentItem = showIfCallbacks[i];
         if (currentItem.shouldShow) {
@@ -1578,9 +1880,8 @@ script: |
     function assignFieldChangeListeners() {
       $('[data-variable]').each(function() {
         var field = $(this);
-        var eventType = field.data('event-type');
         var variableName = field.attr('id');
-        field.closest('.form-group').find('input, select, textarea').on(eventType, function() {
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
           calculateInputValue(this, variableName);
           calculateShouldShowValues();
           showConditionalFieldsBasedOnCurrentValue('fast');
@@ -1634,9 +1935,6 @@ fields:
 		required: false
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 code: |
@@ -1658,9 +1956,6 @@ fields:
 		required: false
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${___send_answers()}
 ---
 mandatory: |
@@ -1671,11 +1966,14 @@ subquestion: |
 	# Thanks for volunteering ${you_output_name}!
 
 under: |
-
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 	${ ('' if defined("___already_sent_icop_email_26e207fc10a5") else (___send_icop_email_26e207fc10a5())) }
 	${___send_answers()}
+css: |
+  <style>
+    button[type='submit'] {
+      display: none;
+    }
+  </style>
 ---
 template: icop_template_af3e7002e7d6
 subject: |
@@ -1755,8 +2053,4 @@ mandatory: |
 question: ''
 subquestion: |
 	Thank you for using this app. Your session is complete. ${___send_answers()}
-
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
