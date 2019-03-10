@@ -1,8 +1,6 @@
 ---
 extends: default
 rules:
-  indentation:
-    indent-sequences: whatever
   line-length: false
   trailing-spaces: false
   truthy: false
