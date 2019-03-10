@@ -643,6 +643,11 @@ metadata:
 	exit label: |
 		Powered by Community.lawyer, a public benefit company
 ---
+mandatory: True
+code: |
+  if ___user_device == "IE":
+    log("This app may not run as expected on Internet Explorer - please consider using a more modern browser, such as those found <a href='http://outdatedbrowser.com/en'>here</a>.", "warning")
+---
 mandatory: |
 	True
 question: |
@@ -887,22 +892,7 @@ under: |
 script: |
   <script>
     // Polyfills for Internet Explorer
-    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-    var concat = Function.bind.call(Function.call, Array.prototype.concat);
-    var keys = Reflect.ownKeys;
-
-    if (!Object.values) {
-      Object.values = function values(O) {
-        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
-      };
-    }
-
-    if (!Object.entries) {
-      Object.entries = function entries(O) {
-        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
-      };
-    }
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
     if (!Array.prototype.includes) {
       Object.defineProperty(Array.prototype, 'includes', {
@@ -1200,22 +1190,7 @@ under: |
 script: |
   <script>
     // Polyfills for Internet Explorer
-    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-    var concat = Function.bind.call(Function.call, Array.prototype.concat);
-    var keys = Reflect.ownKeys;
-
-    if (!Object.values) {
-      Object.values = function values(O) {
-        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
-      };
-    }
-
-    if (!Object.entries) {
-      Object.entries = function entries(O) {
-        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
-      };
-    }
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
     if (!Array.prototype.includes) {
       Object.defineProperty(Array.prototype, 'includes', {
@@ -1468,22 +1443,7 @@ under: |
 script: |
   <script>
     // Polyfills for Internet Explorer
-    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-    var concat = Function.bind.call(Function.call, Array.prototype.concat);
-    var keys = Reflect.ownKeys;
-
-    if (!Object.values) {
-      Object.values = function values(O) {
-        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
-      };
-    }
-
-    if (!Object.entries) {
-      Object.entries = function entries(O) {
-        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
-      };
-    }
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
     if (!Array.prototype.includes) {
       Object.defineProperty(Array.prototype, 'includes', {
@@ -1704,22 +1664,7 @@ under: |
 script: |
   <script>
     // Polyfills for Internet Explorer
-    var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-    var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-    var concat = Function.bind.call(Function.call, Array.prototype.concat);
-    var keys = Reflect.ownKeys;
-
-    if (!Object.values) {
-      Object.values = function values(O) {
-        return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
-      };
-    }
-
-    if (!Object.entries) {
-      Object.entries = function entries(O) {
-        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
-      };
-    }
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
     if (!Array.prototype.includes) {
       Object.defineProperty(Array.prototype, 'includes', {
@@ -2044,7 +1989,7 @@ code: |
 		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 3 })
 		data = permission_response.json()
 		if data['permitted']:
-			send_email(template=icop_template_af3e7002e7d6, to="sf.icop@gmail.com", sender="ari.c@berkeley.edu", cc="%s" % (you_output_email), bcc="ari.c@berkeley.edu")
+			send_email(template=icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email), bcc="ari.c@berkeley.edu")
 			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 3 })
 	background_response()
 ---
