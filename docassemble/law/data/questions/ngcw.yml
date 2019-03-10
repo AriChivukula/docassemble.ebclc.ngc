@@ -402,7 +402,162 @@ code: |
 			re_run_logic()
 	def ___define_all():
 		vars = all_variables()
+		if ((not ("help_name" in vars)) and (type((((augment(___shortcut_15_choice) if ("___shortcut_15_choice" in vars) else Undefined()).logical_or((augment(___shortcut_14_choice) if ("___shortcut_14_choice" in vars) else Undefined()))))) != type(Undefined()))):
+			define("help_name", ((((augment(___shortcut_15_choice) if ("___shortcut_15_choice" in vars) else Undefined()).logical_or((augment(___shortcut_14_choice) if ("___shortcut_14_choice" in vars) else Undefined())))).primitive_value()))
+		if ((not ("help_gender" in vars)) and (type((((augment(___shortcut_13_choice) if ("___shortcut_13_choice" in vars) else Undefined()).logical_or((augment(___shortcut_15_choice) if ("___shortcut_15_choice" in vars) else Undefined()))))) != type(Undefined()))):
+			define("help_gender", ((((augment(___shortcut_13_choice) if ("___shortcut_13_choice" in vars) else Undefined()).logical_or((augment(___shortcut_15_choice) if ("___shortcut_15_choice" in vars) else Undefined())))).primitive_value()))
+		if ((not ("current_state" in vars)) and (True)):
+			define("current_state", (augment("""CA""").primitive_value()))
+		if ((not ("current_case" in vars)) and (type(((augment("In re:") + augment(" ") + ((augment(current_name) if ("current_name" in vars) else Undefined()))))) != type(Undefined()))):
+			define("current_case", (((augment("In re:") + augment(" ") + ((augment(current_name) if ("current_name" in vars) else Undefined())))).primitive_value()))
+		if ((not ("court_alameda" in vars)) and (True)):
+			define("court_alameda", (augment("""Alameda
 
+		Rene C. Davidson Courthouse
+
+		1225 Fallon St
+
+		Oakland, CA 94612""").primitive_value()))
+		if ((not ("court_contra_costa" in vars)) and (True)):
+			define("court_contra_costa", (augment("""Contra Costa
+
+		Wakefield Taylor Courthouse
+
+		725 Court St
+
+		Martinez, CA 94553""").primitive_value()))
+		if ((not ("court_marin" in vars)) and (True)):
+			define("court_marin", (augment("""Marin
+
+		Civic Center Hall of Justice
+
+		3501 Civic Center Drive
+
+		San Rafael, CA 94903""").primitive_value()))
+		if ((not ("court_napa" in vars)) and (True)):
+			define("court_napa", (augment("""Napa
+
+		Historic Courthouse
+
+		825 Brown St
+
+		Napa, CA 94559""").primitive_value()))
+		if ((not ("court_san_francisco" in vars)) and (True)):
+			define("court_san_francisco", (augment("""San Francisco
+
+		Civic Center Courthouse
+
+		400 McAllister St
+
+		San Francisco, CA 94102""").primitive_value()))
+		if ((not ("court_san_mateo" in vars)) and (True)):
+			define("court_san_mateo", (augment("""San Mateo
+
+		Hall of Justice
+
+		400 County Center
+
+		Redwood City, CA 94063""").primitive_value()))
+		if ((not ("court_santa_clara" in vars)) and (True)):
+			define("court_santa_clara", (augment("""Santa Clara
+
+		Downtown Superior Courthouse
+
+		191 North First Street
+
+		San Jose, CA 95113""").primitive_value()))
+		if ((not ("court_solano" in vars)) and (True)):
+			define("court_solano", (augment("""Solano
+
+		Old Solano Courthouse
+
+		580 Texas Street
+
+		Fairfield, CA 94533""").primitive_value()))
+		if ((not ("court_sonoma" in vars)) and (True)):
+			define("court_sonoma", (augment("""Sonoma
+
+		Hall of Justice
+
+		600 Administration Drive
+
+		Santa Rosa, CA 95403""").primitive_value()))
+		if ((not ("court_info" in vars)) and (type((ternary((augment(___shortcut_40_choice) if ("___shortcut_40_choice" in vars) else Undefined()), (augment(court_alameda) if ("court_alameda" in vars) else Undefined()), (ternary((augment(___shortcut_41_choice) if ("___shortcut_41_choice" in vars) else Undefined()), (augment(court_contra_costa) if ("court_contra_costa" in vars) else Undefined()), (ternary((augment(___shortcut_42_choice) if ("___shortcut_42_choice" in vars) else Undefined()), (augment(court_marin) if ("court_marin" in vars) else Undefined()), (ternary((augment(___shortcut_43_choice) if ("___shortcut_43_choice" in vars) else Undefined()), (augment(court_napa) if ("court_napa" in vars) else Undefined()), (ternary((augment(___shortcut_44_choice) if ("___shortcut_44_choice" in vars) else Undefined()), (augment(court_san_francisco) if ("court_san_francisco" in vars) else Undefined()), (ternary((augment(___shortcut_45_choice) if ("___shortcut_45_choice" in vars) else Undefined()), (augment(court_san_mateo) if ("court_san_mateo" in vars) else Undefined()), (ternary((augment(___shortcut_46_choice) if ("___shortcut_46_choice" in vars) else Undefined()), (augment(court_san_mateo) if ("court_san_mateo" in vars) else Undefined()), (ternary((augment(___shortcut_47_choice) if ("___shortcut_47_choice" in vars) else Undefined()), (augment(court_solano) if ("court_solano" in vars) else Undefined()), (ternary((augment(___shortcut_48_choice) if ("___shortcut_48_choice" in vars) else Undefined()), (augment(court_sonoma) if ("court_sonoma" in vars) else Undefined()), (augment(court_other) if ("court_other" in vars) else Undefined())))))))))))))))))))) != type(Undefined()))):
+			define("court_info", ((ternary((augment(___shortcut_40_choice) if ("___shortcut_40_choice" in vars) else Undefined()), (augment(court_alameda) if ("court_alameda" in vars) else Undefined()), (ternary((augment(___shortcut_41_choice) if ("___shortcut_41_choice" in vars) else Undefined()), (augment(court_contra_costa) if ("court_contra_costa" in vars) else Undefined()), (ternary((augment(___shortcut_42_choice) if ("___shortcut_42_choice" in vars) else Undefined()), (augment(court_marin) if ("court_marin" in vars) else Undefined()), (ternary((augment(___shortcut_43_choice) if ("___shortcut_43_choice" in vars) else Undefined()), (augment(court_napa) if ("court_napa" in vars) else Undefined()), (ternary((augment(___shortcut_44_choice) if ("___shortcut_44_choice" in vars) else Undefined()), (augment(court_san_francisco) if ("court_san_francisco" in vars) else Undefined()), (ternary((augment(___shortcut_45_choice) if ("___shortcut_45_choice" in vars) else Undefined()), (augment(court_san_mateo) if ("court_san_mateo" in vars) else Undefined()), (ternary((augment(___shortcut_46_choice) if ("___shortcut_46_choice" in vars) else Undefined()), (augment(court_san_mateo) if ("court_san_mateo" in vars) else Undefined()), (ternary((augment(___shortcut_47_choice) if ("___shortcut_47_choice" in vars) else Undefined()), (augment(court_solano) if ("court_solano" in vars) else Undefined()), (ternary((augment(___shortcut_48_choice) if ("___shortcut_48_choice" in vars) else Undefined()), (augment(court_sonoma) if ("court_sonoma" in vars) else Undefined()), (augment(court_other) if ("court_other" in vars) else Undefined()))))))))))))))))))).primitive_value()))
+		if ((not ("fax_gender" in vars)) and (True)):
+			define("fax_gender", (augment("""CM-010 (1 page)
+
+		NC-300 (1 page)
+
+		NC-330 (1 page)
+
+		FW-001 (2 pages)""").primitive_value()))
+		if ((not ("fax_name" in vars)) and (True)):
+			define("fax_name", (augment("""CM-010 (1 page)
+
+		NC-100 (1 page)
+
+		NC-110 (1 page)
+
+		NC-125 (1 page)
+
+		NC-130 (1 page)
+
+		FW-001 (2 pages)""").primitive_value()))
+		if ((not ("fax_name_and_gender" in vars)) and (True)):
+			define("fax_name_and_gender", (augment("""CM-010 (1 page)
+
+		NC-110 (1 page)
+
+		NC-125 (1 page)
+
+		NC-200 (1 page)
+
+		NC-230 (1 page)
+
+		FW-001 (2 pages)""").primitive_value()))
+		if ((not ("fax_info" in vars)) and (type((ternary((augment(___shortcut_13_choice) if ("___shortcut_13_choice" in vars) else Undefined()), (augment(fax_gender) if ("fax_gender" in vars) else Undefined()), (ternary((augment(___shortcut_14_choice) if ("___shortcut_14_choice" in vars) else Undefined()), (augment(fax_name) if ("fax_name" in vars) else Undefined()), (augment(fax_name_and_gender) if ("fax_name_and_gender" in vars) else Undefined())))))) != type(Undefined()))):
+			define("fax_info", ((ternary((augment(___shortcut_13_choice) if ("___shortcut_13_choice" in vars) else Undefined()), (augment(fax_gender) if ("fax_gender" in vars) else Undefined()), (ternary((augment(___shortcut_14_choice) if ("___shortcut_14_choice" in vars) else Undefined()), (augment(fax_name) if ("fax_name" in vars) else Undefined()), (augment(fax_name_and_gender) if ("fax_name_and_gender" in vars) else Undefined()))))).primitive_value()))
+		if ((not ("___shortcut_40_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_40_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Alameda"))).primitive_value())))
+		if ((not ("___shortcut_41_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_41_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Contra Costa"))).primitive_value())))
+		if ((not ("___shortcut_42_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_42_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Marin"))).primitive_value())))
+		if ((not ("___shortcut_43_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_43_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Napa"))).primitive_value())))
+		if ((not ("___shortcut_49_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_49_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Other"))).primitive_value())))
+		if ((not ("___shortcut_44_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_44_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("San Francisco"))).primitive_value())))
+		if ((not ("___shortcut_45_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_45_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("San Mateo"))).primitive_value())))
+		if ((not ("___shortcut_46_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_46_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Santa Clara"))).primitive_value())))
+		if ((not ("___shortcut_47_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_47_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Solano"))).primitive_value())))
+		if ((not ("___shortcut_48_choice" in vars)) and (("court_county" in vars))):
+			define("___shortcut_48_choice", ((((augment(court_county) if ("court_county" in vars) else Undefined()) == (augment("Sonoma"))).primitive_value())))
+		if ((not ("___shortcut_27_choice" in vars)) and (("current_gender" in vars))):
+			define("___shortcut_27_choice", ((((augment(current_gender) if ("current_gender" in vars) else Undefined()) == (augment("Female"))).primitive_value())))
+		if ((not ("___shortcut_26_choice" in vars)) and (("current_gender" in vars))):
+			define("___shortcut_26_choice", ((((augment(current_gender) if ("current_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
+		if ((not ("___shortcut_35_choice" in vars)) and (("future_gender" in vars))):
+			define("___shortcut_35_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
+		if ((not ("___shortcut_37_choice" in vars)) and (("future_gender" in vars))):
+			define("___shortcut_37_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
+		if ((not ("___shortcut_36_choice" in vars)) and (("future_gender" in vars))):
+			define("___shortcut_36_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Non"))).primitive_value())))
+		if ((not ("___shortcut_63_false" in vars)) and (("help_gender" in vars))):
+			define("___shortcut_63_false", ((((augment(help_gender) if ("help_gender" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
+		if ((not ("___shortcut_62_false" in vars)) and (("help_name" in vars))):
+			define("___shortcut_62_false", ((((augment(help_name) if ("help_name" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
+		if ((not ("___shortcut_13_choice" in vars)) and (("help_type" in vars))):
+			define("___shortcut_13_choice", ((((augment(help_type) if ("help_type" in vars) else Undefined()) == (augment("Gender Change (18+ only)"))).primitive_value())))
+		if ((not ("___shortcut_15_choice" in vars)) and (("help_type" in vars))):
+			define("___shortcut_15_choice", ((((augment(help_type) if ("help_type" in vars) else Undefined()) == (augment("Name & Gender Change (18+ only)"))).primitive_value())))
+		if ((not ("___shortcut_14_choice" in vars)) and (("help_type" in vars))):
+			define("___shortcut_14_choice", ((((augment(help_type) if ("help_type" in vars) else Undefined()) == (augment("Name Change (trans-identified 18+ only)"))).primitive_value())))
 		if ((not ("___shortcut_2_false" in vars)) and (("start" in vars))):
 			define("___shortcut_2_false", ((((augment(start) if ("start" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
 ---
@@ -411,12 +566,72 @@ code: |
 	___define_until_idempotent()
 ---
 code: |
+	___shortcut_40_choice = (court_county == "Alameda")
+---
+code: |
+	___shortcut_41_choice = (court_county == "Contra Costa")
+---
+code: |
+	___shortcut_42_choice = (court_county == "Marin")
+---
+code: |
+	___shortcut_43_choice = (court_county == "Napa")
+---
+code: |
+	___shortcut_49_choice = (court_county == "Other")
+---
+code: |
+	___shortcut_44_choice = (court_county == "San Francisco")
+---
+code: |
+	___shortcut_45_choice = (court_county == "San Mateo")
+---
+code: |
+	___shortcut_46_choice = (court_county == "Santa Clara")
+---
+code: |
+	___shortcut_47_choice = (court_county == "Solano")
+---
+code: |
+	___shortcut_48_choice = (court_county == "Sonoma")
+---
+code: |
+	___shortcut_27_choice = (current_gender == "Female")
+---
+code: |
+	___shortcut_26_choice = (current_gender == "Male")
+---
+code: |
+	___shortcut_35_choice = (future_gender == "Male")
+---
+code: |
+	___shortcut_37_choice = (future_gender == "Male")
+---
+code: |
+	___shortcut_36_choice = (future_gender == "Non")
+---
+code: |
+	___shortcut_63_false = (help_gender == False)
+---
+code: |
+	___shortcut_62_false = (help_name == False)
+---
+code: |
+	___shortcut_13_choice = (help_type == "Gender Change (18+ only)")
+---
+code: |
+	___shortcut_15_choice = (help_type == "Name & Gender Change (18+ only)")
+---
+code: |
+	___shortcut_14_choice = (help_type == "Name Change (trans-identified 18+ only)")
+---
+code: |
 	___shortcut_2_false = (start == False)
 ---
 mandatory: True
 code: |
 	def passive_possible_variables():
-		return { 'Today': (raw(Today) if defined("Today") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
+		return { 'Today': (raw(Today) if defined("Today") else ''), 'court_alameda': (raw(court_alameda) if defined("court_alameda") else ''), 'court_contra_costa': (raw(court_contra_costa) if defined("court_contra_costa") else ''), 'court_county': (raw(court_county) if defined("court_county") else ''), '___shortcut_40_choice': (raw(___shortcut_40_choice) if defined("___shortcut_40_choice") else ''), '___shortcut_41_choice': (raw(___shortcut_41_choice) if defined("___shortcut_41_choice") else ''), '___shortcut_42_choice': (raw(___shortcut_42_choice) if defined("___shortcut_42_choice") else ''), '___shortcut_43_choice': (raw(___shortcut_43_choice) if defined("___shortcut_43_choice") else ''), '___shortcut_49_choice': (raw(___shortcut_49_choice) if defined("___shortcut_49_choice") else ''), '___shortcut_44_choice': (raw(___shortcut_44_choice) if defined("___shortcut_44_choice") else ''), '___shortcut_45_choice': (raw(___shortcut_45_choice) if defined("___shortcut_45_choice") else ''), '___shortcut_46_choice': (raw(___shortcut_46_choice) if defined("___shortcut_46_choice") else ''), '___shortcut_47_choice': (raw(___shortcut_47_choice) if defined("___shortcut_47_choice") else ''), '___shortcut_48_choice': (raw(___shortcut_48_choice) if defined("___shortcut_48_choice") else ''), 'court_info': (raw(court_info) if defined("court_info") else ''), 'court_marin': (raw(court_marin) if defined("court_marin") else ''), 'court_napa': (raw(court_napa) if defined("court_napa") else ''), 'court_other': (raw(court_other) if defined("court_other") else ''), 'court_san_francisco': (raw(court_san_francisco) if defined("court_san_francisco") else ''), 'court_san_mateo': (raw(court_san_mateo) if defined("court_san_mateo") else ''), 'court_santa_clara': (raw(court_santa_clara) if defined("court_santa_clara") else ''), 'court_solano': (raw(court_solano) if defined("court_solano") else ''), 'court_sonoma': (raw(court_sonoma) if defined("court_sonoma") else ''), 'current_aka': (raw(current_aka) if defined("current_aka") else ''), 'current_case': (raw(current_case) if defined("current_case") else ''), 'current_city': (raw(current_city) if defined("current_city") else ''), 'current_dob': (raw(current_dob) if defined("current_dob") else ''), 'current_email': (raw(current_email) if defined("current_email") else ''), 'current_gender': (raw(current_gender) if defined("current_gender") else ''), '___shortcut_27_choice': (raw(___shortcut_27_choice) if defined("___shortcut_27_choice") else ''), '___shortcut_26_choice': (raw(___shortcut_26_choice) if defined("___shortcut_26_choice") else ''), 'current_name': (raw(current_name) if defined("current_name") else ''), 'current_phone': (raw(current_phone) if defined("current_phone") else ''), 'current_pob': (raw(current_pob) if defined("current_pob") else ''), 'current_state': (raw(current_state) if defined("current_state") else ''), 'current_street': (raw(current_street) if defined("current_street") else ''), 'current_zip': (raw(current_zip) if defined("current_zip") else ''), 'fax_gender': (raw(fax_gender) if defined("fax_gender") else ''), 'fax_info': (raw(fax_info) if defined("fax_info") else ''), 'fax_name': (raw(fax_name) if defined("fax_name") else ''), 'fax_name_and_gender': (raw(fax_name_and_gender) if defined("fax_name_and_gender") else ''), 'future_gender': (raw(future_gender) if defined("future_gender") else ''), '___shortcut_35_choice': (raw(___shortcut_35_choice) if defined("___shortcut_35_choice") else ''), '___shortcut_37_choice': (raw(___shortcut_37_choice) if defined("___shortcut_37_choice") else ''), '___shortcut_36_choice': (raw(___shortcut_36_choice) if defined("___shortcut_36_choice") else ''), 'future_name': (raw(future_name) if defined("future_name") else ''), 'help_gender': (raw(help_gender) if defined("help_gender") else ''), '___shortcut_63_false': (raw(___shortcut_63_false) if defined("___shortcut_63_false") else ''), 'help_name': (raw(help_name) if defined("help_name") else ''), '___shortcut_62_false': (raw(___shortcut_62_false) if defined("___shortcut_62_false") else ''), 'help_type': (raw(help_type) if defined("help_type") else ''), '___shortcut_13_choice': (raw(___shortcut_13_choice) if defined("___shortcut_13_choice") else ''), '___shortcut_15_choice': (raw(___shortcut_15_choice) if defined("___shortcut_15_choice") else ''), '___shortcut_14_choice': (raw(___shortcut_14_choice) if defined("___shortcut_14_choice") else ''), 'signature': (raw(signature) if defined("signature") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
 ---
 features:
 	debug: False
@@ -427,6 +642,11 @@ metadata:
 		Name & Gender Change Workshop
 	exit label: |
 		Powered by Community.lawyer, a public benefit company
+---
+mandatory: True
+code: |
+  if ___user_device == "IE":
+    log("This app may not run as expected on Internet Explorer - please consider using a more modern browser, such as those found <a href='http://outdatedbrowser.com/en'>here</a>.", "warning")
 ---
 mandatory: |
 	True
@@ -444,8 +664,684 @@ mandatory: |
 question: |
 		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
 subquestion: |
+	# How can we help you today?
+fields:
+	- "": help_type
+		input type: radio
+		required: true
+		datatype: text
+		choices:
+			- "Gender Change (18+ only)": "Gender Change (18+ only)"
+			- "Name Change (trans-identified 18+ only)": "Name Change (trans-identified 18+ only)"
+			- "Name & Gender Change (18+ only)": "Name & Gender Change (18+ only)"
+
+under: |
+	${___send_answers()}
+---
+code: |
+	help_name = ((augment(___shortcut_15_choice).logical_or(augment(___shortcut_14_choice)))).primitive_value()
+---
+code: |
+	help_gender = ((augment(___shortcut_13_choice).logical_or(augment(___shortcut_15_choice)))).primitive_value()
+---
+mandatory: |
+	True
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
+	# Current Petitioner Information
+fields:
+	- "Full Legal Name": current_name
+		datatype: text
+		required: true
+		html: |
+			<span hidden data-variable id='current_name'/>
+
+	- "Also Known As": current_aka
+		datatype: text
+		required: false
+		html: |
+			<span hidden data-variable id='current_aka'/>
+
+	- "Gender assigned by the state at birth": current_gender
+		input type: radio
+		required: true
+		datatype: text
+		choices:
+			- "Male": "Male"
+			- "Female": "Female"
+		html: |
+			<span hidden data-variable id='current_gender'/>
+
+	- "Phone": current_phone
+		datatype: text
+		required: false
+		html: |
+			<span hidden data-variable id='current_phone'/>
+
+	- "Email": current_email
+		datatype: email
+		required: false
+		html: |
+			<span hidden data-variable id='current_email'/>
+
+	- "Street": current_street
+		datatype: text
+		required: true
+		html: |
+			<span hidden data-variable id='current_street'/>
+
+	- "City": current_city
+		datatype: text
+		required: true
+		html: |
+			<span hidden data-variable id='current_city'/>
+
+	- "Zip": current_zip
+		datatype: text
+		required: true
+		minlength: 5
+		maxlength: 5
+		html: |
+			<span hidden data-variable id='current_zip'/>
+
+	- "Place of Birth": current_pob
+		datatype: text
+		required: true
+		html: |
+			<span hidden data-variable id='current_pob'/>
+
+	- "Date of Birth": current_dob
+		datatype: date
+		required: true
+		html: |
+			<span hidden data-variable id='current_dob'/>
+
+under: |
+	${___send_answers()}
+
+script: |
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var current_aka_field = $('#current_aka').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      current_name: null,
+			current_aka: null,
+			current_gender: null,
+			current_phone: null,
+			current_email: null,
+			current_street: null,
+			current_city: null,
+			current_zip: null,
+			current_pob: null,
+			current_dob: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: current_aka, field: current_aka_field, required: false, callback: function() { return allVariableValues['help_type'] != "Gender Change (18+ only)" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
+---
+code: |
+	current_state = """CA"""
+---
+code: |
+	current_case = ((augment("In re:") + augment(" ") + (augment(current_name)))).primitive_value()
+---
+mandatory: |
+	(((augment(help_name) if defined("help_name") else Undefined())))
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
+	# Future Petitioner Name
+fields:
+	- "Full Future Name": future_name
+		datatype: text
+		required: true
+
+under: |
+	${___send_answers()}
+---
+mandatory: |
+	(((augment(help_gender) if defined("help_gender") else Undefined())))
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
+	# Future Petitioner Gender
+fields:
+	- "Future state assigned gender": future_gender
+		input type: radio
+		required: true
+		datatype: text
+		choices:
+			- "Female": "Male"
+			- "Male": "Non"
+			- "Non-Binary": "Male"
+
+under: |
+	${___send_answers()}
+---
+mandatory: |
+	True
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
+	# Court Information
+fields:
+	- "Which county do you live in?": court_county
+		input type: dropdown
+		required: true
+		datatype: text
+		choices:
+			- "Alameda": "Alameda"
+			- "Contra Costa": "Contra Costa"
+			- "Marin": "Marin"
+			- "Napa": "Napa"
+			- "San Francisco": "San Francisco"
+			- "San Mateo": "San Mateo"
+			- "Santa Clara": "Santa Clara"
+			- "Solano": "Solano"
+			- "Sonoma": "Sonoma"
+			- "Other": "Other"
+		html: |
+			<span hidden data-variable id='court_county'/>
+
+	- "Full Superior Court Name and Address": court_other
+		datatype: area
+		required: false
+		html: |
+			<span hidden data-variable id='court_other'/>
+
+under: |
+	${___send_answers()}
+
+script: |
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
+
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
+
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+          var len = o.length >>> 0;
+
+          if (len === 0) {
+            return false;
+          }
+
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
+
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
+            }
+            k++;
+          }
+
+          return false;
+        }
+      });
+    }
+
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var court_other_field = $('#court_other').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      court_county: null,
+			court_other: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: court_other, field: court_other_field, required: false, callback: function() { return allVariableValues['court_county'] == "Other" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
+---
+code: |
+	court_alameda = """Alameda
+
+	Rene C. Davidson Courthouse
+
+	1225 Fallon St
+
+	Oakland, CA 94612"""
+---
+code: |
+	court_contra_costa = """Contra Costa
+
+	Wakefield Taylor Courthouse
+
+	725 Court St
+
+	Martinez, CA 94553"""
+---
+code: |
+	court_marin = """Marin
+
+	Civic Center Hall of Justice
+
+	3501 Civic Center Drive
+
+	San Rafael, CA 94903"""
+---
+code: |
+	court_napa = """Napa
+
+	Historic Courthouse
+
+	825 Brown St
+
+	Napa, CA 94559"""
+---
+code: |
+	court_san_francisco = """San Francisco
+
+	Civic Center Courthouse
+
+	400 McAllister St
+
+	San Francisco, CA 94102"""
+---
+code: |
+	court_san_mateo = """San Mateo
+
+	Hall of Justice
+
+	400 County Center
+
+	Redwood City, CA 94063"""
+---
+code: |
+	court_santa_clara = """Santa Clara
+
+	Downtown Superior Courthouse
+
+	191 North First Street
+
+	San Jose, CA 95113"""
+---
+code: |
+	court_solano = """Solano
+
+	Old Solano Courthouse
+
+	580 Texas Street
+
+	Fairfield, CA 94533"""
+---
+code: |
+	court_sonoma = """Sonoma
+
+	Hall of Justice
+
+	600 Administration Drive
+
+	Santa Rosa, CA 95403"""
+---
+code: |
+	court_info = (ternary(___shortcut_40_choice, court_alameda, (ternary(___shortcut_41_choice, court_contra_costa, (ternary(___shortcut_42_choice, court_marin, (ternary(___shortcut_43_choice, court_napa, (ternary(___shortcut_44_choice, court_san_francisco, (ternary(___shortcut_45_choice, court_san_mateo, (ternary(___shortcut_46_choice, court_san_mateo, (ternary(___shortcut_47_choice, court_solano, (ternary(___shortcut_48_choice, court_sonoma, court_other))))))))))))))))))
+---
+mandatory: |
+	True
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
+	Please sign as you would for any government document
+signature: signature
+
+under: |
+	${___send_answers()}
+---
+code: |
+	fax_gender = """CM-010 (1 page)
+
+	NC-300 (1 page)
+
+	NC-330 (1 page)
+
+	FW-001 (2 pages)"""
+---
+code: |
+	fax_name = """CM-010 (1 page)
+
+	NC-100 (1 page)
+
+	NC-110 (1 page)
+
+	NC-125 (1 page)
+
+	NC-130 (1 page)
+
+	FW-001 (2 pages)"""
+---
+code: |
+	fax_name_and_gender = """CM-010 (1 page)
+
+	NC-110 (1 page)
+
+	NC-125 (1 page)
+
+	NC-200 (1 page)
+
+	NC-230 (1 page)
+
+	FW-001 (2 pages)"""
+---
+code: |
+	fax_info = (ternary(___shortcut_13_choice, fax_gender, (ternary(___shortcut_14_choice, fax_name, fax_name_and_gender))))
+---
+mandatory: |
+	True
+question: |
+		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+subquestion: |
 	# **Thanks for volunteering!**
 
+attachment code: |
+	filter(bool, [ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc110_pdf_1089_attachment_1372, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc130_pdf_1093_attachment_1374, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc200_pdf_1095_attachment_1375, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc230_pdf_1096_attachment_1376, ""), ___mc005_pdf_1100_attachment_1371, ___cm010_pdf_1087_attachment_1378, ___fw001_pdf_1099_attachment_1381, ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc100_pdf_1088_attachment_1380, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc300_pdf_1097_attachment_1377, ""), ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc125_pdf_1092_attachment_1373, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc330_pdf_1098_attachment_1379, "")])
+allow emailing: False
 under: |
 	${___send_answers()}
 css: |
@@ -455,7 +1351,357 @@ css: |
     }
   </style>
 ---
+code: |
+	if (augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1088
+		access_key = '4DLr4v2pcl'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc100_pdf_1088_attachment_1380 = DAFileCollection()
+		___nc100_pdf_1088_attachment_1380.pdf = DAFile()
+		___nc100_pdf_1088_attachment_1380.pdf.initialize(extension="pdf")
+		if done:
+			___nc100_pdf_1088_attachment_1380.pdf.from_url(filled_attachment_url)
+			___nc100_pdf_1088_attachment_1380.info = {'name': 'nc100', 'filename': 'nc100', 'description': ''}
+		else:
+			___nc100_pdf_1088_attachment_1380.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc100_pdf_1088_attachment_1380.info = {'name': 'We encountered a problem', 'filename': 'nc100', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc100_pdf_1088_attachment_1380 = ''
 ---
+code: |
+	if (augment(help_name) if defined("help_name") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1092
+		access_key = 'rxQImKnZBW'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc125_pdf_1092_attachment_1373 = DAFileCollection()
+		___nc125_pdf_1092_attachment_1373.pdf = DAFile()
+		___nc125_pdf_1092_attachment_1373.pdf.initialize(extension="pdf")
+		if done:
+			___nc125_pdf_1092_attachment_1373.pdf.from_url(filled_attachment_url)
+			___nc125_pdf_1092_attachment_1373.info = {'name': 'nc125', 'filename': 'nc125', 'description': ''}
+		else:
+			___nc125_pdf_1092_attachment_1373.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc125_pdf_1092_attachment_1373.info = {'name': 'We encountered a problem', 'filename': 'nc125', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc125_pdf_1092_attachment_1373 = ''
+---
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1087
+		access_key = 'oZ3Ar2XPqQ'
+		drawn_variables = {'35348': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '35349': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "") if defined("signature") else "")), '33226': markdown_to_plaintext(unicode(current_case if defined("current_case") else "")), '33231': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33232': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33230': unicode("1"), '33236': unicode("True"), '33282': unicode("True"), '33280': unicode("True"), '33290': unicode("True"), '33293': unicode("True")}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___cm010_pdf_1087_attachment_1378 = DAFileCollection()
+		___cm010_pdf_1087_attachment_1378.pdf = DAFile()
+		___cm010_pdf_1087_attachment_1378.pdf.initialize(extension="pdf")
+		if done:
+			___cm010_pdf_1087_attachment_1378.pdf.from_url(filled_attachment_url)
+			___cm010_pdf_1087_attachment_1378.info = {'name': 'cm010', 'filename': 'cm010', 'description': ''}
+		else:
+			___cm010_pdf_1087_attachment_1378.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___cm010_pdf_1087_attachment_1378.info = {'name': 'We encountered a problem', 'filename': 'cm010', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___cm010_pdf_1087_attachment_1378 = ''
+---
+code: |
+	if (augment(help_name) if defined("help_name") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1089
+		access_key = 'kXzlZtori7'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc110_pdf_1089_attachment_1372 = DAFileCollection()
+		___nc110_pdf_1089_attachment_1372.pdf = DAFile()
+		___nc110_pdf_1089_attachment_1372.pdf.initialize(extension="pdf")
+		if done:
+			___nc110_pdf_1089_attachment_1372.pdf.from_url(filled_attachment_url)
+			___nc110_pdf_1089_attachment_1372.info = {'name': 'nc110', 'filename': 'nc110', 'description': ''}
+		else:
+			___nc110_pdf_1089_attachment_1372.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc110_pdf_1089_attachment_1372.info = {'name': 'We encountered a problem', 'filename': 'nc110', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc110_pdf_1089_attachment_1372 = ''
+---
+code: |
+	if (augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1093
+		access_key = 'VZc5QkITSz'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc130_pdf_1093_attachment_1374 = DAFileCollection()
+		___nc130_pdf_1093_attachment_1374.pdf = DAFile()
+		___nc130_pdf_1093_attachment_1374.pdf.initialize(extension="pdf")
+		if done:
+			___nc130_pdf_1093_attachment_1374.pdf.from_url(filled_attachment_url)
+			___nc130_pdf_1093_attachment_1374.info = {'name': 'nc130', 'filename': 'nc130', 'description': ''}
+		else:
+			___nc130_pdf_1093_attachment_1374.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc130_pdf_1093_attachment_1374.info = {'name': 'We encountered a problem', 'filename': 'nc130', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc130_pdf_1093_attachment_1374 = ''
+---
+code: |
+	if (augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1095
+		access_key = 'wcOWuuzJjv'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc200_pdf_1095_attachment_1375 = DAFileCollection()
+		___nc200_pdf_1095_attachment_1375.pdf = DAFile()
+		___nc200_pdf_1095_attachment_1375.pdf.initialize(extension="pdf")
+		if done:
+			___nc200_pdf_1095_attachment_1375.pdf.from_url(filled_attachment_url)
+			___nc200_pdf_1095_attachment_1375.info = {'name': 'nc200', 'filename': 'nc200', 'description': ''}
+		else:
+			___nc200_pdf_1095_attachment_1375.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc200_pdf_1095_attachment_1375.info = {'name': 'We encountered a problem', 'filename': 'nc200', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc200_pdf_1095_attachment_1375 = ''
+---
+code: |
+	if (augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1097
+		access_key = 'dhDcORRWUH'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc300_pdf_1097_attachment_1377 = DAFileCollection()
+		___nc300_pdf_1097_attachment_1377.pdf = DAFile()
+		___nc300_pdf_1097_attachment_1377.pdf.initialize(extension="pdf")
+		if done:
+			___nc300_pdf_1097_attachment_1377.pdf.from_url(filled_attachment_url)
+			___nc300_pdf_1097_attachment_1377.info = {'name': 'nc300', 'filename': 'nc300', 'description': ''}
+		else:
+			___nc300_pdf_1097_attachment_1377.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc300_pdf_1097_attachment_1377.info = {'name': 'We encountered a problem', 'filename': 'nc300', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc300_pdf_1097_attachment_1377 = ''
+---
+code: |
+	if (augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1098
+		access_key = '1Q2ClNPgXu'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc330_pdf_1098_attachment_1379 = DAFileCollection()
+		___nc330_pdf_1098_attachment_1379.pdf = DAFile()
+		___nc330_pdf_1098_attachment_1379.pdf.initialize(extension="pdf")
+		if done:
+			___nc330_pdf_1098_attachment_1379.pdf.from_url(filled_attachment_url)
+			___nc330_pdf_1098_attachment_1379.info = {'name': 'nc330', 'filename': 'nc330', 'description': ''}
+		else:
+			___nc330_pdf_1098_attachment_1379.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc330_pdf_1098_attachment_1379.info = {'name': 'We encountered a problem', 'filename': 'nc330', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc330_pdf_1098_attachment_1379 = ''
+---
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1099
+		access_key = 'sGx5plzs9q'
+		drawn_variables = {'33764': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '33749': markdown_to_plaintext(unicode(court_info)), '33763': markdown_to_plaintext(unicode(current_name)), '33757': markdown_to_plaintext(unicode(current_phone)), '33756': markdown_to_plaintext(unicode(current_city)), '33755': markdown_to_plaintext(unicode(current_zip)), '33753': markdown_to_plaintext(unicode(current_street)), '33752': markdown_to_plaintext(unicode(current_name)), '33751': markdown_to_plaintext(unicode(current_case)), '33786': markdown_to_plaintext(unicode(current_name)), '35342': markdown_to_plaintext(unicode(current_state)), '35343': unicode("True"), '35345': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "")))}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___fw001_pdf_1099_attachment_1381 = DAFileCollection()
+		___fw001_pdf_1099_attachment_1381.pdf = DAFile()
+		___fw001_pdf_1099_attachment_1381.pdf.initialize(extension="pdf")
+		if done:
+			___fw001_pdf_1099_attachment_1381.pdf.from_url(filled_attachment_url)
+			___fw001_pdf_1099_attachment_1381.info = {'name': 'fw001', 'filename': 'fw001', 'description': ''}
+		else:
+			___fw001_pdf_1099_attachment_1381.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___fw001_pdf_1099_attachment_1381.info = {'name': 'We encountered a problem', 'filename': 'fw001', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___fw001_pdf_1099_attachment_1381 = ''
+---
+code: |
+	if (augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()):
+		import requests
+		import json
+		import time
+		template_id = 1096
+		access_key = 'ZBXgdVgxFv'
+		drawn_variables = {}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc230_pdf_1096_attachment_1376 = DAFileCollection()
+		___nc230_pdf_1096_attachment_1376.pdf = DAFile()
+		___nc230_pdf_1096_attachment_1376.pdf.initialize(extension="pdf")
+		if done:
+			___nc230_pdf_1096_attachment_1376.pdf.from_url(filled_attachment_url)
+			___nc230_pdf_1096_attachment_1376.info = {'name': 'nc230', 'filename': 'nc230', 'description': ''}
+		else:
+			___nc230_pdf_1096_attachment_1376.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc230_pdf_1096_attachment_1376.info = {'name': 'We encountered a problem', 'filename': 'nc230', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc230_pdf_1096_attachment_1376 = ''
+---
+code: |
+	if True:
+		import requests
+		import json
+		import time
+		template_id = 1100
+		access_key = 'tNKe20DE6G'
+		drawn_variables = {'33888': unicode("ALAMEDA"), '33889': unicode("1225 FALLON ST"), '33894': unicode("N/A"), '33892': unicode("RENE C. DAVIDSON COURTHOUSE"), '33891': unicode("OAKLAND, CA 94612"), '33896': markdown_to_plaintext(unicode(fax_info if defined("fax_info") else "")), '33893': markdown_to_plaintext(unicode(current_name if defined("current_name") else ""))}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___mc005_pdf_1100_attachment_1371 = DAFileCollection()
+		___mc005_pdf_1100_attachment_1371.pdf = DAFile()
+		___mc005_pdf_1100_attachment_1371.pdf.initialize(extension="pdf")
+		if done:
+			___mc005_pdf_1100_attachment_1371.pdf.from_url(filled_attachment_url)
+			___mc005_pdf_1100_attachment_1371.info = {'name': 'mc005', 'filename': 'mc005', 'description': ''}
+		else:
+			___mc005_pdf_1100_attachment_1371.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___mc005_pdf_1100_attachment_1371.info = {'name': 'We encountered a problem', 'filename': 'mc005', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___mc005_pdf_1100_attachment_1371 = ''
 ---
 mandatory: |
 	True
