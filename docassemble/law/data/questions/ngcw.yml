@@ -1,9 +1,9 @@
 ---
 modules:
-- docassemble.base.util
+  - docassemble.base.util
 ---
 imports:
-- datetime
+  - datetime
 ---
 metadata:
   title: Name/Gender Change
@@ -21,91 +21,91 @@ question: |
 subquestion: |
   Please inform us what services you are seeking assistance with.
 choices:
-- Gender Change (18+ only)
-- Name Change (trans-identified 18+ only)
-- Name & Gender Change (18+ only)
+  - Gender Change (18+ only)
+  - Name Change (trans-identified 18+ only)
+  - Name & Gender Change (18+ only)
 ---
 question: |
   Current Petitioner Information
 subquestion: |
   Please enter your current legal information.
 fields:
-- Name: petitioner_full_name
-- Address: petitioner_number_and_street
-- City: petitioner_city
-- Zip: petitioner_zip
-- Telephone: petitioner_phone_number
-  required: False
-- Email: petitioner_email
-  required: False
-- Assigned Gender at Birth: petitioner_agab
-  choices:
-  - Male
-  - Female
+  - Name: petitioner_full_name
+  - Address: petitioner_number_and_street
+  - City: petitioner_city
+  - Zip: petitioner_zip
+  - Telephone: petitioner_phone_number
+    required: False
+  - Email: petitioner_email
+    required: False
+  - Assigned Gender at Birth: petitioner_agab
+    choices:
+      - Male
+      - Female
 ---
 question: |
   Additional Petitioner Information
 subquestion: |
   Please enter your additional legal information.
 fields:
-- AKA 1: petitioner_full_name2
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- AKA 2: petitioner_full_name3
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- AKA 3: petitioner_full_name4
-  required: False
-  js hide if: val("help_type") == "Gender Change (18+ only)"
-- Place of Birth: petitioner_pob
-- Date of Birth: petitioner_dob
-  datatype: date
+  - AKA 1: petitioner_full_name2
+    required: False
+    js hide if: val("help_type") == "Gender Change (18+ only)"
+  - AKA 2: petitioner_full_name3
+    required: False
+    js hide if: val("help_type") == "Gender Change (18+ only)"
+  - AKA 3: petitioner_full_name4
+    required: False
+    js hide if: val("help_type") == "Gender Change (18+ only)"
+  - Place of Birth: petitioner_pob
+  - Date of Birth: petitioner_dob
+    datatype: date
 ---
 question: |
   Future Petitioner Name
 subquestion: |
   Please enter the name you wish to go by legally.
 fields:
-- Name: new_name
+  - Name: new_name
 ---
 question: |
   Future Petitioner Gender
 subquestion: |
   Please enter the gender you wish to go by legally.
 fields:
-- Gender: new_gender
-  choices:
-  - Female
-  - Male
-  - Non-Binary
+  - Gender: new_gender
+    choices:
+      - Female
+      - Male
+      - Non-Binary
 ---
 question: |
   Court Information
 subquestion: |
   Please select the county you live in.
 fields:
-- County: court_county
-  choices:
-  - Alameda
-  - Contra Costa
-  - Marin
-  - Napa
-  - San Francisco
-  - San Mateo
-  - Santa Clara
-  - Solano
-  - Sonoma
-  - Other
-- Other County: court_county_custom
-  js show if: val("court_county") == "Other"
-- Address: court_address
-  js show if: val("court_county") == "Other"
-- City: court_city
-  js show if: val("court_county") == "Other"
-- Zip: court_zip
-  js show if: val("court_county") == "Other"
-- Branch: court_branch
-  js show if: val("court_county") == "Other"
+  - County: court_county
+    choices:
+      - Alameda
+      - Contra Costa
+      - Marin
+      - Napa
+      - San Francisco
+      - San Mateo
+      - Santa Clara
+      - Solano
+      - Sonoma
+      - Other
+  - Other County: court_county_custom
+    js show if: val("court_county") == "Other"
+  - Address: court_address
+    js show if: val("court_county") == "Other"
+  - City: court_city
+    js show if: val("court_county") == "Other"
+  - Zip: court_zip
+    js show if: val("court_county") == "Other"
+  - Branch: court_branch
+    js show if: val("court_county") == "Other"
 ---
 mandatory: True
 code: |
@@ -225,54 +225,54 @@ attachment:
   variable name: unofficial_name_and_gender_change
   pdf template file: name_and_gender_change.pdf
   fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Full Name2: |
-      ${ petitioner_full_name2 }
-  - Petitioner Full Name3: |
-      ${ petitioner_full_name3 }
-  - Petitioner Full Name4: |
-      ${ petitioner_full_name4 }
-  - Petitioner Full Name w/AKAs: |
-      ${ petitioner_full_name_w_akas }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Petitioner POB: |
-      ${ petitioner_pob }
-  - Petitioner DOB: |
-      ${ petitioner_dob }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Petitioner New Name: |
-      ${ new_name }
-  - Female Check: |
-      ${ female_check }
-  - Male Check: |
-      ${ male_check }
-  - Nonbinary Check: |
-      ${ nonbinary_check }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
+    - Petitioner Full Name: |
+        ${ petitioner_full_name }
+    - Petitioner Full Name2: |
+        ${ petitioner_full_name2 }
+    - Petitioner Full Name3: |
+        ${ petitioner_full_name3 }
+    - Petitioner Full Name4: |
+        ${ petitioner_full_name4 }
+    - Petitioner Full Name w/AKAs: |
+        ${ petitioner_full_name_w_akas }
+    - Petitioner Number and Street: |
+        ${ petitioner_number_and_street }
+    - Petitioner City: |
+        ${ petitioner_city }
+    - STATE: |
+        ${ petitioner_state }
+    - Petitioner Zip: |
+        ${ petitioner_zip }
+    - Petitioner Phone Number: |
+        ${ petitioner_phone_number }
+    - Petitioner E-mail: |
+        ${ petitioner_email }
+    - Petitioner POB: |
+        ${ petitioner_pob }
+    - Petitioner DOB: |
+        ${ petitioner_dob }
+    - Check Box5: |
+        ${ check_box5 }
+    - Check Box6: |
+        ${ check_box6 }
+    - Petitioner New Name: |
+        ${ new_name }
+    - Female Check: |
+        ${ female_check }
+    - Male Check: |
+        ${ male_check }
+    - Nonbinary Check: |
+        ${ nonbinary_check }
+    - County: |
+        ${ court_county_final }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
+    - Date1_af_date: |
+        ${ date1 }
 allow emailing: False
 ---
 field: name_form
@@ -285,48 +285,48 @@ attachment:
   variable name: unofficial_name_change
   pdf template file: name_change.pdf
   fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Full Name2: |
-      ${ petitioner_full_name2 }
-  - Petitioner Full Name3: |
-      ${ petitioner_full_name3 }
-  - Petitioner Full Name4: |
-      ${ petitioner_full_name4 }
-  - Petitioner Full Name w/AKAs: |
-      ${ petitioner_full_name_w_akas }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Petitioner POB: |
-      ${ petitioner_pob }
-  - Petitioner DOB: |
-      ${ petitioner_dob }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Petitioner New Name: |
-      ${ new_name }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
+    - Petitioner Full Name: |
+        ${ petitioner_full_name }
+    - Petitioner Full Name2: |
+        ${ petitioner_full_name2 }
+    - Petitioner Full Name3: |
+        ${ petitioner_full_name3 }
+    - Petitioner Full Name4: |
+        ${ petitioner_full_name4 }
+    - Petitioner Full Name w/AKAs: |
+        ${ petitioner_full_name_w_akas }
+    - Petitioner Number and Street: |
+        ${ petitioner_number_and_street }
+    - Petitioner City: |
+        ${ petitioner_city }
+    - STATE: |
+        ${ petitioner_state }
+    - Petitioner Zip: |
+        ${ petitioner_zip }
+    - Petitioner Phone Number: |
+        ${ petitioner_phone_number }
+    - Petitioner E-mail: |
+        ${ petitioner_email }
+    - Petitioner POB: |
+        ${ petitioner_pob }
+    - Petitioner DOB: |
+        ${ petitioner_dob }
+    - Check Box5: |
+        ${ check_box5 }
+    - Check Box6: |
+        ${ check_box6 }
+    - Petitioner New Name: |
+        ${ new_name }
+    - County: |
+        ${ court_county_final }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
+    - Date1_af_date: |
+        ${ date1 }
 allow emailing: False
 ---
 field: gender_form
@@ -339,40 +339,40 @@ attachment:
   variable name: unofficial_gender_change
   pdf template file: gender_change.pdf
   fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - Check Box5: |
-      ${ check_box5 }
-  - Check Box6: |
-      ${ check_box6 }
-  - Female Check: |
-      ${ female_check }
-  - Male Check: |
-      ${ male_check }
-  - Nonbinary Check: |
-      ${ nonbinary_check }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
+    - Petitioner Full Name: |
+        ${ petitioner_full_name }
+    - Petitioner Number and Street: |
+        ${ petitioner_number_and_street }
+    - Petitioner City: |
+        ${ petitioner_city }
+    - STATE: |
+        ${ petitioner_state }
+    - Petitioner Zip: |
+        ${ petitioner_zip }
+    - Petitioner Phone Number: |
+        ${ petitioner_phone_number }
+    - Petitioner E-mail: |
+        ${ petitioner_email }
+    - Check Box5: |
+        ${ check_box5 }
+    - Check Box6: |
+        ${ check_box6 }
+    - Female Check: |
+        ${ female_check }
+    - Male Check: |
+        ${ male_check }
+    - Nonbinary Check: |
+        ${ nonbinary_check }
+    - County: |
+        ${ court_county_final }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
+    - Date1_af_date: |
+        ${ date1 }
 allow emailing: False
 ---
 field: fee_form
@@ -385,32 +385,32 @@ attachment:
   variable name: unofficial_fee_waiver
   pdf template file: fee_waiver.pdf
   fields:
-  - Petitioner Full Name: |
-      ${ petitioner_full_name }
-  - Petitioner Number and Street: |
-      ${ petitioner_number_and_street }
-  - Petitioner City: |
-      ${ petitioner_city }
-  - STATE: |
-      ${ petitioner_state }
-  - Petitioner Zip: |
-      ${ petitioner_zip }
-  - Petitioner Phone Number: |
-      ${ petitioner_phone_number }
-  - Petitioner E-mail: |
-      ${ petitioner_email }
-  - County: |
-      ${ court_county_final }
-  - Court Address: |
-      ${ court_address }
-  - Court City and Zip: |
-      ${ court_city_and_zip }
-  - Court Branch Name: |
-      ${ court_branch }
-  - Date1_af_date: |
-      ${ date1 }
-  - Text59: |
-      ${ case_name }
+    - Petitioner Full Name: |
+        ${ petitioner_full_name }
+    - Petitioner Number and Street: |
+        ${ petitioner_number_and_street }
+    - Petitioner City: |
+        ${ petitioner_city }
+    - STATE: |
+        ${ petitioner_state }
+    - Petitioner Zip: |
+        ${ petitioner_zip }
+    - Petitioner Phone Number: |
+        ${ petitioner_phone_number }
+    - Petitioner E-mail: |
+        ${ petitioner_email }
+    - County: |
+        ${ court_county_final }
+    - Court Address: |
+        ${ court_address }
+    - Court City and Zip: |
+        ${ court_city_and_zip }
+    - Court Branch Name: |
+        ${ court_branch }
+    - Date1_af_date: |
+        ${ date1 }
+    - Text59: |
+        ${ case_name }
 allow emailing: False
 ---
 code: |
@@ -421,5 +421,5 @@ mandatory: True
 question: |
   ${message}
 buttons:
-- Exit: exit
-- Restart: restart
+  - Exit: exit
+  - Restart: restart
