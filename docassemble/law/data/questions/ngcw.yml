@@ -410,6 +410,8 @@ code: |
 			define("current_state", (augment("""CA""").primitive_value()))
 		if ((not ("current_case" in vars)) and (type(((augment("In re:") + augment(" ") + ((augment(current_name) if ("current_name" in vars) else Undefined()))))) != type(Undefined()))):
 			define("current_case", (((augment("In re:") + augment(" ") + ((augment(current_name) if ("current_name" in vars) else Undefined())))).primitive_value()))
+		if ((not ("current_address" in vars)) and (("current_street" in vars) and ("current_city" in vars) and ("current_state" in vars) and ("current_zip" in vars))):
+			define("current_address", (augment("""%s , %s , %s %s""" % (current_street,current_city,current_state,current_zip)).primitive_value()))
 		if ((not ("court_alameda" in vars)) and (True)):
 			define("court_alameda", (augment("""Alameda
 
@@ -543,11 +545,11 @@ code: |
 		if ((not ("___shortcut_26_choice" in vars)) and (("current_gender" in vars))):
 			define("___shortcut_26_choice", ((((augment(current_gender) if ("current_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
 		if ((not ("___shortcut_35_choice" in vars)) and (("future_gender" in vars))):
-			define("___shortcut_35_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
-		if ((not ("___shortcut_37_choice" in vars)) and (("future_gender" in vars))):
-			define("___shortcut_37_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
+			define("___shortcut_35_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Female"))).primitive_value())))
 		if ((not ("___shortcut_36_choice" in vars)) and (("future_gender" in vars))):
-			define("___shortcut_36_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Non"))).primitive_value())))
+			define("___shortcut_36_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Male"))).primitive_value())))
+		if ((not ("___shortcut_37_choice" in vars)) and (("future_gender" in vars))):
+			define("___shortcut_37_choice", ((((augment(future_gender) if ("future_gender" in vars) else Undefined()) == (augment("Non-Binary"))).primitive_value())))
 		if ((not ("___shortcut_63_false" in vars)) and (("help_gender" in vars))):
 			define("___shortcut_63_false", ((((augment(help_gender) if ("help_gender" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
 		if ((not ("___shortcut_62_false" in vars)) and (("help_name" in vars))):
@@ -602,13 +604,13 @@ code: |
 	___shortcut_26_choice = (current_gender == "Male")
 ---
 code: |
-	___shortcut_35_choice = (future_gender == "Male")
+	___shortcut_35_choice = (future_gender == "Female")
 ---
 code: |
-	___shortcut_37_choice = (future_gender == "Male")
+	___shortcut_36_choice = (future_gender == "Male")
 ---
 code: |
-	___shortcut_36_choice = (future_gender == "Non")
+	___shortcut_37_choice = (future_gender == "Non-Binary")
 ---
 code: |
 	___shortcut_63_false = (help_gender == False)
@@ -631,7 +633,7 @@ code: |
 mandatory: True
 code: |
 	def passive_possible_variables():
-		return { 'Today': (raw(Today) if defined("Today") else ''), 'court_alameda': (raw(court_alameda) if defined("court_alameda") else ''), 'court_contra_costa': (raw(court_contra_costa) if defined("court_contra_costa") else ''), 'court_county': (raw(court_county) if defined("court_county") else ''), '___shortcut_40_choice': (raw(___shortcut_40_choice) if defined("___shortcut_40_choice") else ''), '___shortcut_41_choice': (raw(___shortcut_41_choice) if defined("___shortcut_41_choice") else ''), '___shortcut_42_choice': (raw(___shortcut_42_choice) if defined("___shortcut_42_choice") else ''), '___shortcut_43_choice': (raw(___shortcut_43_choice) if defined("___shortcut_43_choice") else ''), '___shortcut_49_choice': (raw(___shortcut_49_choice) if defined("___shortcut_49_choice") else ''), '___shortcut_44_choice': (raw(___shortcut_44_choice) if defined("___shortcut_44_choice") else ''), '___shortcut_45_choice': (raw(___shortcut_45_choice) if defined("___shortcut_45_choice") else ''), '___shortcut_46_choice': (raw(___shortcut_46_choice) if defined("___shortcut_46_choice") else ''), '___shortcut_47_choice': (raw(___shortcut_47_choice) if defined("___shortcut_47_choice") else ''), '___shortcut_48_choice': (raw(___shortcut_48_choice) if defined("___shortcut_48_choice") else ''), 'court_info': (raw(court_info) if defined("court_info") else ''), 'court_marin': (raw(court_marin) if defined("court_marin") else ''), 'court_napa': (raw(court_napa) if defined("court_napa") else ''), 'court_other': (raw(court_other) if defined("court_other") else ''), 'court_san_francisco': (raw(court_san_francisco) if defined("court_san_francisco") else ''), 'court_san_mateo': (raw(court_san_mateo) if defined("court_san_mateo") else ''), 'court_santa_clara': (raw(court_santa_clara) if defined("court_santa_clara") else ''), 'court_solano': (raw(court_solano) if defined("court_solano") else ''), 'court_sonoma': (raw(court_sonoma) if defined("court_sonoma") else ''), 'current_aka': (raw(current_aka) if defined("current_aka") else ''), 'current_case': (raw(current_case) if defined("current_case") else ''), 'current_city': (raw(current_city) if defined("current_city") else ''), 'current_dob': (raw(current_dob) if defined("current_dob") else ''), 'current_email': (raw(current_email) if defined("current_email") else ''), 'current_gender': (raw(current_gender) if defined("current_gender") else ''), '___shortcut_27_choice': (raw(___shortcut_27_choice) if defined("___shortcut_27_choice") else ''), '___shortcut_26_choice': (raw(___shortcut_26_choice) if defined("___shortcut_26_choice") else ''), 'current_name': (raw(current_name) if defined("current_name") else ''), 'current_phone': (raw(current_phone) if defined("current_phone") else ''), 'current_pob': (raw(current_pob) if defined("current_pob") else ''), 'current_state': (raw(current_state) if defined("current_state") else ''), 'current_street': (raw(current_street) if defined("current_street") else ''), 'current_zip': (raw(current_zip) if defined("current_zip") else ''), 'fax_gender': (raw(fax_gender) if defined("fax_gender") else ''), 'fax_info': (raw(fax_info) if defined("fax_info") else ''), 'fax_name': (raw(fax_name) if defined("fax_name") else ''), 'fax_name_and_gender': (raw(fax_name_and_gender) if defined("fax_name_and_gender") else ''), 'future_gender': (raw(future_gender) if defined("future_gender") else ''), '___shortcut_35_choice': (raw(___shortcut_35_choice) if defined("___shortcut_35_choice") else ''), '___shortcut_37_choice': (raw(___shortcut_37_choice) if defined("___shortcut_37_choice") else ''), '___shortcut_36_choice': (raw(___shortcut_36_choice) if defined("___shortcut_36_choice") else ''), 'future_name': (raw(future_name) if defined("future_name") else ''), 'help_gender': (raw(help_gender) if defined("help_gender") else ''), '___shortcut_63_false': (raw(___shortcut_63_false) if defined("___shortcut_63_false") else ''), 'help_name': (raw(help_name) if defined("help_name") else ''), '___shortcut_62_false': (raw(___shortcut_62_false) if defined("___shortcut_62_false") else ''), 'help_type': (raw(help_type) if defined("help_type") else ''), '___shortcut_13_choice': (raw(___shortcut_13_choice) if defined("___shortcut_13_choice") else ''), '___shortcut_15_choice': (raw(___shortcut_15_choice) if defined("___shortcut_15_choice") else ''), '___shortcut_14_choice': (raw(___shortcut_14_choice) if defined("___shortcut_14_choice") else ''), 'signature': (raw(signature) if defined("signature") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
+		return { 'Today': (raw(Today) if defined("Today") else ''), 'court_alameda': (raw(court_alameda) if defined("court_alameda") else ''), 'court_contra_costa': (raw(court_contra_costa) if defined("court_contra_costa") else ''), 'court_county': (raw(court_county) if defined("court_county") else ''), '___shortcut_40_choice': (raw(___shortcut_40_choice) if defined("___shortcut_40_choice") else ''), '___shortcut_41_choice': (raw(___shortcut_41_choice) if defined("___shortcut_41_choice") else ''), '___shortcut_42_choice': (raw(___shortcut_42_choice) if defined("___shortcut_42_choice") else ''), '___shortcut_43_choice': (raw(___shortcut_43_choice) if defined("___shortcut_43_choice") else ''), '___shortcut_49_choice': (raw(___shortcut_49_choice) if defined("___shortcut_49_choice") else ''), '___shortcut_44_choice': (raw(___shortcut_44_choice) if defined("___shortcut_44_choice") else ''), '___shortcut_45_choice': (raw(___shortcut_45_choice) if defined("___shortcut_45_choice") else ''), '___shortcut_46_choice': (raw(___shortcut_46_choice) if defined("___shortcut_46_choice") else ''), '___shortcut_47_choice': (raw(___shortcut_47_choice) if defined("___shortcut_47_choice") else ''), '___shortcut_48_choice': (raw(___shortcut_48_choice) if defined("___shortcut_48_choice") else ''), 'court_info': (raw(court_info) if defined("court_info") else ''), 'court_marin': (raw(court_marin) if defined("court_marin") else ''), 'court_napa': (raw(court_napa) if defined("court_napa") else ''), 'court_other': (raw(court_other) if defined("court_other") else ''), 'court_san_francisco': (raw(court_san_francisco) if defined("court_san_francisco") else ''), 'court_san_mateo': (raw(court_san_mateo) if defined("court_san_mateo") else ''), 'court_santa_clara': (raw(court_santa_clara) if defined("court_santa_clara") else ''), 'court_solano': (raw(court_solano) if defined("court_solano") else ''), 'court_sonoma': (raw(court_sonoma) if defined("court_sonoma") else ''), 'current_address': (raw(current_address) if defined("current_address") else ''), 'current_aka_1': (raw(current_aka_1) if defined("current_aka_1") else ''), 'current_aka_2': (raw(current_aka_2) if defined("current_aka_2") else ''), 'current_aka_3': (raw(current_aka_3) if defined("current_aka_3") else ''), 'current_case': (raw(current_case) if defined("current_case") else ''), 'current_city': (raw(current_city) if defined("current_city") else ''), 'current_dob': (raw(current_dob) if defined("current_dob") else ''), 'current_email': (raw(current_email) if defined("current_email") else ''), 'current_gender': (raw(current_gender) if defined("current_gender") else ''), '___shortcut_27_choice': (raw(___shortcut_27_choice) if defined("___shortcut_27_choice") else ''), '___shortcut_26_choice': (raw(___shortcut_26_choice) if defined("___shortcut_26_choice") else ''), 'current_name': (raw(current_name) if defined("current_name") else ''), 'current_phone': (raw(current_phone) if defined("current_phone") else ''), 'current_pob': (raw(current_pob) if defined("current_pob") else ''), 'current_state': (raw(current_state) if defined("current_state") else ''), 'current_street': (raw(current_street) if defined("current_street") else ''), 'current_zip': (raw(current_zip) if defined("current_zip") else ''), 'fax_gender': (raw(fax_gender) if defined("fax_gender") else ''), 'fax_info': (raw(fax_info) if defined("fax_info") else ''), 'fax_name': (raw(fax_name) if defined("fax_name") else ''), 'fax_name_and_gender': (raw(fax_name_and_gender) if defined("fax_name_and_gender") else ''), 'future_gender': (raw(future_gender) if defined("future_gender") else ''), '___shortcut_35_choice': (raw(___shortcut_35_choice) if defined("___shortcut_35_choice") else ''), '___shortcut_36_choice': (raw(___shortcut_36_choice) if defined("___shortcut_36_choice") else ''), '___shortcut_37_choice': (raw(___shortcut_37_choice) if defined("___shortcut_37_choice") else ''), 'future_name': (raw(future_name) if defined("future_name") else ''), 'help_gender': (raw(help_gender) if defined("help_gender") else ''), '___shortcut_63_false': (raw(___shortcut_63_false) if defined("___shortcut_63_false") else ''), 'help_name': (raw(help_name) if defined("help_name") else ''), '___shortcut_62_false': (raw(___shortcut_62_false) if defined("___shortcut_62_false") else ''), 'help_type': (raw(help_type) if defined("help_type") else ''), '___shortcut_13_choice': (raw(___shortcut_13_choice) if defined("___shortcut_13_choice") else ''), '___shortcut_15_choice': (raw(___shortcut_15_choice) if defined("___shortcut_15_choice") else ''), '___shortcut_14_choice': (raw(___shortcut_14_choice) if defined("___shortcut_14_choice") else ''), 'signature': (raw(signature) if defined("signature") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
 ---
 features:
 	debug: False
@@ -697,11 +699,23 @@ fields:
 		html: |
 			<span hidden data-variable id='current_name'/>
 
-	- "Also Known As": current_aka
+	- "Also Known As": current_aka_1
 		datatype: text
 		required: false
 		html: |
-			<span hidden data-variable id='current_aka'/>
+			<span hidden data-variable id='current_aka_1'/>
+
+	- "Also Also Known As": current_aka_2
+		datatype: text
+		required: false
+		html: |
+			<span hidden data-variable id='current_aka_2'/>
+
+	- "Also Also Also Known As": current_aka_3
+		datatype: text
+		required: false
+		html: |
+			<span hidden data-variable id='current_aka_3'/>
 
 	- "Gender assigned by the state at birth": current_gender
 		input type: radio
@@ -827,12 +841,16 @@ script: |
     }
 
     // Those fields which should be conditionally shown
-    var current_aka_field = $('#current_aka').closest('.form-group');
+    var current_aka_1_field = $('#current_aka_1').closest('.form-group');
+		var current_aka_2_field = $('#current_aka_2').closest('.form-group');
+		var current_aka_3_field = $('#current_aka_3').closest('.form-group');
 
     // We track the values of all in-page fields
     var allVariableValues = {
       current_name: null,
-			current_aka: null,
+			current_aka_1: null,
+			current_aka_2: null,
+			current_aka_3: null,
 			current_gender: null,
 			current_phone: null,
 			current_email: null,
@@ -849,7 +867,9 @@ script: |
     }
 
     var showIfCallbacks = [
-      { shouldShow: false, variableName: current_aka, field: current_aka_field, required: false, callback: function() { return allVariableValues['help_type'] != "Gender Change (18+ only)" } },
+      { shouldShow: false, variableName: current_aka_1, field: current_aka_1_field, required: false, callback: function() { return allVariableValues['help_name'] } },
+			{ shouldShow: false, variableName: current_aka_2, field: current_aka_2_field, required: false, callback: function() { return allVariableValues['help_name'] } },
+			{ shouldShow: false, variableName: current_aka_3, field: current_aka_3_field, required: false, callback: function() { return allVariableValues['help_name'] } },
     ];
 
     hideAllConditionalFields();
@@ -953,6 +973,9 @@ code: |
 code: |
 	current_case = ((augment("In re:") + augment(" ") + (augment(current_name)))).primitive_value()
 ---
+code: |
+	current_address = """%s , %s , %s %s""" % (current_street,current_city,current_state,current_zip)
+---
 mandatory: |
 	(((augment(help_name) if defined("help_name") else Undefined())))
 question: |
@@ -979,9 +1002,9 @@ fields:
 		required: true
 		datatype: text
 		choices:
-			- "Female": "Male"
-			- "Male": "Non"
-			- "Non-Binary": "Male"
+			- "Female": "Female"
+			- "Male": "Male"
+			- "Non-Binary": "Non-Binary"
 
 under: |
 	${___send_answers()}
@@ -1340,7 +1363,7 @@ subquestion: |
 	# **Thanks for volunteering!**
 
 attachment code: |
-	filter(bool, [ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc110_pdf_1089_attachment_1372, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc130_pdf_1093_attachment_1374, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc200_pdf_1095_attachment_1375, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc230_pdf_1096_attachment_1376, ""), ___mc005_pdf_1100_attachment_1371, ___cm010_pdf_1087_attachment_1378, ___fw001_pdf_1099_attachment_1381, ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc100_pdf_1088_attachment_1380, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc300_pdf_1097_attachment_1377, ""), ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc125_pdf_1092_attachment_1373, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc330_pdf_1098_attachment_1379, "")])
+	filter(bool, [ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc110_pdf_1089_attachment_1372, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc130_pdf_1093_attachment_1374, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc200_pdf_1095_attachment_1375, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), ___nc230_pdf_1096_attachment_1376, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), ___nc100_pdf_1147_attachment_1383, ""), ___mc005_pdf_1100_attachment_1371, ___cm010_pdf_1087_attachment_1378, ___fw001_pdf_1099_attachment_1381, ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc300_pdf_1097_attachment_1377, ""), ternary((augment(help_name) if defined("help_name") else Undefined()), ___nc125_pdf_1092_attachment_1373, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), ___nc330_pdf_1098_attachment_1379, "")])
 allow emailing: False
 under: |
 	${___send_answers()}
@@ -1352,45 +1375,13 @@ css: |
   </style>
 ---
 code: |
-	if (augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()):
-		import requests
-		import json
-		import time
-		template_id = 1088
-		access_key = '4DLr4v2pcl'
-		drawn_variables = {}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		___nc100_pdf_1088_attachment_1380 = DAFileCollection()
-		___nc100_pdf_1088_attachment_1380.pdf = DAFile()
-		___nc100_pdf_1088_attachment_1380.pdf.initialize(extension="pdf")
-		if done:
-			___nc100_pdf_1088_attachment_1380.pdf.from_url(filled_attachment_url)
-			___nc100_pdf_1088_attachment_1380.info = {'name': 'nc100', 'filename': 'nc100', 'description': ''}
-		else:
-			___nc100_pdf_1088_attachment_1380.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			___nc100_pdf_1088_attachment_1380.info = {'name': 'We encountered a problem', 'filename': 'nc100', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		___nc100_pdf_1088_attachment_1380 = ''
----
-code: |
 	if (augment(help_name) if defined("help_name") else Undefined()):
 		import requests
 		import json
 		import time
 		template_id = 1092
 		access_key = 'rxQImKnZBW'
-		drawn_variables = {}
+		drawn_variables = {'33492': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33483': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33484': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33485': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '33486': markdown_to_plaintext(unicode(current_aka_1 if defined("current_aka_1") else "")), '33488': markdown_to_plaintext(unicode(current_aka_2 if defined("current_aka_2") else "")), '33490': markdown_to_plaintext(unicode(current_aka_3 if defined("current_aka_3") else "")), '33500': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33502': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33503': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33506': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33504': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33505': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33508': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33495': markdown_to_plaintext(unicode(court_info if defined("court_info") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1422,7 +1413,7 @@ code: |
 		import time
 		template_id = 1087
 		access_key = 'oZ3Ar2XPqQ'
-		drawn_variables = {'35348': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '35349': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "") if defined("signature") else "")), '33226': markdown_to_plaintext(unicode(current_case if defined("current_case") else "")), '33231': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33232': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33230': unicode("1"), '33236': unicode("True"), '33282': unicode("True"), '33280': unicode("True"), '33290': unicode("True"), '33293': unicode("True")}
+		drawn_variables = {'35348': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '33226': markdown_to_plaintext(unicode(current_case if defined("current_case") else "")), '33231': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33232': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33230': unicode("1"), '33236': unicode("True"), '33282': unicode("True"), '33280': unicode("True"), '33290': unicode("True"), '33293': unicode("True")}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1454,7 +1445,7 @@ code: |
 		import time
 		template_id = 1089
 		access_key = 'kXzlZtori7'
-		drawn_variables = {}
+		drawn_variables = {'35400': unicode("1"), '35399': unicode("1"), '35403': markdown_to_plaintext(unicode(current_address if defined("current_address") else "")), '33348': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33380': unicode("True"), '33350': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33351': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '33352': markdown_to_plaintext(unicode((current_dob.strftime('%m-%d-%Y') if current_dob != "" else "") if defined("current_dob") else "")), '33383': unicode("True"), '33353': markdown_to_plaintext(unicode(current_pob if defined("current_pob") else "")), '33377': markdown_to_plaintext(unicode(___shortcut_26_choice if defined("___shortcut_26_choice") else "")), '33378': markdown_to_plaintext(unicode(___shortcut_27_choice if defined("___shortcut_27_choice") else "")), '33347': unicode("Better fit for my identity"), '33373': unicode("True"), '33375': unicode("True"), '33361': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33362': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33365': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33366': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33385': unicode("True")}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1484,9 +1475,41 @@ code: |
 		import requests
 		import json
 		import time
+		template_id = 1147
+		access_key = 'T6HvMWTHWs'
+		drawn_variables = {'35374': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '35376': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '35377': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '35378': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '35379': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '35380': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '35382': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '35369': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '35366': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '35352': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '35353': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '35354': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '35358': markdown_to_plaintext(unicode(current_aka_1 if defined("current_aka_1") else "")), '35359': markdown_to_plaintext(unicode(current_aka_2 if defined("current_aka_2") else "")), '35360': markdown_to_plaintext(unicode(current_aka_3 if defined("current_aka_3") else "")), '35389': unicode("True"), '35396': unicode("True")}
+		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
+		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+		task_id = fill_response.get('task_id')
+		filled_attachment_url = ""
+		done = False
+		pdf_attempts = 0
+		while not done and pdf_attempts < 250:
+			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+			done = task_response.get('status') == 'done'
+			filled_attachment_url = task_response.get('document')
+			pdf_attempts += 1
+			time.sleep(.2)
+		___nc100_pdf_1147_attachment_1383 = DAFileCollection()
+		___nc100_pdf_1147_attachment_1383.pdf = DAFile()
+		___nc100_pdf_1147_attachment_1383.pdf.initialize(extension="pdf")
+		if done:
+			___nc100_pdf_1147_attachment_1383.pdf.from_url(filled_attachment_url)
+			___nc100_pdf_1147_attachment_1383.info = {'name': 'nc100', 'filename': 'nc100', 'description': ''}
+		else:
+			___nc100_pdf_1147_attachment_1383.pdf.from_url('https://community.lawyer/static/blank.pdf')
+			___nc100_pdf_1147_attachment_1383.info = {'name': 'We encountered a problem', 'filename': 'nc100', 'description': 'There was a problem filling your Pdf - please try again'}
+	else:
+		___nc100_pdf_1147_attachment_1383 = ''
+---
+code: |
+	if (augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()):
+		import requests
+		import json
+		import time
 		template_id = 1093
 		access_key = 'VZc5QkITSz'
-		drawn_variables = {}
+		drawn_variables = {'33535': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33537': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33538': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33539': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33540': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33541': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33543': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33530': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '33527': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33519': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33521': markdown_to_plaintext(unicode(current_aka_1 if defined("current_aka_1") else "")), '33523': markdown_to_plaintext(unicode(current_aka_2 if defined("current_aka_2") else "")), '33525': markdown_to_plaintext(unicode(current_aka_3 if defined("current_aka_3") else "")), '33520': markdown_to_plaintext(unicode(future_name if defined("future_name") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1518,7 +1541,7 @@ code: |
 		import time
 		template_id = 1095
 		access_key = 'wcOWuuzJjv'
-		drawn_variables = {}
+		drawn_variables = {'33615': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33617': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33618': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33619': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33620': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33622': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33623': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33610': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '33607': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33606': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33628': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '33629': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33630': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33631': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else "")), '33627': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33632': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33634': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33633': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else "")), '33625': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33626': markdown_to_plaintext(unicode(current_name if defined("current_name") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1550,7 +1573,7 @@ code: |
 		import time
 		template_id = 1097
 		access_key = 'dhDcORRWUH'
-		drawn_variables = {}
+		drawn_variables = {'33691': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33693': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33694': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33695': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33696': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33697': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33699': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33686': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '33683': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33682': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33703': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33704': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33705': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else "")), '33711': unicode("True"), '33707': unicode("True"), '33708': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33709': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33710': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else "")), '33701': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '33702': markdown_to_plaintext(unicode(current_name if defined("current_name") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1582,7 +1605,7 @@ code: |
 		import time
 		template_id = 1098
 		access_key = '1Q2ClNPgXu'
-		drawn_variables = {}
+		drawn_variables = {'33743': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33748': unicode("True"), '33742': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33745': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else "")), '33725': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33727': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33728': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33729': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33730': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33731': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33733': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33718': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33720': markdown_to_plaintext(unicode(court_info if defined("court_info") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1614,7 +1637,7 @@ code: |
 		import time
 		template_id = 1099
 		access_key = 'sGx5plzs9q'
-		drawn_variables = {'33764': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '33749': markdown_to_plaintext(unicode(court_info)), '33763': markdown_to_plaintext(unicode(current_name)), '33757': markdown_to_plaintext(unicode(current_phone)), '33756': markdown_to_plaintext(unicode(current_city)), '33755': markdown_to_plaintext(unicode(current_zip)), '33753': markdown_to_plaintext(unicode(current_street)), '33752': markdown_to_plaintext(unicode(current_name)), '33751': markdown_to_plaintext(unicode(current_case)), '33786': markdown_to_plaintext(unicode(current_name)), '35342': markdown_to_plaintext(unicode(current_state)), '35343': unicode("True"), '35345': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "")))}
+		drawn_variables = {'33764': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '33749': markdown_to_plaintext(unicode(court_info)), '33763': markdown_to_plaintext(unicode(current_name)), '33757': markdown_to_plaintext(unicode(current_phone)), '33756': markdown_to_plaintext(unicode(current_city)), '33755': markdown_to_plaintext(unicode(current_zip)), '33753': markdown_to_plaintext(unicode(current_street)), '33752': markdown_to_plaintext(unicode(current_name)), '33751': markdown_to_plaintext(unicode(current_case)), '33786': markdown_to_plaintext(unicode(current_name)), '35342': markdown_to_plaintext(unicode(current_state)), '35343': unicode("True")}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -1646,7 +1669,7 @@ code: |
 		import time
 		template_id = 1096
 		access_key = 'ZBXgdVgxFv'
-		drawn_variables = {}
+		drawn_variables = {'33648': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33650': markdown_to_plaintext(unicode(current_street if defined("current_street") else "")), '33651': markdown_to_plaintext(unicode(current_city if defined("current_city") else "")), '33654': markdown_to_plaintext(unicode(current_phone if defined("current_phone") else "")), '33656': markdown_to_plaintext(unicode(current_email if defined("current_email") else "")), '33652': markdown_to_plaintext(unicode(current_state if defined("current_state") else "")), '33653': markdown_to_plaintext(unicode(current_zip if defined("current_zip") else "")), '33643': markdown_to_plaintext(unicode(court_info if defined("court_info") else "")), '33641': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33660': markdown_to_plaintext(unicode(current_name if defined("current_name") else "")), '33661': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '33662': markdown_to_plaintext(unicode(future_name if defined("future_name") else "")), '33677': markdown_to_plaintext(unicode(___shortcut_35_choice if defined("___shortcut_35_choice") else "")), '33678': markdown_to_plaintext(unicode(___shortcut_36_choice if defined("___shortcut_36_choice") else "")), '33681': markdown_to_plaintext(unicode(___shortcut_37_choice if defined("___shortcut_37_choice") else ""))}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
