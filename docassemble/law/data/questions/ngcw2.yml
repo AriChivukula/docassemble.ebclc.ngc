@@ -4,6 +4,12 @@ modules:
 ---
 mandatory: True
 code: |
+	from docassemble.base.functions import get_uid
+	if not defined("___answers_session_id"):
+		define("___answers_session_id", get_uid())
+---
+mandatory: True
+code: |
 	define("Today", today())
 ---
 initial: True
@@ -386,12 +392,16 @@ code: |
   from markdown import markdown
 
   def markdown_to_plaintext(markdown_string):
-    html = markdown(markdown_string)
-    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
-    html = re.sub(r'<code>(.*?)</code >', ' ', html)
-    soup = BeautifulSoup(html, "html.parser")
-    text = ''.join(soup.findAll(text=True))
-    return text
+    try:
+      html_list = list(map(lambda str: markdown(str), markdown_string.split("\n")))
+      html_list = list(map(lambda html: re.sub(r'<pre>(.*?)</pre>', ' ', html), html_list))
+      html_list = list(map(lambda html: re.sub(r'<code>(.*?)</code >', ' ', html), html_list))
+      soup_list = list(map(lambda html: BeautifulSoup(html, "html.parser"), html_list))
+      text_list = list(map(lambda soup: ''.join(soup.findAll(text=True)), soup_list))
+      text_list = list(map(lambda text: re.sub(r'\n', '\n\n', text), text_list))
+      return "\n".join(text_list)
+    except:
+      return markdown_string
 ---
 mandatory: True
 code: |
@@ -633,7 +643,45 @@ code: |
 mandatory: True
 code: |
 	def passive_possible_variables():
-		return { 'Today': (raw(Today) if defined("Today") else ''), 'court_alameda': (raw(court_alameda) if defined("court_alameda") else ''), 'court_contra_costa': (raw(court_contra_costa) if defined("court_contra_costa") else ''), 'court_county': (raw(court_county) if defined("court_county") else ''), '___shortcut_40_choice': (raw(___shortcut_40_choice) if defined("___shortcut_40_choice") else ''), '___shortcut_41_choice': (raw(___shortcut_41_choice) if defined("___shortcut_41_choice") else ''), '___shortcut_42_choice': (raw(___shortcut_42_choice) if defined("___shortcut_42_choice") else ''), '___shortcut_43_choice': (raw(___shortcut_43_choice) if defined("___shortcut_43_choice") else ''), '___shortcut_49_choice': (raw(___shortcut_49_choice) if defined("___shortcut_49_choice") else ''), '___shortcut_44_choice': (raw(___shortcut_44_choice) if defined("___shortcut_44_choice") else ''), '___shortcut_45_choice': (raw(___shortcut_45_choice) if defined("___shortcut_45_choice") else ''), '___shortcut_46_choice': (raw(___shortcut_46_choice) if defined("___shortcut_46_choice") else ''), '___shortcut_47_choice': (raw(___shortcut_47_choice) if defined("___shortcut_47_choice") else ''), '___shortcut_48_choice': (raw(___shortcut_48_choice) if defined("___shortcut_48_choice") else ''), 'court_info': (raw(court_info) if defined("court_info") else ''), 'court_marin': (raw(court_marin) if defined("court_marin") else ''), 'court_napa': (raw(court_napa) if defined("court_napa") else ''), 'court_other': (raw(court_other) if defined("court_other") else ''), 'court_san_francisco': (raw(court_san_francisco) if defined("court_san_francisco") else ''), 'court_san_mateo': (raw(court_san_mateo) if defined("court_san_mateo") else ''), 'court_santa_clara': (raw(court_santa_clara) if defined("court_santa_clara") else ''), 'court_solano': (raw(court_solano) if defined("court_solano") else ''), 'court_sonoma': (raw(court_sonoma) if defined("court_sonoma") else ''), 'current_address': (raw(current_address) if defined("current_address") else ''), 'current_aka_1': (raw(current_aka_1) if defined("current_aka_1") else ''), 'current_aka_2': (raw(current_aka_2) if defined("current_aka_2") else ''), 'current_aka_3': (raw(current_aka_3) if defined("current_aka_3") else ''), 'current_case': (raw(current_case) if defined("current_case") else ''), 'current_city': (raw(current_city) if defined("current_city") else ''), 'current_dob': (raw(current_dob) if defined("current_dob") else ''), 'current_email': (raw(current_email) if defined("current_email") else ''), 'current_gender': (raw(current_gender) if defined("current_gender") else ''), '___shortcut_27_choice': (raw(___shortcut_27_choice) if defined("___shortcut_27_choice") else ''), '___shortcut_26_choice': (raw(___shortcut_26_choice) if defined("___shortcut_26_choice") else ''), 'current_name': (raw(current_name) if defined("current_name") else ''), 'current_phone': (raw(current_phone) if defined("current_phone") else ''), 'current_pob': (raw(current_pob) if defined("current_pob") else ''), 'current_state': (raw(current_state) if defined("current_state") else ''), 'current_street': (raw(current_street) if defined("current_street") else ''), 'current_zip': (raw(current_zip) if defined("current_zip") else ''), 'fax_gender': (raw(fax_gender) if defined("fax_gender") else ''), 'fax_info': (raw(fax_info) if defined("fax_info") else ''), 'fax_name': (raw(fax_name) if defined("fax_name") else ''), 'fax_name_and_gender': (raw(fax_name_and_gender) if defined("fax_name_and_gender") else ''), 'future_gender': (raw(future_gender) if defined("future_gender") else ''), '___shortcut_35_choice': (raw(___shortcut_35_choice) if defined("___shortcut_35_choice") else ''), '___shortcut_36_choice': (raw(___shortcut_36_choice) if defined("___shortcut_36_choice") else ''), '___shortcut_37_choice': (raw(___shortcut_37_choice) if defined("___shortcut_37_choice") else ''), 'future_name': (raw(future_name) if defined("future_name") else ''), 'help_gender': (raw(help_gender) if defined("help_gender") else ''), '___shortcut_63_false': (raw(___shortcut_63_false) if defined("___shortcut_63_false") else ''), 'help_name': (raw(help_name) if defined("help_name") else ''), '___shortcut_62_false': (raw(___shortcut_62_false) if defined("___shortcut_62_false") else ''), 'help_type': (raw(help_type) if defined("help_type") else ''), '___shortcut_13_choice': (raw(___shortcut_13_choice) if defined("___shortcut_13_choice") else ''), '___shortcut_15_choice': (raw(___shortcut_15_choice) if defined("___shortcut_15_choice") else ''), '___shortcut_14_choice': (raw(___shortcut_14_choice) if defined("___shortcut_14_choice") else ''), 'signature': (raw(signature) if defined("signature") else ''), 'start': (raw(start) if defined("start") else ''), '___shortcut_2_false': (raw(___shortcut_2_false) if defined("___shortcut_2_false") else '') }
+		return { 'Today': markdown_to_plaintext(Today) if defined("Today") else '', 'court_alameda': markdown_to_plaintext(court_alameda) if defined("court_alameda") else '', 'court_contra_costa': markdown_to_plaintext(court_contra_costa) if defined("court_contra_costa") else '', 'court_county': markdown_to_plaintext(court_county) if defined("court_county") else '', '___shortcut_40_choice': markdown_to_plaintext(___shortcut_40_choice) if defined("___shortcut_40_choice") else '', '___shortcut_41_choice': markdown_to_plaintext(___shortcut_41_choice) if defined("___shortcut_41_choice") else '', '___shortcut_42_choice': markdown_to_plaintext(___shortcut_42_choice) if defined("___shortcut_42_choice") else '', '___shortcut_43_choice': markdown_to_plaintext(___shortcut_43_choice) if defined("___shortcut_43_choice") else '', '___shortcut_49_choice': markdown_to_plaintext(___shortcut_49_choice) if defined("___shortcut_49_choice") else '', '___shortcut_44_choice': markdown_to_plaintext(___shortcut_44_choice) if defined("___shortcut_44_choice") else '', '___shortcut_45_choice': markdown_to_plaintext(___shortcut_45_choice) if defined("___shortcut_45_choice") else '', '___shortcut_46_choice': markdown_to_plaintext(___shortcut_46_choice) if defined("___shortcut_46_choice") else '', '___shortcut_47_choice': markdown_to_plaintext(___shortcut_47_choice) if defined("___shortcut_47_choice") else '', '___shortcut_48_choice': markdown_to_plaintext(___shortcut_48_choice) if defined("___shortcut_48_choice") else '', 'court_info': markdown_to_plaintext(court_info) if defined("court_info") else '', 'court_marin': markdown_to_plaintext(court_marin) if defined("court_marin") else '', 'court_napa': markdown_to_plaintext(court_napa) if defined("court_napa") else '', 'court_other': markdown_to_plaintext(court_other) if defined("court_other") else '', 'court_san_francisco': markdown_to_plaintext(court_san_francisco) if defined("court_san_francisco") else '', 'court_san_mateo': markdown_to_plaintext(court_san_mateo) if defined("court_san_mateo") else '', 'court_santa_clara': markdown_to_plaintext(court_santa_clara) if defined("court_santa_clara") else '', 'court_solano': markdown_to_plaintext(court_solano) if defined("court_solano") else '', 'court_sonoma': markdown_to_plaintext(court_sonoma) if defined("court_sonoma") else '', 'current_address': markdown_to_plaintext(current_address) if defined("current_address") else '', 'current_aka_1': markdown_to_plaintext(current_aka_1) if defined("current_aka_1") else '', 'current_aka_2': markdown_to_plaintext(current_aka_2) if defined("current_aka_2") else '', 'current_aka_3': markdown_to_plaintext(current_aka_3) if defined("current_aka_3") else '', 'current_case': markdown_to_plaintext(current_case) if defined("current_case") else '', 'current_city': markdown_to_plaintext(current_city) if defined("current_city") else '', 'current_dob': markdown_to_plaintext(current_dob) if defined("current_dob") else '', 'current_email': markdown_to_plaintext(current_email) if defined("current_email") else '', 'current_gender': markdown_to_plaintext(current_gender) if defined("current_gender") else '', '___shortcut_27_choice': markdown_to_plaintext(___shortcut_27_choice) if defined("___shortcut_27_choice") else '', '___shortcut_26_choice': markdown_to_plaintext(___shortcut_26_choice) if defined("___shortcut_26_choice") else '', 'current_name': markdown_to_plaintext(current_name) if defined("current_name") else '', 'current_phone': markdown_to_plaintext(current_phone) if defined("current_phone") else '', 'current_pob': markdown_to_plaintext(current_pob) if defined("current_pob") else '', 'current_state': markdown_to_plaintext(current_state) if defined("current_state") else '', 'current_street': markdown_to_plaintext(current_street) if defined("current_street") else '', 'current_zip': markdown_to_plaintext(current_zip) if defined("current_zip") else '', 'fax_gender': markdown_to_plaintext(fax_gender) if defined("fax_gender") else '', 'fax_info': markdown_to_plaintext(fax_info) if defined("fax_info") else '', 'fax_name': markdown_to_plaintext(fax_name) if defined("fax_name") else '', 'fax_name_and_gender': markdown_to_plaintext(fax_name_and_gender) if defined("fax_name_and_gender") else '', 'future_gender': markdown_to_plaintext(future_gender) if defined("future_gender") else '', '___shortcut_35_choice': markdown_to_plaintext(___shortcut_35_choice) if defined("___shortcut_35_choice") else '', '___shortcut_36_choice': markdown_to_plaintext(___shortcut_36_choice) if defined("___shortcut_36_choice") else '', '___shortcut_37_choice': markdown_to_plaintext(___shortcut_37_choice) if defined("___shortcut_37_choice") else '', 'future_name': markdown_to_plaintext(future_name) if defined("future_name") else '', 'help_gender': markdown_to_plaintext(help_gender) if defined("help_gender") else '', '___shortcut_63_false': markdown_to_plaintext(___shortcut_63_false) if defined("___shortcut_63_false") else '', 'help_name': markdown_to_plaintext(help_name) if defined("help_name") else '', '___shortcut_62_false': markdown_to_plaintext(___shortcut_62_false) if defined("___shortcut_62_false") else '', 'help_type': markdown_to_plaintext(help_type) if defined("help_type") else '', '___shortcut_13_choice': markdown_to_plaintext(___shortcut_13_choice) if defined("___shortcut_13_choice") else '', '___shortcut_15_choice': markdown_to_plaintext(___shortcut_15_choice) if defined("___shortcut_15_choice") else '', '___shortcut_14_choice': markdown_to_plaintext(___shortcut_14_choice) if defined("___shortcut_14_choice") else '', 'signature': markdown_to_plaintext(signature) if defined("signature") else '', 'start': markdown_to_plaintext(start) if defined("start") else '', '___shortcut_2_false': markdown_to_plaintext(___shortcut_2_false) if defined("___shortcut_2_false") else '' }
+---
+event: ___send_answers_background
+code: |
+	import requests
+	import json
+	import time
+	from docassemble.base.functions import get_config, all_variables, user_info, user_logged_in
+	from docassemble.base.core import DAFileList, DAFileCollection, DAFile, DADict
+	time.sleep(2)
+	___answers = all_variables(simplify=False)
+	answers_to_send = {}
+	files = {}
+	for q, a in ___answers.items():
+		if isinstance(a, DAFileList) or isinstance(a, DAFile) or isinstance(a, DAFileCollection):
+			s3_config = get_config('s3')
+			local_path = a.path().replace("/tmp/", "")
+			bucket_name = s3_config['bucket']
+			files[q] = "s3://%s/%s" % (bucket_name, local_path)
+		elif isinstance(a, DADict) and type(a.values()[0]) is bool:
+			checked_boxes = []
+			for box_name, box_value in a.items():
+				if box_value is True:
+					checked_boxes.append(box_name)
+			answers_to_send[q] = checked_boxes
+		else:
+			answers_to_send[q] = unicode(a)
+	answers_to_send = json.dumps(answers_to_send, default=lambda x: unicode(x))
+	files = json.dumps(files, default=lambda x: unicode(x))
+	timestamp = time.time()
+	params = { 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'answers': answers_to_send, 'files': files, 'docassemble_interview_id': '1123', 'session_id': ___answers_session_id, 'timestamp': timestamp }
+	response = requests.post('https://community.lawyer/builder_answers', data=params)
+	background_response()
+---
+initial: True
+code: |
+	def ___send_answers():
+		background_action('___send_answers_background')
+		return ''
 ---
 features:
 	debug: False
@@ -644,6 +692,11 @@ metadata:
 		Name & Gender Change Workshop
 	exit label: |
 		Powered by Community.lawyer, a public benefit company
+---
+mandatory: True
+code: |
+	from docassemble.base.util import device
+	___user_device = device().browser.family
 ---
 mandatory: True
 code: |
