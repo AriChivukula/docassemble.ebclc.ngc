@@ -48,7 +48,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.law',
-      version='0.4.4',
+      version='0.4.6',
       description=('Legal Automation Workshop'),
       long_description=read("README.md"),
       long_description_content_type='text/markdown',
