@@ -1,5 +1,3 @@
-# Prepared by Community.lawyer on 3/19/2019
-# Compatible with Docassemble version 0.3.11
 ---
 modules:
 	- docassemble.base.util
@@ -18,240 +16,374 @@ initial: True
 code: |
   import datetime
   import types
-
-  def ternary(condition, true_value, false_value):
-    if is_undefined(condition):
-      return Undefined()
-    elif is_true(augment(condition)):
-      return primitive_value(true_value)
-    else:
-      return primitive_value(false_value)
-
-  def primitive_value(something):
-    return augment(something).wrapped
-
-  def Undefined():
-    return augment(None)
-
-  def is_true(arg):
-    return primitive_value(arg) == True
-
-  def is_false(arg):
-    return primitive_value(arg) == False
-
-  def is_falsy(arg):
-    wrapped = primitive_value(arg)
-    return wrapped == False or wrapped == None
-
-  def is_truthy(arg):
-    wrapped = primitive_value(arg)
-    return not is_falsy(wrapped)
-
-  def is_augmented(something):
-    return something.__class__.__name__ == 'Augmented'
-
-  def augment(something):
-    if is_augmented(something):
-      return something
-    return Augmented(something)
-
-  def is_undefined(something):
-    return augment(something).wrapped == None
-
-  def is_not_undefined(something):
-    return not is_undefined(something)
-
-  class Augmented(object):
-    def __init__(self, something):
-      self.wrapped = something
+  class FalseBoolean(object):
+    def primitive_value(self):
+      return False
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return False
+    def logical_and(self, arg):
+      return self
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (TrueBoolean() if arg.__nonzero__() else self)
+    def logical_not(self):
+      return TrueBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else TrueBoolean())
+  class TrueBoolean(object):
+    def primitive_value(self):
+      return True
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return True
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+    def logical_or(self, arg):
+      return self
+    def logical_not(self):
+      return FalseBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+  class Undefined(object):
+    def is_undefined(self):
+      return True
+    def __nonzero__(self):
+      return False
+    def primitive_value(self):
+      return False
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (self if arg.__nonzero__() else augment(False))
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (augment(True) if arg.__nonzero__() else self)
+    def logical_not(self):
+      return self
+    def logical_equals(self, arg):
+      return self
+    def all_true(self):
+      return self
+    def all_false(self):
+      return self
+    def any_true(self):
+      return self
+    def all_false(self):
+      return self
+    def __add__(self, other):
+      return self
+    def __mul__(self, other):
+      return self
+    def __sub__(self, other):
+      return self
+    def __div__(self, other):
+      return self
+    def __eq__(self, other):
+      return self
+    def __lt__(self, other):
+      return self
+    def __le__(self, other):
+      return self
+    def __gt__(self, other):
+      return self
+    def __ge__(self, other):
+      return self
+    def __ne__(self, other):
+      return self
+    def __len__(self):
+      return self
+  class Datetime(datetime.datetime):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Time(datetime.time):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.time(self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Float(float):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return float(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Integer(int):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return int(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class String(object):
+    def __init__(self, string):
+      self.string = string
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.string
+    def __len__(self):
+      return Integer(self.primitive_value().__len__())
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == (other.primitive_value()))
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < (other.primitive_value()))
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= (other.primitive_value()))
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > (other.primitive_value()))
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= (other.primitive_value()))
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != (other.primitive_value()))
+  class Dictionary(object):
+    def __init__(self, da_dict):
+      self.da_dict = da_dict
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.da_dict
+    def all_true(self):
+      return augment(self.da_dict.all_true())
+    def all_false(self):
+      return augment(self.da_dict.all_false())
+    def any_true(self):
+      return augment(self.da_dict.any_true())
+    def any_false(self):
+      return augment(self.da_dict.any_false())
     def __str__(self):
-      return unicode(self.wrapped)
-    # boolean
-    def boolean_and(self, _arg):
-      arg = augment(_arg)
-      if is_false(self.wrapped) or is_false(arg.wrapped):
-        return augment(False)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped and arg.wrapped)
-    def boolean_or(self, _arg):
-      arg = augment(_arg)
-      if is_true(self.wrapped) or is_true(arg.wrapped):
-        return augment(True)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped or arg.wrapped)
-    def boolean_not(self):
-      if is_undefined(self):
-        return self
-      return augment(not self.wrapped)
-    def boolean_eq(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped == arg.wrapped)
-    def boolean_ne(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped != arg.wrapped)
-    # number
-    def number_add(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped + arg.wrapped)
-    def number_subtract(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped - arg.wrapped)
-    def number_multiply(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped * arg.wrapped)
-    def number_divide(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      if arg.wrapped == 0:
-        return Undefined()
-      return augment(self.wrapped / arg.wrapped)
-    def number_eq(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped == arg.wrapped)
-    def number_ne(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped != arg.wrapped)
-    def number_gt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped > arg.wrapped)
-    def number_gte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped >= arg.wrapped)
-    def number_lt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped < arg.wrapped)
-    def number_lte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped <= arg.wrapped)
-    # string
-    def string_join_with_space(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped + ' ' + arg.wrapped)
-    def string_join_without_space(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped + arg.wrapped)
-    def string_eq(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped == arg.wrapped)
-    def string_ne(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped != arg.wrapped)
-    def string_length(self):
-      if is_undefined(self):
-        return Undefined()
-      return augment(len(self.wrapped))
-    # time
-    def time_eq(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped == arg.wrapped)
-    def time_ne(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped != arg.wrapped)
-    def time_gt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped > arg.wrapped)
-    def time_gte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped >= arg.wrapped)
-    def time_lt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped < arg.wrapped)
-    def time_lte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped <= arg.wrapped)
-    # date
-    def date_eq(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped == arg.wrapped)
-    def date_ne(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped != arg.wrapped)
-    def date_gt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped > arg.wrapped)
-    def date_gte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped >= arg.wrapped)
-    def date_lt(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped < arg.wrapped)
-    def date_lte(self, _arg):
-      arg = augment(_arg)
-      if is_undefined(self) or is_undefined(arg):
-        return Undefined()
-      return augment(self.wrapped <= arg.wrapped)
-    # dictionary
-    def dictionary_all_false(self):
-      if is_undefined(self):
-        return self
-      return augment(self.wrapped.all_false())
-    def dictionary_all_true(self):
-      if is_undefined(self):
-        return self
-      return augment(self.wrapped.all_true())
-    def dictionary_any_false(self):
-      if is_undefined(self):
-        return self
-      return augment(self.wrapped.any_false())
-    def dictionary_any_true(self):
-      if is_undefined(self):
-        return self
-      return augment(self.wrapped.any_true())
+      return unicode(self.da_dict)
+  def augment(something):
+    string_type = type('a')
+    bool_type = type(True)
+    integer_type = type(1)
+    float_type = type(1.0)
+    time_type = type(datetime.time())
+    datetime_type = type(datetime.datetime(1, 1, 1))
+    my_type = type(something)
+    alt_type = something.__class__.__name__
+    if(my_type == string_type or alt_type == 'unicode'):
+      return String(something)
+    elif(my_type == bool_type):
+      if(something == True):
+        return TrueBoolean()
+      else:
+        return FalseBoolean()
+    elif(my_type == integer_type or alt_type == 'int'):
+      return Integer(something)
+    elif(my_type == float_type or alt_type == 'float'):
+      return Float(something)
+    elif(my_type == time_type):
+      return Time(something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(my_type == datetime_type or alt_type == 'DADateTime'):
+      return Datetime(something.year, something.month, something.day, something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(alt_type == 'DADict'):
+      return Dictionary(something)
+    raise Exception("Couldn't augment because type() is " + unicode(my_type) + " and alt type is " + alt_type + " and argument was " + unicode(something))
+  def ternary(condition, true_value, false_value):
+    if type(condition) == type(Undefined()):
+      return Undefined()
+    elif condition:
+      return true_value
+    else:
+      return false_value
 ---
 initial: True
 code: |
@@ -280,146 +412,146 @@ code: |
 			re_run_logic()
 	def ___define_all():
 		vars = all_variables()
-		if ((not ("you_title" in vars)) and (is_not_undefined(((augment("Your Information")))))):
-			define("you_title", (primitive_value(((augment("Your Information"))))))
-		if ((not ("you_title_name" in vars)) and (is_not_undefined(((augment("Name")))))):
-			define("you_title_name", (primitive_value(((augment("Name"))))))
-		if ((not ("you_title_assoc" in vars)) and (is_not_undefined(((augment("School/Firm/etc.")))))):
-			define("you_title_assoc", (primitive_value(((augment("School/Firm/etc."))))))
-		if ((not ("you_title_phone" in vars)) and (is_not_undefined(((augment("Phone")))))):
-			define("you_title_phone", (primitive_value(((augment("Phone"))))))
-		if ((not ("you_title_email" in vars)) and (is_not_undefined(((augment("EMail")))))):
-			define("you_title_email", (primitive_value(((augment("EMail"))))))
-		if ((not ("proceeding_title" in vars)) and (is_not_undefined(((augment("Proceeding Information")))))):
-			define("proceeding_title", (primitive_value(((augment("Proceeding Information"))))))
-		if ((not ("proceeding_title_date" in vars)) and (is_not_undefined(((augment("Date")))))):
-			define("proceeding_title_date", (primitive_value(((augment("Date"))))))
-		if ((not ("proceeding_title_time" in vars)) and (is_not_undefined(((augment("Time")))))):
-			define("proceeding_title_time", (primitive_value(((augment("Time"))))))
-		if ((not ("proceeding_title_judge" in vars)) and (is_not_undefined(((augment("Judge")))))):
-			define("proceeding_title_judge", (primitive_value(((augment("Judge"))))))
-		if ((not ("proceeding_title_case" in vars)) and (is_not_undefined(((augment("Case")))))):
-			define("proceeding_title_case", (primitive_value(((augment("Case"))))))
-		if ((not ("proceeding_title_type" in vars)) and (is_not_undefined(((augment("Type")))))):
-			define("proceeding_title_type", (primitive_value(((augment("Type"))))))
-		if ((not ("detainee_title" in vars)) and (is_not_undefined(((augment("Detainee Information")))))):
-			define("detainee_title", (primitive_value(((augment("Detainee Information"))))))
-		if ((not ("detainee_title_name" in vars)) and (is_not_undefined(((augment("Name")))))):
-			define("detainee_title_name", (primitive_value(((augment("Name"))))))
-		if ((not ("detainee_title_appearance" in vars)) and (is_not_undefined(((augment("How did they appear?")))))):
-			define("detainee_title_appearance", (primitive_value(((augment("How did they appear?"))))))
-		if ((not ("detainee_title_languages" in vars)) and (is_not_undefined(((augment("Languages Spoken")))))):
-			define("detainee_title_languages", (primitive_value(((augment("Languages Spoken"))))))
-		if ((not ("detainee_title_location" in vars)) and (is_not_undefined(((augment("Where are they being detained?")))))):
-			define("detainee_title_location", (primitive_value(((augment("Where are they being detained?"))))))
-		if ((not ("detainee_title_location_other" in vars)) and (is_not_undefined(((augment("Other Location")))))):
-			define("detainee_title_location_other", (primitive_value(((augment("Other Location"))))))
-		if ((not ("detainee_title_representation" in vars)) and (is_not_undefined(((augment("Do they have representation?")))))):
-			define("detainee_title_representation", (primitive_value(((augment("Do they have representation?"))))))
-		if ((not ("detainee_title_representation_who" in vars)) and (is_not_undefined(((augment("Who?")))))):
-			define("detainee_title_representation_who", (primitive_value(((augment("Who?"))))))
-		if ((not ("detainee_title_representation_continuance" in vars)) and (is_not_undefined(((augment("Was a continuance to find representation granted?")))))):
-			define("detainee_title_representation_continuance", (primitive_value(((augment("Was a continuance to find representation granted?"))))))
-		if ((not ("detainee_title_representation_continuance_length" in vars)) and (is_not_undefined(((augment("How Long?")))))):
-			define("detainee_title_representation_continuance_length", (primitive_value(((augment("How Long?"))))))
-		if ((not ("detainee_title_representation_continuance_denial" in vars)) and (is_not_undefined(((augment("Why?")))))):
-			define("detainee_title_representation_continuance_denial", (primitive_value(((augment("Why?"))))))
-		if ((not ("context_title" in vars)) and (is_not_undefined(((augment("Context Information")))))):
-			define("context_title", (primitive_value(((augment("Context Information"))))))
-		if ((not ("context_title_anyone" in vars)) and (is_not_undefined(((augment("Did the detainee have trouble communicating with anyone?")))))):
-			define("context_title_anyone", (primitive_value(((augment("Did the detainee have trouble communicating with anyone?"))))))
-		if ((not ("context_title_anyone_who" in vars)) and (is_not_undefined(((augment("With who?")))))):
-			define("context_title_anyone_who", (primitive_value(((augment("With who?"))))))
-		if ((not ("context_title_anyone_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
-			define("context_title_anyone_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_interpretation" in vars)) and (is_not_undefined(((augment("Did the detainee have issues with interpretation?")))))):
-			define("context_title_interpretation", (primitive_value(((augment("Did the detainee have issues with interpretation?"))))))
-		if ((not ("context_title_interpretation_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
-			define("context_title_interpretation_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_illness" in vars)) and (is_not_undefined(((augment("Did the detainee show signs of suffering from mental illness?")))))):
-			define("context_title_illness", (primitive_value(((augment("Did the detainee show signs of suffering from mental illness?"))))))
-		if ((not ("context_title_illness_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
-			define("context_title_illness_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_illness_addressed" in vars)) and (is_not_undefined(((augment("How was it addressed?")))))):
-			define("context_title_illness_addressed", (primitive_value(((augment("How was it addressed?"))))))
-		if ((not ("outcome_title" in vars)) and (is_not_undefined(((augment("Outcome Information")))))):
-			define("outcome_title", (primitive_value(((augment("Outcome Information"))))))
-		if ((not ("outcome_title_relief" in vars)) and (is_not_undefined(((augment("Did detainee file any application for relief?")))))):
-			define("outcome_title_relief", (primitive_value(((augment("Did detainee file any application for relief?"))))))
-		if ((not ("outcome_title_relief_info" in vars)) and (is_not_undefined(((augment("What were they?")))))):
-			define("outcome_title_relief_info", (primitive_value(((augment("What were they?"))))))
-		if ((not ("outcome_title_relief_deadline" in vars)) and (is_not_undefined(((augment("What is the deadline?")))))):
-			define("outcome_title_relief_deadline", (primitive_value(((augment("What is the deadline?"))))))
-		if ((not ("outcome_title_bond" in vars)) and (is_not_undefined(((augment("Did IJ grant bond?")))))):
-			define("outcome_title_bond", (primitive_value(((augment("Did IJ grant bond?"))))))
-		if ((not ("outcome_title_bond_amount" in vars)) and (is_not_undefined(((augment("Amount")))))):
-			define("outcome_title_bond_amount", (primitive_value(((augment("Amount"))))))
-		if ((not ("outcome_title_bond_denial" in vars)) and (is_not_undefined(((augment("Reason")))))):
-			define("outcome_title_bond_denial", (primitive_value(((augment("Reason"))))))
-		if ((not ("hearing_title" in vars)) and (is_not_undefined(((augment("Hearing Information")))))):
-			define("hearing_title", (primitive_value(((augment("Hearing Information"))))))
-		if ((not ("hearing_title_date" in vars)) and (is_not_undefined(((augment("Date")))))):
-			define("hearing_title_date", (primitive_value(((augment("Date"))))))
-		if ((not ("hearing_title_time" in vars)) and (is_not_undefined(((augment("Time")))))):
-			define("hearing_title_time", (primitive_value(((augment("Time"))))))
-		if ((not ("hearing_title_type" in vars)) and (is_not_undefined(((augment("Type")))))):
-			define("hearing_title_type", (primitive_value(((augment("Type"))))))
-		if ((not ("other_title" in vars)) and (is_not_undefined(((augment("Other Information")))))):
-			define("other_title", (primitive_value(((augment("Other Information"))))))
+		if ((not ("you_title" in vars)) and (type(((augment("Your Information")))) != type(Undefined()))):
+			define("you_title", (((augment("Your Information"))).primitive_value()))
+		if ((not ("you_title_name" in vars)) and (type(((augment("Name")))) != type(Undefined()))):
+			define("you_title_name", (((augment("Name"))).primitive_value()))
+		if ((not ("you_title_assoc" in vars)) and (type(((augment("School/Firm/etc.")))) != type(Undefined()))):
+			define("you_title_assoc", (((augment("School/Firm/etc."))).primitive_value()))
+		if ((not ("you_title_phone" in vars)) and (type(((augment("Phone")))) != type(Undefined()))):
+			define("you_title_phone", (((augment("Phone"))).primitive_value()))
+		if ((not ("you_title_email" in vars)) and (type(((augment("EMail")))) != type(Undefined()))):
+			define("you_title_email", (((augment("EMail"))).primitive_value()))
+		if ((not ("proceeding_title" in vars)) and (type(((augment("Proceeding Information")))) != type(Undefined()))):
+			define("proceeding_title", (((augment("Proceeding Information"))).primitive_value()))
+		if ((not ("proceeding_title_date" in vars)) and (type(((augment("Date")))) != type(Undefined()))):
+			define("proceeding_title_date", (((augment("Date"))).primitive_value()))
+		if ((not ("proceeding_title_time" in vars)) and (type(((augment("Time")))) != type(Undefined()))):
+			define("proceeding_title_time", (((augment("Time"))).primitive_value()))
+		if ((not ("proceeding_title_judge" in vars)) and (type(((augment("Judge")))) != type(Undefined()))):
+			define("proceeding_title_judge", (((augment("Judge"))).primitive_value()))
+		if ((not ("proceeding_title_case" in vars)) and (type(((augment("Case")))) != type(Undefined()))):
+			define("proceeding_title_case", (((augment("Case"))).primitive_value()))
+		if ((not ("proceeding_title_type" in vars)) and (type(((augment("Type")))) != type(Undefined()))):
+			define("proceeding_title_type", (((augment("Type"))).primitive_value()))
+		if ((not ("detainee_title" in vars)) and (type(((augment("Detainee Information")))) != type(Undefined()))):
+			define("detainee_title", (((augment("Detainee Information"))).primitive_value()))
+		if ((not ("detainee_title_name" in vars)) and (type(((augment("Name")))) != type(Undefined()))):
+			define("detainee_title_name", (((augment("Name"))).primitive_value()))
+		if ((not ("detainee_title_appearance" in vars)) and (type(((augment("How did they appear?")))) != type(Undefined()))):
+			define("detainee_title_appearance", (((augment("How did they appear?"))).primitive_value()))
+		if ((not ("detainee_title_languages" in vars)) and (type(((augment("Languages Spoken")))) != type(Undefined()))):
+			define("detainee_title_languages", (((augment("Languages Spoken"))).primitive_value()))
+		if ((not ("detainee_title_location" in vars)) and (type(((augment("Where are they being detained?")))) != type(Undefined()))):
+			define("detainee_title_location", (((augment("Where are they being detained?"))).primitive_value()))
+		if ((not ("detainee_title_location_other" in vars)) and (type(((augment("Other Location")))) != type(Undefined()))):
+			define("detainee_title_location_other", (((augment("Other Location"))).primitive_value()))
+		if ((not ("detainee_title_representation" in vars)) and (type(((augment("Do they have representation?")))) != type(Undefined()))):
+			define("detainee_title_representation", (((augment("Do they have representation?"))).primitive_value()))
+		if ((not ("detainee_title_representation_who" in vars)) and (type(((augment("Who?")))) != type(Undefined()))):
+			define("detainee_title_representation_who", (((augment("Who?"))).primitive_value()))
+		if ((not ("detainee_title_representation_continuance" in vars)) and (type(((augment("Was a continuance to find representation granted?")))) != type(Undefined()))):
+			define("detainee_title_representation_continuance", (((augment("Was a continuance to find representation granted?"))).primitive_value()))
+		if ((not ("detainee_title_representation_continuance_length" in vars)) and (type(((augment("How Long?")))) != type(Undefined()))):
+			define("detainee_title_representation_continuance_length", (((augment("How Long?"))).primitive_value()))
+		if ((not ("detainee_title_representation_continuance_denial" in vars)) and (type(((augment("Why?")))) != type(Undefined()))):
+			define("detainee_title_representation_continuance_denial", (((augment("Why?"))).primitive_value()))
+		if ((not ("context_title" in vars)) and (type(((augment("Context Information")))) != type(Undefined()))):
+			define("context_title", (((augment("Context Information"))).primitive_value()))
+		if ((not ("context_title_anyone" in vars)) and (type(((augment("Did the detainee have trouble communicating with anyone?")))) != type(Undefined()))):
+			define("context_title_anyone", (((augment("Did the detainee have trouble communicating with anyone?"))).primitive_value()))
+		if ((not ("context_title_anyone_who" in vars)) and (type(((augment("With who?")))) != type(Undefined()))):
+			define("context_title_anyone_who", (((augment("With who?"))).primitive_value()))
+		if ((not ("context_title_anyone_info" in vars)) and (type(((augment("How so?")))) != type(Undefined()))):
+			define("context_title_anyone_info", (((augment("How so?"))).primitive_value()))
+		if ((not ("context_title_interpretation" in vars)) and (type(((augment("Did the detainee have issues with interpretation?")))) != type(Undefined()))):
+			define("context_title_interpretation", (((augment("Did the detainee have issues with interpretation?"))).primitive_value()))
+		if ((not ("context_title_interpretation_info" in vars)) and (type(((augment("How so?")))) != type(Undefined()))):
+			define("context_title_interpretation_info", (((augment("How so?"))).primitive_value()))
+		if ((not ("context_title_illness" in vars)) and (type(((augment("Did the detainee show signs of suffering from mental illness?")))) != type(Undefined()))):
+			define("context_title_illness", (((augment("Did the detainee show signs of suffering from mental illness?"))).primitive_value()))
+		if ((not ("context_title_illness_info" in vars)) and (type(((augment("How so?")))) != type(Undefined()))):
+			define("context_title_illness_info", (((augment("How so?"))).primitive_value()))
+		if ((not ("context_title_illness_addressed" in vars)) and (type(((augment("How was it addressed?")))) != type(Undefined()))):
+			define("context_title_illness_addressed", (((augment("How was it addressed?"))).primitive_value()))
+		if ((not ("outcome_title" in vars)) and (type(((augment("Outcome Information")))) != type(Undefined()))):
+			define("outcome_title", (((augment("Outcome Information"))).primitive_value()))
+		if ((not ("outcome_title_relief" in vars)) and (type(((augment("Did detainee file any application for relief?")))) != type(Undefined()))):
+			define("outcome_title_relief", (((augment("Did detainee file any application for relief?"))).primitive_value()))
+		if ((not ("outcome_title_relief_info" in vars)) and (type(((augment("What were they?")))) != type(Undefined()))):
+			define("outcome_title_relief_info", (((augment("What were they?"))).primitive_value()))
+		if ((not ("outcome_title_relief_deadline" in vars)) and (type(((augment("What is the deadline?")))) != type(Undefined()))):
+			define("outcome_title_relief_deadline", (((augment("What is the deadline?"))).primitive_value()))
+		if ((not ("outcome_title_bond" in vars)) and (type(((augment("Did IJ grant bond?")))) != type(Undefined()))):
+			define("outcome_title_bond", (((augment("Did IJ grant bond?"))).primitive_value()))
+		if ((not ("outcome_title_bond_amount" in vars)) and (type(((augment("Amount")))) != type(Undefined()))):
+			define("outcome_title_bond_amount", (((augment("Amount"))).primitive_value()))
+		if ((not ("outcome_title_bond_denial" in vars)) and (type(((augment("Reason")))) != type(Undefined()))):
+			define("outcome_title_bond_denial", (((augment("Reason"))).primitive_value()))
+		if ((not ("hearing_title" in vars)) and (type(((augment("Hearing Information")))) != type(Undefined()))):
+			define("hearing_title", (((augment("Hearing Information"))).primitive_value()))
+		if ((not ("hearing_title_date" in vars)) and (type(((augment("Date")))) != type(Undefined()))):
+			define("hearing_title_date", (((augment("Date"))).primitive_value()))
+		if ((not ("hearing_title_time" in vars)) and (type(((augment("Time")))) != type(Undefined()))):
+			define("hearing_title_time", (((augment("Time"))).primitive_value()))
+		if ((not ("hearing_title_type" in vars)) and (type(((augment("Type")))) != type(Undefined()))):
+			define("hearing_title_type", (((augment("Type"))).primitive_value()))
+		if ((not ("other_title" in vars)) and (type(((augment("Other Information")))) != type(Undefined()))):
+			define("other_title", (((augment("Other Information"))).primitive_value()))
 		if ((not ("___shortcut_82_choice" in vars)) and (("context_output_anyone" in vars))):
-			define("___shortcut_82_choice", ((primitive_value(((augment(context_output_anyone) if ("context_output_anyone" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_82_choice", ((((augment(context_output_anyone) if ("context_output_anyone" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_81_choice" in vars)) and (("context_output_anyone" in vars))):
-			define("___shortcut_81_choice", ((primitive_value(((augment(context_output_anyone) if ("context_output_anyone" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_81_choice", ((((augment(context_output_anyone) if ("context_output_anyone" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_91_choice" in vars)) and (("context_output_illness" in vars))):
-			define("___shortcut_91_choice", ((primitive_value(((augment(context_output_illness) if ("context_output_illness" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_91_choice", ((((augment(context_output_illness) if ("context_output_illness" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_90_choice" in vars)) and (("context_output_illness" in vars))):
-			define("___shortcut_90_choice", ((primitive_value(((augment(context_output_illness) if ("context_output_illness" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_90_choice", ((((augment(context_output_illness) if ("context_output_illness" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_87_choice" in vars)) and (("context_output_interpretation" in vars))):
-			define("___shortcut_87_choice", ((primitive_value(((augment(context_output_interpretation) if ("context_output_interpretation" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_87_choice", ((((augment(context_output_interpretation) if ("context_output_interpretation" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_86_choice" in vars)) and (("context_output_interpretation" in vars))):
-			define("___shortcut_86_choice", ((primitive_value(((augment(context_output_interpretation) if ("context_output_interpretation" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_86_choice", ((((augment(context_output_interpretation) if ("context_output_interpretation" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_48_choice" in vars)) and (("detainee_output_appearance" in vars))):
-			define("___shortcut_48_choice", ((primitive_value(((augment(detainee_output_appearance) if ("detainee_output_appearance" in vars) else Undefined()).string_eq(augment("In Person")))))))
+			define("___shortcut_48_choice", ((((augment(detainee_output_appearance) if ("detainee_output_appearance" in vars) else Undefined()) == (augment("In Person"))).primitive_value())))
 		if ((not ("___shortcut_49_choice" in vars)) and (("detainee_output_appearance" in vars))):
-			define("___shortcut_49_choice", ((primitive_value(((augment(detainee_output_appearance) if ("detainee_output_appearance" in vars) else Undefined()).string_eq(augment("Video Conference")))))))
+			define("___shortcut_49_choice", ((((augment(detainee_output_appearance) if ("detainee_output_appearance" in vars) else Undefined()) == (augment("Video Conference"))).primitive_value())))
 		if ((not ("___shortcut_52_choice" in vars)) and (("detainee_output_location" in vars))):
-			define("___shortcut_52_choice", ((primitive_value(((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()).string_eq(augment("CoCo")))))))
+			define("___shortcut_52_choice", ((((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()) == (augment("CoCo"))).primitive_value())))
 		if ((not ("___shortcut_53_choice" in vars)) and (("detainee_output_location" in vars))):
-			define("___shortcut_53_choice", ((primitive_value(((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()).string_eq(augment("Mesa Verde")))))))
+			define("___shortcut_53_choice", ((((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()) == (augment("Mesa Verde"))).primitive_value())))
 		if ((not ("___shortcut_55_choice" in vars)) and (("detainee_output_location" in vars))):
-			define("___shortcut_55_choice", ((primitive_value(((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()).string_eq(augment("Other")))))))
+			define("___shortcut_55_choice", ((((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()) == (augment("Other"))).primitive_value())))
 		if ((not ("___shortcut_54_choice" in vars)) and (("detainee_output_location" in vars))):
-			define("___shortcut_54_choice", ((primitive_value(((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()).string_eq(augment("Sacramento/Yuba")))))))
+			define("___shortcut_54_choice", ((((augment(detainee_output_location) if ("detainee_output_location" in vars) else Undefined()) == (augment("Sacramento/Yuba"))).primitive_value())))
 		if ((not ("___shortcut_59_choice" in vars)) and (("detainee_output_representation" in vars))):
-			define("___shortcut_59_choice", ((primitive_value(((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_59_choice", ((((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_60_choice" in vars)) and (("detainee_output_representation" in vars))):
-			define("___shortcut_60_choice", ((primitive_value(((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()).string_eq(augment("Unknown")))))))
+			define("___shortcut_60_choice", ((((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()) == (augment("Unknown"))).primitive_value())))
 		if ((not ("___shortcut_58_choice" in vars)) and (("detainee_output_representation" in vars))):
-			define("___shortcut_58_choice", ((primitive_value(((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_58_choice", ((((augment(detainee_output_representation) if ("detainee_output_representation" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_65_choice" in vars)) and (("detainee_output_representation_continuance" in vars))):
-			define("___shortcut_65_choice", ((primitive_value(((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_65_choice", ((((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_66_choice" in vars)) and (("detainee_output_representation_continuance" in vars))):
-			define("___shortcut_66_choice", ((primitive_value(((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()).string_eq(augment("Unknown")))))))
+			define("___shortcut_66_choice", ((((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()) == (augment("Unknown"))).primitive_value())))
 		if ((not ("___shortcut_64_choice" in vars)) and (("detainee_output_representation_continuance" in vars))):
-			define("___shortcut_64_choice", ((primitive_value(((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_64_choice", ((((augment(detainee_output_representation_continuance) if ("detainee_output_representation_continuance" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_112_choice" in vars)) and (("outcome_output_bond" in vars))):
-			define("___shortcut_112_choice", ((primitive_value(((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_112_choice", ((((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_113_choice" in vars)) and (("outcome_output_bond" in vars))):
-			define("___shortcut_113_choice", ((primitive_value(((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()).string_eq(augment("Unknown")))))))
+			define("___shortcut_113_choice", ((((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()) == (augment("Unknown"))).primitive_value())))
 		if ((not ("___shortcut_110_choice" in vars)) and (("outcome_output_bond" in vars))):
-			define("___shortcut_110_choice", ((primitive_value(((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_110_choice", ((((augment(outcome_output_bond) if ("outcome_output_bond" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_136_choice" in vars)) and (("outcome_output_relief" in vars))):
-			define("___shortcut_136_choice", ((primitive_value(((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()).string_eq(augment("No")))))))
+			define("___shortcut_136_choice", ((((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()) == (augment("No"))).primitive_value())))
 		if ((not ("___shortcut_137_choice" in vars)) and (("outcome_output_relief" in vars))):
-			define("___shortcut_137_choice", ((primitive_value(((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()).string_eq(augment("Unknown")))))))
+			define("___shortcut_137_choice", ((((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()) == (augment("Unknown"))).primitive_value())))
 		if ((not ("___shortcut_135_choice" in vars)) and (("outcome_output_relief" in vars))):
-			define("___shortcut_135_choice", ((primitive_value(((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()).string_eq(augment("Yes")))))))
+			define("___shortcut_135_choice", ((((augment(outcome_output_relief) if ("outcome_output_relief" in vars) else Undefined()) == (augment("Yes"))).primitive_value())))
 		if ((not ("___shortcut_45_choice" in vars)) and (("proceeding_output_type" in vars))):
-			define("___shortcut_45_choice", ((primitive_value(((augment(proceeding_output_type) if ("proceeding_output_type" in vars) else Undefined()).string_eq(augment("Bond Hearing")))))))
+			define("___shortcut_45_choice", ((((augment(proceeding_output_type) if ("proceeding_output_type" in vars) else Undefined()) == (augment("Bond Hearing"))).primitive_value())))
 		if ((not ("___shortcut_46_choice" in vars)) and (("proceeding_output_type" in vars))):
-			define("___shortcut_46_choice", ((primitive_value(((augment(proceeding_output_type) if ("proceeding_output_type" in vars) else Undefined()).string_eq(augment("Master Calendar")))))))
+			define("___shortcut_46_choice", ((((augment(proceeding_output_type) if ("proceeding_output_type" in vars) else Undefined()) == (augment("Master Calendar"))).primitive_value())))
 		if ((not ("___shortcut_131_false" in vars)) and (("start" in vars))):
-			define("___shortcut_131_false", ((primitive_value(((augment(start) if ("start" in vars) else Undefined()).boolean_eq(augment(False)))))))
+			define("___shortcut_131_false", ((((augment(start) if ("start" in vars) else Undefined()).logical_equals(augment(False))).primitive_value())))
 ---
 initial: True
 code: |
@@ -509,18 +641,7 @@ code: |
 mandatory: True
 code: |
 	def passive_possible_variables():
-		return { 'Today': markdown_to_plaintext(Today) if defined("Today") else '', 'context_output_anyone': markdown_to_plaintext(context_output_anyone) if defined("context_output_anyone") else '', '___shortcut_82_choice': markdown_to_plaintext(___shortcut_82_choice) if defined("___shortcut_82_choice") else '', '___shortcut_81_choice': markdown_to_plaintext(___shortcut_81_choice) if defined("___shortcut_81_choice") else '', 'context_output_anyone_info': markdown_to_plaintext(context_output_anyone_info) if defined("context_output_anyone_info") else '', 'context_output_anyone_who': markdown_to_plaintext(context_output_anyone_who) if defined("context_output_anyone_who") else '', 'context_output_illness': markdown_to_plaintext(context_output_illness) if defined("context_output_illness") else '', '___shortcut_91_choice': markdown_to_plaintext(___shortcut_91_choice) if defined("___shortcut_91_choice") else '', '___shortcut_90_choice': markdown_to_plaintext(___shortcut_90_choice) if defined("___shortcut_90_choice") else '', 'context_output_illness_addressed': markdown_to_plaintext(context_output_illness_addressed) if defined("context_output_illness_addressed") else '', 'context_output_illness_info': markdown_to_plaintext(context_output_illness_info) if defined("context_output_illness_info") else '', 'context_output_interpretation': markdown_to_plaintext(context_output_interpretation) if defined("context_output_interpretation") else '', '___shortcut_87_choice': markdown_to_plaintext(___shortcut_87_choice) if defined("___shortcut_87_choice") else '', '___shortcut_86_choice': markdown_to_plaintext(___shortcut_86_choice) if defined("___shortcut_86_choice") else '', 'context_output_interpretation_info': markdown_to_plaintext(context_output_interpretation_info) if defined("context_output_interpretation_info") else '', 'context_title': markdown_to_plaintext(context_title) if defined("context_title") else '', 'context_title_anyone': markdown_to_plaintext(context_title_anyone) if defined("context_title_anyone") else '', 'context_title_anyone_info': markdown_to_plaintext(context_title_anyone_info) if defined("context_title_anyone_info") else '', 'context_title_anyone_who': markdown_to_plaintext(context_title_anyone_who) if defined("context_title_anyone_who") else '', 'context_title_illness': markdown_to_plaintext(context_title_illness) if defined("context_title_illness") else '', 'context_title_illness_addressed': markdown_to_plaintext(context_title_illness_addressed) if defined("context_title_illness_addressed") else '', 'context_title_illness_info': markdown_to_plaintext(context_title_illness_info) if defined("context_title_illness_info") else '', 'context_title_interpretation': markdown_to_plaintext(context_title_interpretation) if defined("context_title_interpretation") else '', 'context_title_interpretation_info': markdown_to_plaintext(context_title_interpretation_info) if defined("context_title_interpretation_info") else '', 'detainee_output_appearance': markdown_to_plaintext(detainee_output_appearance) if defined("detainee_output_appearance") else '', '___shortcut_48_choice': markdown_to_plaintext(___shortcut_48_choice) if defined("___shortcut_48_choice") else '', '___shortcut_49_choice': markdown_to_plaintext(___shortcut_49_choice) if defined("___shortcut_49_choice") else '', 'detainee_output_languages': markdown_to_plaintext(detainee_output_languages) if defined("detainee_output_languages") else '', 'detainee_output_location': markdown_to_plaintext(detainee_output_location) if defined("detainee_output_location") else '', '___shortcut_52_choice': markdown_to_plaintext(___shortcut_52_choice) if defined("___shortcut_52_choice") else '', '___shortcut_53_choice': markdown_to_plaintext(___shortcut_53_choice) if defined("___shortcut_53_choice") else '', '___shortcut_55_choice': markdown_to_plaintext(___shortcut_55_choice) if defined("___shortcut_55_choice") else '', '___shortcut_54_choice': markdown_to_plaintext(___shortcut_54_choice) if defined("___shortcut_54_choice") else '', 'detainee_output_location_other': markdown_to_plaintext(detainee_output_location_other) if defined("detainee_output_location_other") else '', 'detainee_output_name': markdown_to_plaintext(detainee_output_name) if defined("detainee_output_name") else '', 'detainee_output_representation': markdown_to_plaintext(detainee_output_representation) if defined("detainee_output_representation") else '', '___shortcut_59_choice': markdown_to_plaintext(___shortcut_59_choice) if defined("___shortcut_59_choice") else '', '___shortcut_60_choice': markdown_to_plaintext(___shortcut_60_choice) if defined("___shortcut_60_choice") else '', '___shortcut_58_choice': markdown_to_plaintext(___shortcut_58_choice) if defined("___shortcut_58_choice") else '', 'detainee_output_representation_continuance': markdown_to_plaintext(detainee_output_representation_continuance) if defined("detainee_output_representation_continuance") else '', '___shortcut_65_choice': markdown_to_plaintext(___shortcut_65_choice) if defined("___shortcut_65_choice") else '', '___shortcut_66_choice': markdown_to_plaintext(___shortcut_66_choice) if defined("___shortcut_66_choice") else '', '___shortcut_64_choice': markdown_to_plaintext(___shortcut_64_choice) if defined("___shortcut_64_choice") else '', 'detainee_output_representation_continuance_denial': markdown_to_plaintext(detainee_output_representation_continuance_denial) if defined("detainee_output_representation_continuance_denial") else '', 'detainee_output_representation_continuance_length': markdown_to_plaintext(detainee_output_representation_continuance_length) if defined("detainee_output_representation_continuance_length") else '', 'detainee_output_representation_who': markdown_to_plaintext(detainee_output_representation_who) if defined("detainee_output_representation_who") else '', 'detainee_title': markdown_to_plaintext(detainee_title) if defined("detainee_title") else '', 'detainee_title_appearance': markdown_to_plaintext(detainee_title_appearance) if defined("detainee_title_appearance") else '', 'detainee_title_languages': markdown_to_plaintext(detainee_title_languages) if defined("detainee_title_languages") else '', 'detainee_title_location': markdown_to_plaintext(detainee_title_location) if defined("detainee_title_location") else '', 'detainee_title_location_other': markdown_to_plaintext(detainee_title_location_other) if defined("detainee_title_location_other") else '', 'detainee_title_name': markdown_to_plaintext(detainee_title_name) if defined("detainee_title_name") else '', 'detainee_title_representation': markdown_to_plaintext(detainee_title_representation) if defined("detainee_title_representation") else '', 'detainee_title_representation_continuance': markdown_to_plaintext(detainee_title_representation_continuance) if defined("detainee_title_representation_continuance") else '', 'detainee_title_representation_continuance_denial': markdown_to_plaintext(detainee_title_representation_continuance_denial) if defined("detainee_title_representation_continuance_denial") else '', 'detainee_title_representation_continuance_length': markdown_to_plaintext(detainee_title_representation_continuance_length) if defined("detainee_title_representation_continuance_length") else '', 'detainee_title_representation_who': markdown_to_plaintext(detainee_title_representation_who) if defined("detainee_title_representation_who") else '', 'hearing_output_date': markdown_to_plaintext(hearing_output_date) if defined("hearing_output_date") else '', 'hearing_output_time': markdown_to_plaintext(hearing_output_time) if defined("hearing_output_time") else '', 'hearing_output_type': markdown_to_plaintext(hearing_output_type) if defined("hearing_output_type") else '', 'hearing_title': markdown_to_plaintext(hearing_title) if defined("hearing_title") else '', 'hearing_title_date': markdown_to_plaintext(hearing_title_date) if defined("hearing_title_date") else '', 'hearing_title_time': markdown_to_plaintext(hearing_title_time) if defined("hearing_title_time") else '', 'hearing_title_type': markdown_to_plaintext(hearing_title_type) if defined("hearing_title_type") else '', 'other_output': markdown_to_plaintext(other_output) if defined("other_output") else '', 'other_title': markdown_to_plaintext(other_title) if defined("other_title") else '', 'outcome_output_bond': markdown_to_plaintext(outcome_output_bond) if defined("outcome_output_bond") else '', '___shortcut_112_choice': markdown_to_plaintext(___shortcut_112_choice) if defined("___shortcut_112_choice") else '', '___shortcut_113_choice': markdown_to_plaintext(___shortcut_113_choice) if defined("___shortcut_113_choice") else '', '___shortcut_110_choice': markdown_to_plaintext(___shortcut_110_choice) if defined("___shortcut_110_choice") else '', 'outcome_output_bond_amount': markdown_to_plaintext(outcome_output_bond_amount) if defined("outcome_output_bond_amount") else '', 'outcome_output_bond_denial': markdown_to_plaintext(outcome_output_bond_denial) if defined("outcome_output_bond_denial") else '', 'outcome_output_relief': markdown_to_plaintext(outcome_output_relief) if defined("outcome_output_relief") else '', '___shortcut_136_choice': markdown_to_plaintext(___shortcut_136_choice) if defined("___shortcut_136_choice") else '', '___shortcut_137_choice': markdown_to_plaintext(___shortcut_137_choice) if defined("___shortcut_137_choice") else '', '___shortcut_135_choice': markdown_to_plaintext(___shortcut_135_choice) if defined("___shortcut_135_choice") else '', 'outcome_output_relief_deadline': markdown_to_plaintext(outcome_output_relief_deadline) if defined("outcome_output_relief_deadline") else '', 'outcome_output_relief_info': markdown_to_plaintext(outcome_output_relief_info) if defined("outcome_output_relief_info") else '', 'outcome_title': markdown_to_plaintext(outcome_title) if defined("outcome_title") else '', 'outcome_title_bond': markdown_to_plaintext(outcome_title_bond) if defined("outcome_title_bond") else '', 'outcome_title_bond_amount': markdown_to_plaintext(outcome_title_bond_amount) if defined("outcome_title_bond_amount") else '', 'outcome_title_bond_denial': markdown_to_plaintext(outcome_title_bond_denial) if defined("outcome_title_bond_denial") else '', 'outcome_title_relief': markdown_to_plaintext(outcome_title_relief) if defined("outcome_title_relief") else '', 'outcome_title_relief_deadline': markdown_to_plaintext(outcome_title_relief_deadline) if defined("outcome_title_relief_deadline") else '', 'outcome_title_relief_info': markdown_to_plaintext(outcome_title_relief_info) if defined("outcome_title_relief_info") else '', 'proceeding_output_case': markdown_to_plaintext(proceeding_output_case) if defined("proceeding_output_case") else '', 'proceeding_output_date': markdown_to_plaintext(proceeding_output_date) if defined("proceeding_output_date") else '', 'proceeding_output_judge': markdown_to_plaintext(proceeding_output_judge) if defined("proceeding_output_judge") else '', 'proceeding_output_time': markdown_to_plaintext(proceeding_output_time) if defined("proceeding_output_time") else '', 'proceeding_output_type': markdown_to_plaintext(proceeding_output_type) if defined("proceeding_output_type") else '', '___shortcut_45_choice': markdown_to_plaintext(___shortcut_45_choice) if defined("___shortcut_45_choice") else '', '___shortcut_46_choice': markdown_to_plaintext(___shortcut_46_choice) if defined("___shortcut_46_choice") else '', 'proceeding_title': markdown_to_plaintext(proceeding_title) if defined("proceeding_title") else '', 'proceeding_title_case': markdown_to_plaintext(proceeding_title_case) if defined("proceeding_title_case") else '', 'proceeding_title_date': markdown_to_plaintext(proceeding_title_date) if defined("proceeding_title_date") else '', 'proceeding_title_judge': markdown_to_plaintext(proceeding_title_judge) if defined("proceeding_title_judge") else '', 'proceeding_title_time': markdown_to_plaintext(proceeding_title_time) if defined("proceeding_title_time") else '', 'proceeding_title_type': markdown_to_plaintext(proceeding_title_type) if defined("proceeding_title_type") else '', '___shortcut_131_false': markdown_to_plaintext(___shortcut_131_false) if defined("___shortcut_131_false") else '', 'start': markdown_to_plaintext(start) if defined("start") else '', 'you_output_assoc': markdown_to_plaintext(you_output_assoc) if defined("you_output_assoc") else '', 'you_output_email': markdown_to_plaintext(you_output_email) if defined("you_output_email") else '', 'you_output_name': markdown_to_plaintext(you_output_name) if defined("you_output_name") else '', 'you_output_phone': markdown_to_plaintext(you_output_phone) if defined("you_output_phone") else '', 'you_title': markdown_to_plaintext(you_title) if defined("you_title") else '', 'you_title_assoc': markdown_to_plaintext(you_title_assoc) if defined("you_title_assoc") else '', 'you_title_email': markdown_to_plaintext(you_title_email) if defined("you_title_email") else '', 'you_title_name': markdown_to_plaintext(you_title_name) if defined("you_title_name") else '', 'you_title_phone': markdown_to_plaintext(you_title_phone) if defined("you_title_phone") else '' }
----
-mandatory: True
-code: |
-	import requests
-	import json
-	define("___authorized", json.loads(requests.get("https://community.lawyer/docassemble_builder/docassemble_interviews/authorize?id=1103&key=" + unicode(url_args.get('key'))).content)['authorized'])
----
-mandatory: |
-	not ___authorized
-question: Sorry, you are not authorized to access this page.
-subquestion: Try signing into your account or contacting the App author.
+		return { 'Today': markdown_to_plaintext(Today) if defined("Today") else '', 'context_output_anyone': markdown_to_plaintext(context_output_anyone) if defined("context_output_anyone") else '', '___shortcut_82_choice': markdown_to_plaintext(___shortcut_82_choice) if defined("___shortcut_82_choice") else '', '___shortcut_81_choice': markdown_to_plaintext(___shortcut_81_choice) if defined("___shortcut_81_choice") else '', 'context_output_anyone_info': markdown_to_plaintext(context_output_anyone_info) if defined("context_output_anyone_info") else '', 'context_output_anyone_who': markdown_to_plaintext(context_output_anyone_who) if defined("context_output_anyone_who") else '', 'context_output_illness': markdown_to_plaintext(context_output_illness) if defined("context_output_illness") else '', '___shortcut_91_choice': markdown_to_plaintext(___shortcut_91_choice) if defined("___shortcut_91_choice") else '', '___shortcut_90_choice': markdown_to_plaintext(___shortcut_90_choice) if defined("___shortcut_90_choice") else '', 'context_output_illness_addressed': markdown_to_plaintext(context_output_illness_addressed) if defined("context_output_illness_addressed") else '', 'context_output_illness_info': markdown_to_plaintext(context_output_illness_info) if defined("context_output_illness_info") else '', 'context_output_interpretation': markdown_to_plaintext(context_output_interpretation) if defined("context_output_interpretation") else '', '___shortcut_87_choice': markdown_to_plaintext(___shortcut_87_choice) if defined("___shortcut_87_choice") else '', '___shortcut_86_choice': markdown_to_plaintext(___shortcut_86_choice) if defined("___shortcut_86_choice") else '', 'context_output_interpretation_info': markdown_to_plaintext(context_output_interpretation_info) if defined("context_output_interpretation_info") else '', 'context_title': markdown_to_plaintext(context_title) if defined("context_title") else '', 'context_title_anyone': markdown_to_plaintext(context_title_anyone) if defined("context_title_anyone") else '', 'context_title_anyone_info': markdown_to_plaintext(context_title_anyone_info) if defined("context_title_anyone_info") else '', 'context_title_anyone_who': markdown_to_plaintext(context_title_anyone_who) if defined("context_title_anyone_who") else '', 'context_title_illness': markdown_to_plaintext(context_title_illness) if defined("context_title_illness") else '', 'context_title_illness_addressed': markdown_to_plaintext(context_title_illness_addressed) if defined("context_title_illness_addressed") else '', 'context_title_illness_info': markdown_to_plaintext(context_title_illness_info) if defined("context_title_illness_info") else '', 'context_title_interpretation': markdown_to_plaintext(context_title_interpretation) if defined("context_title_interpretation") else '', 'context_title_interpretation_info': markdown_to_plaintext(context_title_interpretation_info) if defined("context_title_interpretation_info") else '', 'detainee_output_appearance': markdown_to_plaintext(detainee_output_appearance) if defined("detainee_output_appearance") else '', '___shortcut_48_choice': markdown_to_plaintext(___shortcut_48_choice) if defined("___shortcut_48_choice") else '', '___shortcut_49_choice': markdown_to_plaintext(___shortcut_49_choice) if defined("___shortcut_49_choice") else '', 'detainee_output_languages': markdown_to_plaintext(detainee_output_languages) if defined("detainee_output_languages") else '', 'detainee_output_location': markdown_to_plaintext(detainee_output_location) if defined("detainee_output_location") else '', '___shortcut_52_choice': markdown_to_plaintext(___shortcut_52_choice) if defined("___shortcut_52_choice") else '', '___shortcut_53_choice': markdown_to_plaintext(___shortcut_53_choice) if defined("___shortcut_53_choice") else '', '___shortcut_55_choice': markdown_to_plaintext(___shortcut_55_choice) if defined("___shortcut_55_choice") else '', '___shortcut_54_choice': markdown_to_plaintext(___shortcut_54_choice) if defined("___shortcut_54_choice") else '', 'detainee_output_location_other': markdown_to_plaintext(detainee_output_location_other) if defined("detainee_output_location_other") else '', 'detainee_output_name': markdown_to_plaintext(detainee_output_name) if defined("detainee_output_name") else '', 'detainee_output_representation': markdown_to_plaintext(detainee_output_representation) if defined("detainee_output_representation") else '', '___shortcut_59_choice': markdown_to_plaintext(___shortcut_59_choice) if defined("___shortcut_59_choice") else '', '___shortcut_60_choice': markdown_to_plaintext(___shortcut_60_choice) if defined("___shortcut_60_choice") else '', '___shortcut_58_choice': markdown_to_plaintext(___shortcut_58_choice) if defined("___shortcut_58_choice") else '', 'detainee_output_representation_continuance': markdown_to_plaintext(detainee_output_representation_continuance) if defined("detainee_output_representation_continuance") else '', '___shortcut_65_choice': markdown_to_plaintext(___shortcut_65_choice) if defined("___shortcut_65_choice") else '', '___shortcut_66_choice': markdown_to_plaintext(___shortcut_66_choice) if defined("___shortcut_66_choice") else '', '___shortcut_64_choice': markdown_to_plaintext(___shortcut_64_choice) if defined("___shortcut_64_choice") else '', 'detainee_output_representation_continuance_denial': markdown_to_plaintext(detainee_output_representation_continuance_denial) if defined("detainee_output_representation_continuance_denial") else '', 'detainee_output_representation_continuance_length': markdown_to_plaintext(detainee_output_representation_continuance_length) if defined("detainee_output_representation_continuance_length") else '', 'detainee_output_representation_who': markdown_to_plaintext(detainee_output_representation_who) if defined("detainee_output_representation_who") else '', 'detainee_title': markdown_to_plaintext(detainee_title) if defined("detainee_title") else '', 'detainee_title_appearance': markdown_to_plaintext(detainee_title_appearance) if defined("detainee_title_appearance") else '', 'detainee_title_languages': markdown_to_plaintext(detainee_title_languages) if defined("detainee_title_languages") else '', 'detainee_title_location': markdown_to_plaintext(detainee_title_location) if defined("detainee_title_location") else '', 'detainee_title_location_other': markdown_to_plaintext(detainee_title_location_other) if defined("detainee_title_location_other") else '', 'detainee_title_name': markdown_to_plaintext(detainee_title_name) if defined("detainee_title_name") else '', 'detainee_title_representation': markdown_to_plaintext(detainee_title_representation) if defined("detainee_title_representation") else '', 'detainee_title_representation_continuance': markdown_to_plaintext(detainee_title_representation_continuance) if defined("detainee_title_representation_continuance") else '', 'detainee_title_representation_continuance_denial': markdown_to_plaintext(detainee_title_representation_continuance_denial) if defined("detainee_title_representation_continuance_denial") else '', 'detainee_title_representation_continuance_length': markdown_to_plaintext(detainee_title_representation_continuance_length) if defined("detainee_title_representation_continuance_length") else '', 'detainee_title_representation_who': markdown_to_plaintext(detainee_title_representation_who) if defined("detainee_title_representation_who") else '', 'hearing_output_date': markdown_to_plaintext(hearing_output_date) if defined("hearing_output_date") else '', 'hearing_output_time': markdown_to_plaintext(hearing_output_time) if defined("hearing_output_time") else '', 'hearing_output_type': markdown_to_plaintext(hearing_output_type) if defined("hearing_output_type") else '', 'hearing_title': markdown_to_plaintext(hearing_title) if defined("hearing_title") else '', 'hearing_title_date': markdown_to_plaintext(hearing_title_date) if defined("hearing_title_date") else '', 'hearing_title_time': markdown_to_plaintext(hearing_title_time) if defined("hearing_title_time") else '', 'hearing_title_type': markdown_to_plaintext(hearing_title_type) if defined("hearing_title_type") else '', 'other_output': markdown_to_plaintext(other_output) if defined("other_output") else '', 'other_title': markdown_to_plaintext(other_title) if defined("other_title") else '', 'outcome_output_bond': markdown_to_plaintext(outcome_output_bond) if defined("outcome_output_bond") else '', '___shortcut_112_choice': markdown_to_plaintext(___shortcut_112_choice) if defined("___shortcut_112_choice") else '', '___shortcut_113_choice': markdown_to_plaintext(___shortcut_113_choice) if defined("___shortcut_113_choice") else '', '___shortcut_110_choice': markdown_to_plaintext(___shortcut_110_choice) if defined("___shortcut_110_choice") else '', 'outcome_output_bond_amount': markdown_to_plaintext(outcome_output_bond_amount) if defined("outcome_output_bond_amount") else '', 'outcome_output_bond_denial': markdown_to_plaintext(outcome_output_bond_denial) if defined("outcome_output_bond_denial") else '', 'outcome_output_relief': markdown_to_plaintext(outcome_output_relief) if defined("outcome_output_relief") else '', '___shortcut_136_choice': markdown_to_plaintext(___shortcut_136_choice) if defined("___shortcut_136_choice") else '', '___shortcut_137_choice': markdown_to_plaintext(___shortcut_137_choice) if defined("___shortcut_137_choice") else '', '___shortcut_135_choice': markdown_to_plaintext(___shortcut_135_choice) if defined("___shortcut_135_choice") else '', 'outcome_output_relief_deadline': markdown_to_plaintext(outcome_output_relief_deadline) if defined("outcome_output_relief_deadline") else '', 'outcome_output_relief_info': markdown_to_plaintext(outcome_output_relief_info) if defined("outcome_output_relief_info") else '', 'outcome_title': markdown_to_plaintext(outcome_title) if defined("outcome_title") else '', 'outcome_title_bond': markdown_to_plaintext(outcome_title_bond) if defined("outcome_title_bond") else '', 'outcome_title_bond_amount': markdown_to_plaintext(outcome_title_bond_amount) if defined("outcome_title_bond_amount") else '', 'outcome_title_bond_denial': markdown_to_plaintext(outcome_title_bond_denial) if defined("outcome_title_bond_denial") else '', 'outcome_title_relief': markdown_to_plaintext(outcome_title_relief) if defined("outcome_title_relief") else '', 'outcome_title_relief_deadline': markdown_to_plaintext(outcome_title_relief_deadline) if defined("outcome_title_relief_deadline") else '', 'outcome_title_relief_info': markdown_to_plaintext(outcome_title_relief_info) if defined("outcome_title_relief_info") else '', 'proceeding_output_case': markdown_to_plaintext(proceeding_output_case) if defined("proceeding_output_case") else '', 'proceeding_output_date': markdown_to_plaintext(proceeding_output_date) if defined("proceeding_output_date") else '', 'proceeding_output_judge': markdown_to_plaintext(proceeding_output_judge) if defined("proceeding_output_judge") else '', 'proceeding_output_time': markdown_to_plaintext(proceeding_output_time) if defined("proceeding_output_time") else '', 'proceeding_output_type': markdown_to_plaintext(proceeding_output_type) if defined("proceeding_output_type") else '', '___shortcut_45_choice': markdown_to_plaintext(___shortcut_45_choice) if defined("___shortcut_45_choice") else '', '___shortcut_46_choice': markdown_to_plaintext(___shortcut_46_choice) if defined("___shortcut_46_choice") else '', 'proceeding_title': markdown_to_plaintext(proceeding_title) if defined("proceeding_title") else '', 'proceeding_title_case': markdown_to_plaintext(proceeding_title_case) if defined("proceeding_title_case") else '', 'proceeding_title_date': markdown_to_plaintext(proceeding_title_date) if defined("proceeding_title_date") else '', 'proceeding_title_judge': markdown_to_plaintext(proceeding_title_judge) if defined("proceeding_title_judge") else '', 'proceeding_title_time': markdown_to_plaintext(proceeding_title_time) if defined("proceeding_title_time") else '', 'proceeding_title_type': markdown_to_plaintext(proceeding_title_type) if defined("proceeding_title_type") else '', 'start': markdown_to_plaintext(start) if defined("start") else '', '___shortcut_131_false': markdown_to_plaintext(___shortcut_131_false) if defined("___shortcut_131_false") else '', 'you_output_assoc': markdown_to_plaintext(you_output_assoc) if defined("you_output_assoc") else '', 'you_output_email': markdown_to_plaintext(you_output_email) if defined("you_output_email") else '', 'you_output_name': markdown_to_plaintext(you_output_name) if defined("you_output_name") else '', 'you_output_phone': markdown_to_plaintext(you_output_phone) if defined("you_output_phone") else '', 'you_title': markdown_to_plaintext(you_title) if defined("you_title") else '', 'you_title_assoc': markdown_to_plaintext(you_title_assoc) if defined("you_title_assoc") else '', 'you_title_email': markdown_to_plaintext(you_title_email) if defined("you_title_email") else '', 'you_title_name': markdown_to_plaintext(you_title_name) if defined("you_title_name") else '', 'you_title_phone': markdown_to_plaintext(you_title_phone) if defined("you_title_phone") else '' }
 ---
 event: ___send_answers_background
 code: |
@@ -563,13 +684,12 @@ code: |
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d.js
 ---
 metadata:
 	title: |
 		Immigration Court Observation Form
 	exit label: |
-		Powered by Community.lawyer
+		Powered by Community.lawyer, a public benefit company
 ---
 mandatory: True
 code: |
@@ -593,19 +713,19 @@ under: |
 	${___send_answers()}
 ---
 code: |
-	you_title = primitive_value(((augment("Your Information"))))
+	you_title = ((augment("Your Information"))).primitive_value()
 ---
 code: |
-	you_title_name = primitive_value(((augment("Name"))))
+	you_title_name = ((augment("Name"))).primitive_value()
 ---
 code: |
-	you_title_assoc = primitive_value(((augment("School/Firm/etc."))))
+	you_title_assoc = ((augment("School/Firm/etc."))).primitive_value()
 ---
 code: |
-	you_title_phone = primitive_value(((augment("Phone"))))
+	you_title_phone = ((augment("Phone"))).primitive_value()
 ---
 code: |
-	you_title_email = primitive_value(((augment("EMail"))))
+	you_title_email = ((augment("EMail"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -615,22 +735,22 @@ subquestion: |
 	# ${you_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_2" data-field-id="53250"><p>Please enter the observer&#39;s (your) information!</p>
-			</span>
+			<p>Please enter the observer&#39;s (your) information!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_name\" data-field-id=\"53251\">${you_title_name}</span>": you_output_name
+
+	- "${you_title_name}": you_output_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_assoc\" data-field-id=\"53252\">${you_title_assoc}</span>": you_output_assoc
+	- "${you_title_assoc}": you_output_assoc
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_phone\" data-field-id=\"53253\">${you_title_phone}</span>": you_output_phone
+	- "${you_title_phone}": you_output_phone
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_email\" data-field-id=\"53254\">${you_title_email}</span>": you_output_email
+	- "${you_title_email}": you_output_email
 		datatype: email
 		required: true
 
@@ -638,22 +758,22 @@ under: |
 	${___send_answers()}
 ---
 code: |
-	proceeding_title = primitive_value(((augment("Proceeding Information"))))
+	proceeding_title = ((augment("Proceeding Information"))).primitive_value()
 ---
 code: |
-	proceeding_title_date = primitive_value(((augment("Date"))))
+	proceeding_title_date = ((augment("Date"))).primitive_value()
 ---
 code: |
-	proceeding_title_time = primitive_value(((augment("Time"))))
+	proceeding_title_time = ((augment("Time"))).primitive_value()
 ---
 code: |
-	proceeding_title_judge = primitive_value(((augment("Judge"))))
+	proceeding_title_judge = ((augment("Judge"))).primitive_value()
 ---
 code: |
-	proceeding_title_case = primitive_value(((augment("Case"))))
+	proceeding_title_case = ((augment("Case"))).primitive_value()
 ---
 code: |
-	proceeding_title_type = primitive_value(((augment("Type"))))
+	proceeding_title_type = ((augment("Type"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -663,69 +783,69 @@ subquestion: |
 	# ${proceeding_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_3" data-field-id="53256"><p>Please enter information on the proceeding you&#39;re observing ${you_output_name}!</p>
-			</span>
+			<p>Please enter information on the proceeding you&#39;re observing ${you_output_name}!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_date\" data-field-id=\"53259\">${proceeding_title_date}</span>": proceeding_output_date
+
+	- "${proceeding_title_date}": proceeding_output_date
 		datatype: date
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_time\" data-field-id=\"53261\">${proceeding_title_time}</span>": proceeding_output_time
+	- "${proceeding_title_time}": proceeding_output_time
 		datatype: time
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_judge\" data-field-id=\"53262\">${proceeding_title_judge}</span>": proceeding_output_judge
+	- "${proceeding_title_judge}": proceeding_output_judge
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_case\" data-field-id=\"53264\">${proceeding_title_case}</span>": proceeding_output_case
+	- "${proceeding_title_case}": proceeding_output_case
 		datatype: text
 		required: true
 		minlength: 0
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_type\" data-field-id=\"53268\">${proceeding_title_type}</span>": proceeding_output_type
+	- "${proceeding_title_type}": proceeding_output_type
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Bond Hearing</span>": "Bond Hearing"
-			- "<span>Master Calendar</span>": "Master Calendar"
+			- "Bond Hearing": "Bond Hearing"
+			- "Master Calendar": "Master Calendar"
 
 under: |
 	${___send_answers()}
 ---
 code: |
-	detainee_title = primitive_value(((augment("Detainee Information"))))
+	detainee_title = ((augment("Detainee Information"))).primitive_value()
 ---
 code: |
-	detainee_title_name = primitive_value(((augment("Name"))))
+	detainee_title_name = ((augment("Name"))).primitive_value()
 ---
 code: |
-	detainee_title_appearance = primitive_value(((augment("How did they appear?"))))
+	detainee_title_appearance = ((augment("How did they appear?"))).primitive_value()
 ---
 code: |
-	detainee_title_languages = primitive_value(((augment("Languages Spoken"))))
+	detainee_title_languages = ((augment("Languages Spoken"))).primitive_value()
 ---
 code: |
-	detainee_title_location = primitive_value(((augment("Where are they being detained?"))))
+	detainee_title_location = ((augment("Where are they being detained?"))).primitive_value()
 ---
 code: |
-	detainee_title_location_other = primitive_value(((augment("Other Location"))))
+	detainee_title_location_other = ((augment("Other Location"))).primitive_value()
 ---
 code: |
-	detainee_title_representation = primitive_value(((augment("Do they have representation?"))))
+	detainee_title_representation = ((augment("Do they have representation?"))).primitive_value()
 ---
 code: |
-	detainee_title_representation_who = primitive_value(((augment("Who?"))))
+	detainee_title_representation_who = ((augment("Who?"))).primitive_value()
 ---
 code: |
-	detainee_title_representation_continuance = primitive_value(((augment("Was a continuance to find representation granted?"))))
+	detainee_title_representation_continuance = ((augment("Was a continuance to find representation granted?"))).primitive_value()
 ---
 code: |
-	detainee_title_representation_continuance_length = primitive_value(((augment("How Long?"))))
+	detainee_title_representation_continuance_length = ((augment("How Long?"))).primitive_value()
 ---
 code: |
-	detainee_title_representation_continuance_denial = primitive_value(((augment("Why?"))))
+	detainee_title_representation_continuance_denial = ((augment("Why?"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -735,231 +855,315 @@ subquestion: |
 	# ${detainee_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_4" data-field-id="53277"><p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
-			</span>
+			<p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_name\" data-field-id=\"53279\">${detainee_title_name}</span>": detainee_output_name
+			<span hidden data-variable id='variable_4'/>
+
+	- "${detainee_title_name}": detainee_output_name
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_name'/>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_appearance\" data-field-id=\"53281\">${detainee_title_appearance}</span>": detainee_output_appearance
+	- "${detainee_title_appearance}": detainee_output_appearance
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>In Person</span>": "In Person"
-			- "<span>Video Conference</span>": "Video Conference"
+			- "In Person": "In Person"
+			- "Video Conference": "Video Conference"
+		html: |
+			<span hidden data-variable id='detainee_output_appearance'/>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_languages\" data-field-id=\"53283\">${detainee_title_languages}</span>": detainee_output_languages
+	- "${detainee_title_languages}": detainee_output_languages
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_languages'/>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_location\" data-field-id=\"53285\">${detainee_title_location}</span>": detainee_output_location
+	- "${detainee_title_location}": detainee_output_location
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>CoCo</span>": "CoCo"
-			- "<span>Mesa Verde</span>": "Mesa Verde"
-			- "<span>Sacramento/Yuba</span>": "Sacramento/Yuba"
-			- "<span>Other</span>": "Other"
+			- "CoCo": "CoCo"
+			- "Mesa Verde": "Mesa Verde"
+			- "Sacramento/Yuba": "Sacramento/Yuba"
+			- "Other": "Other"
+		html: |
+			<span hidden data-variable id='detainee_output_location'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_location_other\" data-field-id=\"53288\">${detainee_title_location_other}</span>": detainee_output_location_other
+	- "${detainee_title_location_other}": detainee_output_location_other
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_location_other'/>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_representation\" data-field-id=\"53292\">${detainee_title_representation}</span>": detainee_output_representation
+	- "${detainee_title_representation}": detainee_output_representation
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
-			- "<span>Unknown</span>": "Unknown"
+			- "Yes": "Yes"
+			- "No": "No"
+			- "Unknown": "Unknown"
+		html: |
+			<span hidden data-variable id='detainee_output_representation'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_who\" data-field-id=\"53294\">${detainee_title_representation_who}</span>": detainee_output_representation_who
+	- "${detainee_title_representation_who}": detainee_output_representation_who
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_representation_who'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance\" data-field-id=\"53298\">${detainee_title_representation_continuance}</span>": detainee_output_representation_continuance
+	- "${detainee_title_representation_continuance}": detainee_output_representation_continuance
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
-			- "<span>Unknown</span>": "Unknown"
+			- "Yes": "Yes"
+			- "No": "No"
+			- "Unknown": "Unknown"
+		html: |
+			<span hidden data-variable id='detainee_output_representation_continuance'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_length\" data-field-id=\"53300\">${detainee_title_representation_continuance_length}</span>": detainee_output_representation_continuance_length
+	- "${detainee_title_representation_continuance_length}": detainee_output_representation_continuance_length
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_representation_continuance_length'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_denial\" data-field-id=\"53302\">${detainee_title_representation_continuance_denial}</span>": detainee_output_representation_continuance_denial
+	- "${detainee_title_representation_continuance_denial}": detainee_output_representation_continuance_denial
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='detainee_output_representation_continuance_denial'/>
 
 under: |
 	${___send_answers()}
 
 script: |
-	<script>
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
-    $(function(){
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
 
-      window.CL.quicklyHideConditionalFields();
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
 
-      window.CL.updateFieldVisibility = function () {
-        if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.detainee_output_location)).stringEq(window.CL.augment("Other"))).wrapped))) { window.CL.showField("53288"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53294"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No"))).wrapped))) { window.CL.showField("53298"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.detainee_output_representation_continuance)).stringEq(window.CL.augment("Yes")).booleanAnd((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No")))).wrapped))) { window.CL.showField("53300"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.detainee_output_representation_continuance)).stringEq(window.CL.augment("No")).booleanAnd((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No")))).wrapped))) { window.CL.showField("53302"); }
-        if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.detainee_output_location)).stringEq(window.CL.augment("Other"))).wrapped))) { window.CL.hideField("53288"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53294"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No"))).wrapped))) { window.CL.hideField("53298"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.detainee_output_representation_continuance)).stringEq(window.CL.augment("Yes")).booleanAnd((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No")))).wrapped))) { window.CL.hideField("53300"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.detainee_output_representation_continuance)).stringEq(window.CL.augment("No")).booleanAnd((window.CL.augment(window.CL.variables.detainee_output_representation)).stringEq(window.CL.augment("No")))).wrapped))) { window.CL.hideField("53302"); }
-      };
+          var o = Object(this);
+          var len = o.length >>> 0;
 
-      window.CL.recomputeDerivedVariables = function () {
-        var variablesBefore = $.extend(true, {}, window.CL.variables);
+          if (len === 0) {
+            return false;
+          }
 
-        window.CL.variables.___shortcut_82_choice = (window.CL.variables.context_output_anyone === "No")
-    		window.CL.variables.___shortcut_81_choice = (window.CL.variables.context_output_anyone === "Yes")
-    		window.CL.variables.___shortcut_91_choice = (window.CL.variables.context_output_illness === "No")
-    		window.CL.variables.___shortcut_90_choice = (window.CL.variables.context_output_illness === "Yes")
-    		window.CL.variables.___shortcut_87_choice = (window.CL.variables.context_output_interpretation === "No")
-    		window.CL.variables.___shortcut_86_choice = (window.CL.variables.context_output_interpretation === "Yes")
-    		window.CL.variables.___shortcut_48_choice = (window.CL.variables.detainee_output_appearance === "In Person")
-    		window.CL.variables.___shortcut_49_choice = (window.CL.variables.detainee_output_appearance === "Video Conference")
-    		window.CL.variables.___shortcut_52_choice = (window.CL.variables.detainee_output_location === "CoCo")
-    		window.CL.variables.___shortcut_53_choice = (window.CL.variables.detainee_output_location === "Mesa Verde")
-    		window.CL.variables.___shortcut_55_choice = (window.CL.variables.detainee_output_location === "Other")
-    		window.CL.variables.___shortcut_54_choice = (window.CL.variables.detainee_output_location === "Sacramento/Yuba")
-    		window.CL.variables.___shortcut_59_choice = (window.CL.variables.detainee_output_representation === "No")
-    		window.CL.variables.___shortcut_60_choice = (window.CL.variables.detainee_output_representation === "Unknown")
-    		window.CL.variables.___shortcut_58_choice = (window.CL.variables.detainee_output_representation === "Yes")
-    		window.CL.variables.___shortcut_65_choice = (window.CL.variables.detainee_output_representation_continuance === "No")
-    		window.CL.variables.___shortcut_66_choice = (window.CL.variables.detainee_output_representation_continuance === "Unknown")
-    		window.CL.variables.___shortcut_64_choice = (window.CL.variables.detainee_output_representation_continuance === "Yes")
-    		window.CL.variables.___shortcut_112_choice = (window.CL.variables.outcome_output_bond === "No")
-    		window.CL.variables.___shortcut_113_choice = (window.CL.variables.outcome_output_bond === "Unknown")
-    		window.CL.variables.___shortcut_110_choice = (window.CL.variables.outcome_output_bond === "Yes")
-    		window.CL.variables.___shortcut_136_choice = (window.CL.variables.outcome_output_relief === "No")
-    		window.CL.variables.___shortcut_137_choice = (window.CL.variables.outcome_output_relief === "Unknown")
-    		window.CL.variables.___shortcut_135_choice = (window.CL.variables.outcome_output_relief === "Yes")
-    		window.CL.variables.___shortcut_45_choice = (window.CL.variables.proceeding_output_type === "Bond Hearing")
-    		window.CL.variables.___shortcut_46_choice = (window.CL.variables.proceeding_output_type === "Master Calendar")
-    		window.CL.variables.___shortcut_131_false = (window.CL.negate(window.CL.variables.start))
-        window.CL.variables.you_title = ((window.CL.augment("Your Information")))
-    		window.CL.variables.you_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.you_title_assoc = ((window.CL.augment("School/Firm/etc.")))
-    		window.CL.variables.you_title_phone = ((window.CL.augment("Phone")))
-    		window.CL.variables.you_title_email = ((window.CL.augment("EMail")))
-    		window.CL.variables.proceeding_title = ((window.CL.augment("Proceeding Information")))
-    		window.CL.variables.proceeding_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.proceeding_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.proceeding_title_judge = ((window.CL.augment("Judge")))
-    		window.CL.variables.proceeding_title_case = ((window.CL.augment("Case")))
-    		window.CL.variables.proceeding_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.detainee_title = ((window.CL.augment("Detainee Information")))
-    		window.CL.variables.detainee_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.detainee_title_appearance = ((window.CL.augment("How did they appear?")))
-    		window.CL.variables.detainee_title_languages = ((window.CL.augment("Languages Spoken")))
-    		window.CL.variables.detainee_title_location = ((window.CL.augment("Where are they being detained?")))
-    		window.CL.variables.detainee_title_location_other = ((window.CL.augment("Other Location")))
-    		window.CL.variables.detainee_title_representation = ((window.CL.augment("Do they have representation?")))
-    		window.CL.variables.detainee_title_representation_who = ((window.CL.augment("Who?")))
-    		window.CL.variables.detainee_title_representation_continuance = ((window.CL.augment("Was a continuance to find representation granted?")))
-    		window.CL.variables.detainee_title_representation_continuance_length = ((window.CL.augment("How Long?")))
-    		window.CL.variables.detainee_title_representation_continuance_denial = ((window.CL.augment("Why?")))
-    		window.CL.variables.context_title = ((window.CL.augment("Context Information")))
-    		window.CL.variables.context_title_anyone = ((window.CL.augment("Did the detainee have trouble communicating with anyone?")))
-    		window.CL.variables.context_title_anyone_who = ((window.CL.augment("With who?")))
-    		window.CL.variables.context_title_anyone_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_interpretation = ((window.CL.augment("Did the detainee have issues with interpretation?")))
-    		window.CL.variables.context_title_interpretation_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness = ((window.CL.augment("Did the detainee show signs of suffering from mental illness?")))
-    		window.CL.variables.context_title_illness_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness_addressed = ((window.CL.augment("How was it addressed?")))
-    		window.CL.variables.outcome_title = ((window.CL.augment("Outcome Information")))
-    		window.CL.variables.outcome_title_relief = ((window.CL.augment("Did detainee file any application for relief?")))
-    		window.CL.variables.outcome_title_relief_info = ((window.CL.augment("What were they?")))
-    		window.CL.variables.outcome_title_relief_deadline = ((window.CL.augment("What is the deadline?")))
-    		window.CL.variables.outcome_title_bond = ((window.CL.augment("Did IJ grant bond?")))
-    		window.CL.variables.outcome_title_bond_amount = ((window.CL.augment("Amount")))
-    		window.CL.variables.outcome_title_bond_denial = ((window.CL.augment("Reason")))
-    		window.CL.variables.hearing_title = ((window.CL.augment("Hearing Information")))
-    		window.CL.variables.hearing_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.hearing_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.hearing_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.other_title = ((window.CL.augment("Other Information")))
-        
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-        if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
-          return window.CL.recomputeDerivedVariables();
-        }
-        window.CL.updateFieldVisibility();
-      };
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
 
-      window.CL.updateValue = function (variableName, variableValue) {
-        window.CL.variables[variableName] = variableValue;
-        window.CL.recomputeDerivedVariables();
-      };
-
-      window.CL.assignFieldChangeListeners = function () {
-        $('[data-variable-name]').each(function() {
-          var field = $(this);
-          var variableName = field.data('variable-name');
-          field.closest('.form-group').find('input, select, textarea').on('input change', function() {
-            if (this.type === 'checkbox') {
-              var $this = $(this);
-              var $id = $this.prop('id');
-              var $labelContainer = $('label[for="' + $id +'"]');
-              var $variableName = $labelContainer.find('.checkbox-producer').data('variable-name');
-              window.CL.updateValue($variableName, $this.is(':checked'));
-            } else {
-              window.CL.updateValue(variableName, this.value);
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
             }
-          });
-        });
-      };
+            k++;
+          }
 
-      window.CL.assignFieldChangeListeners();
-      window.CL.getExistingVariables(function(){
-        window.CL.recomputeDerivedVariables();
+          return false;
+        }
       });
-    });
+    }
 
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
 
-	</script>
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var detainee_output_location_other_field = $('#detainee_output_location_other').closest('.form-group');
+		var detainee_output_representation_who_field = $('#detainee_output_representation_who').closest('.form-group');
+		var detainee_output_representation_continuance_field = $('#detainee_output_representation_continuance').closest('.form-group');
+		var detainee_output_representation_continuance_length_field = $('#detainee_output_representation_continuance_length').closest('.form-group');
+		var detainee_output_representation_continuance_denial_field = $('#detainee_output_representation_continuance_denial').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      variable_4: null,
+			detainee_output_name: null,
+			detainee_output_appearance: null,
+			detainee_output_languages: null,
+			detainee_output_location: null,
+			detainee_output_location_other: null,
+			detainee_output_representation: null,
+			detainee_output_representation_who: null,
+			detainee_output_representation_continuance: null,
+			detainee_output_representation_continuance_length: null,
+			detainee_output_representation_continuance_denial: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: detainee_output_location_other, field: detainee_output_location_other_field, required: true, callback: function() { return allVariableValues['detainee_output_location'] == "Other" } },
+			{ shouldShow: false, variableName: detainee_output_representation_who, field: detainee_output_representation_who_field, required: true, callback: function() { return allVariableValues['detainee_output_representation'] == "Yes" } },
+			{ shouldShow: false, variableName: detainee_output_representation_continuance, field: detainee_output_representation_continuance_field, required: true, callback: function() { return allVariableValues['detainee_output_representation'] == "No" } },
+			{ shouldShow: false, variableName: detainee_output_representation_continuance_length, field: detainee_output_representation_continuance_length_field, required: true, callback: function() { return allVariableValues['detainee_output_representation_continuance'] == "Yes" && allVariableValues['detainee_output_representation'] == "No" } },
+			{ shouldShow: false, variableName: detainee_output_representation_continuance_denial, field: detainee_output_representation_continuance_denial_field, required: true, callback: function() { return allVariableValues['detainee_output_representation_continuance'] == "No" && allVariableValues['detainee_output_representation'] == "No" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
 ---
 code: |
-	context_title = primitive_value(((augment("Context Information"))))
+	context_title = ((augment("Context Information"))).primitive_value()
 ---
 code: |
-	context_title_anyone = primitive_value(((augment("Did the detainee have trouble communicating with anyone?"))))
+	context_title_anyone = ((augment("Did the detainee have trouble communicating with anyone?"))).primitive_value()
 ---
 code: |
-	context_title_anyone_who = primitive_value(((augment("With who?"))))
+	context_title_anyone_who = ((augment("With who?"))).primitive_value()
 ---
 code: |
-	context_title_anyone_info = primitive_value(((augment("How so?"))))
+	context_title_anyone_info = ((augment("How so?"))).primitive_value()
 ---
 code: |
-	context_title_interpretation = primitive_value(((augment("Did the detainee have issues with interpretation?"))))
+	context_title_interpretation = ((augment("Did the detainee have issues with interpretation?"))).primitive_value()
 ---
 code: |
-	context_title_interpretation_info = primitive_value(((augment("How so?"))))
+	context_title_interpretation_info = ((augment("How so?"))).primitive_value()
 ---
 code: |
-	context_title_illness = primitive_value(((augment("Did the detainee show signs of suffering from mental illness?"))))
+	context_title_illness = ((augment("Did the detainee show signs of suffering from mental illness?"))).primitive_value()
 ---
 code: |
-	context_title_illness_info = primitive_value(((augment("How so?"))))
+	context_title_illness_info = ((augment("How so?"))).primitive_value()
 ---
 code: |
-	context_title_illness_addressed = primitive_value(((augment("How was it addressed?"))))
+	context_title_illness_addressed = ((augment("How was it addressed?"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -969,537 +1173,741 @@ subquestion: |
 	# ${context_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_5" data-field-id="53308"><p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
-			</span>
+			<p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_anyone\" data-field-id=\"53313\">${context_title_anyone}</span>": context_output_anyone
+			<span hidden data-variable id='variable_5'/>
+
+	- "${context_title_anyone}": context_output_anyone
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
+			- "Yes": "Yes"
+			- "No": "No"
+		html: |
+			<span hidden data-variable id='context_output_anyone'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_who\" data-field-id=\"53318\">${context_title_anyone_who}</span>": context_output_anyone_who
+	- "${context_title_anyone_who}": context_output_anyone_who
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='context_output_anyone_who'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_info\" data-field-id=\"53320\">${context_title_anyone_info}</span>": context_output_anyone_info
+	- "${context_title_anyone_info}": context_output_anyone_info
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='context_output_anyone_info'/>
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_interpretation\" data-field-id=\"53321\">${context_title_interpretation}</span>": context_output_interpretation
+	- "${context_title_interpretation}": context_output_interpretation
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
+			- "Yes": "Yes"
+			- "No": "No"
+		html: |
+			<span hidden data-variable id='context_output_interpretation'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_interpretation_info\" data-field-id=\"53322\">${context_title_interpretation_info}</span>": context_output_interpretation_info
+	- "${context_title_interpretation_info}": context_output_interpretation_info
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='context_output_interpretation_info'/>
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_illness\" data-field-id=\"53398\">${context_title_illness}</span>": context_output_illness
+	- "${context_title_illness}": context_output_illness
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
+			- "Yes": "Yes"
+			- "No": "No"
+		html: |
+			<span hidden data-variable id='context_output_illness'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_info\" data-field-id=\"53401\">${context_title_illness_info}</span>": context_output_illness_info
+	- "${context_title_illness_info}": context_output_illness_info
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='context_output_illness_info'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_addressed\" data-field-id=\"53405\">${context_title_illness_addressed}</span>": context_output_illness_addressed
+	- "${context_title_illness_addressed}": context_output_illness_addressed
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='context_output_illness_addressed'/>
 
 under: |
 	${___send_answers()}
 
 script: |
-	<script>
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
-    $(function(){
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
 
-      window.CL.quicklyHideConditionalFields();
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
 
-      window.CL.updateFieldVisibility = function () {
-        if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.context_output_anyone)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53318"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.context_output_anyone)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53320"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.context_output_interpretation)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53322"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.context_output_illness)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53401"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.context_output_illness)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53405"); }
-        if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.context_output_anyone)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53318"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.context_output_anyone)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53320"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.context_output_interpretation)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53322"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.context_output_illness)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53401"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.context_output_illness)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53405"); }
-      };
+          var o = Object(this);
+          var len = o.length >>> 0;
 
-      window.CL.recomputeDerivedVariables = function () {
-        var variablesBefore = $.extend(true, {}, window.CL.variables);
+          if (len === 0) {
+            return false;
+          }
 
-        window.CL.variables.___shortcut_82_choice = (window.CL.variables.context_output_anyone === "No")
-    		window.CL.variables.___shortcut_81_choice = (window.CL.variables.context_output_anyone === "Yes")
-    		window.CL.variables.___shortcut_91_choice = (window.CL.variables.context_output_illness === "No")
-    		window.CL.variables.___shortcut_90_choice = (window.CL.variables.context_output_illness === "Yes")
-    		window.CL.variables.___shortcut_87_choice = (window.CL.variables.context_output_interpretation === "No")
-    		window.CL.variables.___shortcut_86_choice = (window.CL.variables.context_output_interpretation === "Yes")
-    		window.CL.variables.___shortcut_48_choice = (window.CL.variables.detainee_output_appearance === "In Person")
-    		window.CL.variables.___shortcut_49_choice = (window.CL.variables.detainee_output_appearance === "Video Conference")
-    		window.CL.variables.___shortcut_52_choice = (window.CL.variables.detainee_output_location === "CoCo")
-    		window.CL.variables.___shortcut_53_choice = (window.CL.variables.detainee_output_location === "Mesa Verde")
-    		window.CL.variables.___shortcut_55_choice = (window.CL.variables.detainee_output_location === "Other")
-    		window.CL.variables.___shortcut_54_choice = (window.CL.variables.detainee_output_location === "Sacramento/Yuba")
-    		window.CL.variables.___shortcut_59_choice = (window.CL.variables.detainee_output_representation === "No")
-    		window.CL.variables.___shortcut_60_choice = (window.CL.variables.detainee_output_representation === "Unknown")
-    		window.CL.variables.___shortcut_58_choice = (window.CL.variables.detainee_output_representation === "Yes")
-    		window.CL.variables.___shortcut_65_choice = (window.CL.variables.detainee_output_representation_continuance === "No")
-    		window.CL.variables.___shortcut_66_choice = (window.CL.variables.detainee_output_representation_continuance === "Unknown")
-    		window.CL.variables.___shortcut_64_choice = (window.CL.variables.detainee_output_representation_continuance === "Yes")
-    		window.CL.variables.___shortcut_112_choice = (window.CL.variables.outcome_output_bond === "No")
-    		window.CL.variables.___shortcut_113_choice = (window.CL.variables.outcome_output_bond === "Unknown")
-    		window.CL.variables.___shortcut_110_choice = (window.CL.variables.outcome_output_bond === "Yes")
-    		window.CL.variables.___shortcut_136_choice = (window.CL.variables.outcome_output_relief === "No")
-    		window.CL.variables.___shortcut_137_choice = (window.CL.variables.outcome_output_relief === "Unknown")
-    		window.CL.variables.___shortcut_135_choice = (window.CL.variables.outcome_output_relief === "Yes")
-    		window.CL.variables.___shortcut_45_choice = (window.CL.variables.proceeding_output_type === "Bond Hearing")
-    		window.CL.variables.___shortcut_46_choice = (window.CL.variables.proceeding_output_type === "Master Calendar")
-    		window.CL.variables.___shortcut_131_false = (window.CL.negate(window.CL.variables.start))
-        window.CL.variables.you_title = ((window.CL.augment("Your Information")))
-    		window.CL.variables.you_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.you_title_assoc = ((window.CL.augment("School/Firm/etc.")))
-    		window.CL.variables.you_title_phone = ((window.CL.augment("Phone")))
-    		window.CL.variables.you_title_email = ((window.CL.augment("EMail")))
-    		window.CL.variables.proceeding_title = ((window.CL.augment("Proceeding Information")))
-    		window.CL.variables.proceeding_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.proceeding_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.proceeding_title_judge = ((window.CL.augment("Judge")))
-    		window.CL.variables.proceeding_title_case = ((window.CL.augment("Case")))
-    		window.CL.variables.proceeding_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.detainee_title = ((window.CL.augment("Detainee Information")))
-    		window.CL.variables.detainee_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.detainee_title_appearance = ((window.CL.augment("How did they appear?")))
-    		window.CL.variables.detainee_title_languages = ((window.CL.augment("Languages Spoken")))
-    		window.CL.variables.detainee_title_location = ((window.CL.augment("Where are they being detained?")))
-    		window.CL.variables.detainee_title_location_other = ((window.CL.augment("Other Location")))
-    		window.CL.variables.detainee_title_representation = ((window.CL.augment("Do they have representation?")))
-    		window.CL.variables.detainee_title_representation_who = ((window.CL.augment("Who?")))
-    		window.CL.variables.detainee_title_representation_continuance = ((window.CL.augment("Was a continuance to find representation granted?")))
-    		window.CL.variables.detainee_title_representation_continuance_length = ((window.CL.augment("How Long?")))
-    		window.CL.variables.detainee_title_representation_continuance_denial = ((window.CL.augment("Why?")))
-    		window.CL.variables.context_title = ((window.CL.augment("Context Information")))
-    		window.CL.variables.context_title_anyone = ((window.CL.augment("Did the detainee have trouble communicating with anyone?")))
-    		window.CL.variables.context_title_anyone_who = ((window.CL.augment("With who?")))
-    		window.CL.variables.context_title_anyone_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_interpretation = ((window.CL.augment("Did the detainee have issues with interpretation?")))
-    		window.CL.variables.context_title_interpretation_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness = ((window.CL.augment("Did the detainee show signs of suffering from mental illness?")))
-    		window.CL.variables.context_title_illness_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness_addressed = ((window.CL.augment("How was it addressed?")))
-    		window.CL.variables.outcome_title = ((window.CL.augment("Outcome Information")))
-    		window.CL.variables.outcome_title_relief = ((window.CL.augment("Did detainee file any application for relief?")))
-    		window.CL.variables.outcome_title_relief_info = ((window.CL.augment("What were they?")))
-    		window.CL.variables.outcome_title_relief_deadline = ((window.CL.augment("What is the deadline?")))
-    		window.CL.variables.outcome_title_bond = ((window.CL.augment("Did IJ grant bond?")))
-    		window.CL.variables.outcome_title_bond_amount = ((window.CL.augment("Amount")))
-    		window.CL.variables.outcome_title_bond_denial = ((window.CL.augment("Reason")))
-    		window.CL.variables.hearing_title = ((window.CL.augment("Hearing Information")))
-    		window.CL.variables.hearing_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.hearing_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.hearing_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.other_title = ((window.CL.augment("Other Information")))
-        
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-        if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
-          return window.CL.recomputeDerivedVariables();
-        }
-        window.CL.updateFieldVisibility();
-      };
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
 
-      window.CL.updateValue = function (variableName, variableValue) {
-        window.CL.variables[variableName] = variableValue;
-        window.CL.recomputeDerivedVariables();
-      };
-
-      window.CL.assignFieldChangeListeners = function () {
-        $('[data-variable-name]').each(function() {
-          var field = $(this);
-          var variableName = field.data('variable-name');
-          field.closest('.form-group').find('input, select, textarea').on('input change', function() {
-            if (this.type === 'checkbox') {
-              var $this = $(this);
-              var $id = $this.prop('id');
-              var $labelContainer = $('label[for="' + $id +'"]');
-              var $variableName = $labelContainer.find('.checkbox-producer').data('variable-name');
-              window.CL.updateValue($variableName, $this.is(':checked'));
-            } else {
-              window.CL.updateValue(variableName, this.value);
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
             }
-          });
-        });
-      };
+            k++;
+          }
 
-      window.CL.assignFieldChangeListeners();
-      window.CL.getExistingVariables(function(){
-        window.CL.recomputeDerivedVariables();
+          return false;
+        }
       });
-    });
+    }
 
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
 
-	</script>
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var context_output_anyone_who_field = $('#context_output_anyone_who').closest('.form-group');
+		var context_output_anyone_info_field = $('#context_output_anyone_info').closest('.form-group');
+		var context_output_interpretation_info_field = $('#context_output_interpretation_info').closest('.form-group');
+		var context_output_illness_info_field = $('#context_output_illness_info').closest('.form-group');
+		var context_output_illness_addressed_field = $('#context_output_illness_addressed').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      variable_5: null,
+			context_output_anyone: null,
+			context_output_anyone_who: null,
+			context_output_anyone_info: null,
+			context_output_interpretation: null,
+			context_output_interpretation_info: null,
+			context_output_illness: null,
+			context_output_illness_info: null,
+			context_output_illness_addressed: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: context_output_anyone_who, field: context_output_anyone_who_field, required: true, callback: function() { return allVariableValues['context_output_anyone'] == "Yes" } },
+			{ shouldShow: false, variableName: context_output_anyone_info, field: context_output_anyone_info_field, required: true, callback: function() { return allVariableValues['context_output_anyone'] == "Yes" } },
+			{ shouldShow: false, variableName: context_output_interpretation_info, field: context_output_interpretation_info_field, required: true, callback: function() { return allVariableValues['context_output_interpretation'] == "Yes" } },
+			{ shouldShow: false, variableName: context_output_illness_info, field: context_output_illness_info_field, required: true, callback: function() { return allVariableValues['context_output_illness'] == "Yes" } },
+			{ shouldShow: false, variableName: context_output_illness_addressed, field: context_output_illness_addressed_field, required: true, callback: function() { return allVariableValues['context_output_illness'] == "Yes" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
 ---
 code: |
-	outcome_title = primitive_value(((augment("Outcome Information"))))
+	outcome_title = ((augment("Outcome Information"))).primitive_value()
 ---
 code: |
-	outcome_title_relief = primitive_value(((augment("Did detainee file any application for relief?"))))
+	outcome_title_relief = ((augment("Did detainee file any application for relief?"))).primitive_value()
 ---
 code: |
-	outcome_title_relief_info = primitive_value(((augment("What were they?"))))
+	outcome_title_relief_info = ((augment("What were they?"))).primitive_value()
 ---
 code: |
-	outcome_title_relief_deadline = primitive_value(((augment("What is the deadline?"))))
+	outcome_title_relief_deadline = ((augment("What is the deadline?"))).primitive_value()
 ---
 code: |
-	outcome_title_bond = primitive_value(((augment("Did IJ grant bond?"))))
+	outcome_title_bond = ((augment("Did IJ grant bond?"))).primitive_value()
 ---
 code: |
-	outcome_title_bond_amount = primitive_value(((augment("Amount"))))
+	outcome_title_bond_amount = ((augment("Amount"))).primitive_value()
 ---
 code: |
-	outcome_title_bond_denial = primitive_value(((augment("Reason"))))
+	outcome_title_bond_denial = ((augment("Reason"))).primitive_value()
 ---
 mandatory: |
-	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Bond Hearing")))))
+	(((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()) == (augment("Bond Hearing"))))
 question: |
 		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
 subquestion: |
 	# ${outcome_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_7" data-field-id="53412"><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
-			</span>
+			<p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_bond\" data-field-id=\"53418\">${outcome_title_bond}</span>": outcome_output_bond
+			<span hidden data-variable id='variable_7'/>
+
+	- "${outcome_title_bond}": outcome_output_bond
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
-			- "<span>Unknown</span>": "Unknown"
+			- "Yes": "Yes"
+			- "No": "No"
+			- "Unknown": "Unknown"
+		html: |
+			<span hidden data-variable id='outcome_output_bond'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_amount\" data-field-id=\"53420\">${outcome_title_bond_amount}</span>": outcome_output_bond_amount
+	- "${outcome_title_bond_amount}": outcome_output_bond_amount
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='outcome_output_bond_amount'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_denial\" data-field-id=\"53421\">${outcome_title_bond_denial}</span>": outcome_output_bond_denial
+	- "${outcome_title_bond_denial}": outcome_output_bond_denial
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='outcome_output_bond_denial'/>
 
 under: |
 	${___send_answers()}
 
 script: |
-	<script>
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
-    $(function(){
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
 
-      window.CL.quicklyHideConditionalFields();
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
 
-      window.CL.updateFieldVisibility = function () {
-        if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.outcome_output_bond)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53420"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.outcome_output_bond)).stringEq(window.CL.augment("No"))).wrapped))) { window.CL.showField("53421"); }
-        if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.outcome_output_bond)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53420"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.outcome_output_bond)).stringEq(window.CL.augment("No"))).wrapped))) { window.CL.hideField("53421"); }
-      };
+          var o = Object(this);
+          var len = o.length >>> 0;
 
-      window.CL.recomputeDerivedVariables = function () {
-        var variablesBefore = $.extend(true, {}, window.CL.variables);
+          if (len === 0) {
+            return false;
+          }
 
-        window.CL.variables.___shortcut_82_choice = (window.CL.variables.context_output_anyone === "No")
-    		window.CL.variables.___shortcut_81_choice = (window.CL.variables.context_output_anyone === "Yes")
-    		window.CL.variables.___shortcut_91_choice = (window.CL.variables.context_output_illness === "No")
-    		window.CL.variables.___shortcut_90_choice = (window.CL.variables.context_output_illness === "Yes")
-    		window.CL.variables.___shortcut_87_choice = (window.CL.variables.context_output_interpretation === "No")
-    		window.CL.variables.___shortcut_86_choice = (window.CL.variables.context_output_interpretation === "Yes")
-    		window.CL.variables.___shortcut_48_choice = (window.CL.variables.detainee_output_appearance === "In Person")
-    		window.CL.variables.___shortcut_49_choice = (window.CL.variables.detainee_output_appearance === "Video Conference")
-    		window.CL.variables.___shortcut_52_choice = (window.CL.variables.detainee_output_location === "CoCo")
-    		window.CL.variables.___shortcut_53_choice = (window.CL.variables.detainee_output_location === "Mesa Verde")
-    		window.CL.variables.___shortcut_55_choice = (window.CL.variables.detainee_output_location === "Other")
-    		window.CL.variables.___shortcut_54_choice = (window.CL.variables.detainee_output_location === "Sacramento/Yuba")
-    		window.CL.variables.___shortcut_59_choice = (window.CL.variables.detainee_output_representation === "No")
-    		window.CL.variables.___shortcut_60_choice = (window.CL.variables.detainee_output_representation === "Unknown")
-    		window.CL.variables.___shortcut_58_choice = (window.CL.variables.detainee_output_representation === "Yes")
-    		window.CL.variables.___shortcut_65_choice = (window.CL.variables.detainee_output_representation_continuance === "No")
-    		window.CL.variables.___shortcut_66_choice = (window.CL.variables.detainee_output_representation_continuance === "Unknown")
-    		window.CL.variables.___shortcut_64_choice = (window.CL.variables.detainee_output_representation_continuance === "Yes")
-    		window.CL.variables.___shortcut_112_choice = (window.CL.variables.outcome_output_bond === "No")
-    		window.CL.variables.___shortcut_113_choice = (window.CL.variables.outcome_output_bond === "Unknown")
-    		window.CL.variables.___shortcut_110_choice = (window.CL.variables.outcome_output_bond === "Yes")
-    		window.CL.variables.___shortcut_136_choice = (window.CL.variables.outcome_output_relief === "No")
-    		window.CL.variables.___shortcut_137_choice = (window.CL.variables.outcome_output_relief === "Unknown")
-    		window.CL.variables.___shortcut_135_choice = (window.CL.variables.outcome_output_relief === "Yes")
-    		window.CL.variables.___shortcut_45_choice = (window.CL.variables.proceeding_output_type === "Bond Hearing")
-    		window.CL.variables.___shortcut_46_choice = (window.CL.variables.proceeding_output_type === "Master Calendar")
-    		window.CL.variables.___shortcut_131_false = (window.CL.negate(window.CL.variables.start))
-        window.CL.variables.you_title = ((window.CL.augment("Your Information")))
-    		window.CL.variables.you_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.you_title_assoc = ((window.CL.augment("School/Firm/etc.")))
-    		window.CL.variables.you_title_phone = ((window.CL.augment("Phone")))
-    		window.CL.variables.you_title_email = ((window.CL.augment("EMail")))
-    		window.CL.variables.proceeding_title = ((window.CL.augment("Proceeding Information")))
-    		window.CL.variables.proceeding_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.proceeding_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.proceeding_title_judge = ((window.CL.augment("Judge")))
-    		window.CL.variables.proceeding_title_case = ((window.CL.augment("Case")))
-    		window.CL.variables.proceeding_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.detainee_title = ((window.CL.augment("Detainee Information")))
-    		window.CL.variables.detainee_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.detainee_title_appearance = ((window.CL.augment("How did they appear?")))
-    		window.CL.variables.detainee_title_languages = ((window.CL.augment("Languages Spoken")))
-    		window.CL.variables.detainee_title_location = ((window.CL.augment("Where are they being detained?")))
-    		window.CL.variables.detainee_title_location_other = ((window.CL.augment("Other Location")))
-    		window.CL.variables.detainee_title_representation = ((window.CL.augment("Do they have representation?")))
-    		window.CL.variables.detainee_title_representation_who = ((window.CL.augment("Who?")))
-    		window.CL.variables.detainee_title_representation_continuance = ((window.CL.augment("Was a continuance to find representation granted?")))
-    		window.CL.variables.detainee_title_representation_continuance_length = ((window.CL.augment("How Long?")))
-    		window.CL.variables.detainee_title_representation_continuance_denial = ((window.CL.augment("Why?")))
-    		window.CL.variables.context_title = ((window.CL.augment("Context Information")))
-    		window.CL.variables.context_title_anyone = ((window.CL.augment("Did the detainee have trouble communicating with anyone?")))
-    		window.CL.variables.context_title_anyone_who = ((window.CL.augment("With who?")))
-    		window.CL.variables.context_title_anyone_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_interpretation = ((window.CL.augment("Did the detainee have issues with interpretation?")))
-    		window.CL.variables.context_title_interpretation_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness = ((window.CL.augment("Did the detainee show signs of suffering from mental illness?")))
-    		window.CL.variables.context_title_illness_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness_addressed = ((window.CL.augment("How was it addressed?")))
-    		window.CL.variables.outcome_title = ((window.CL.augment("Outcome Information")))
-    		window.CL.variables.outcome_title_relief = ((window.CL.augment("Did detainee file any application for relief?")))
-    		window.CL.variables.outcome_title_relief_info = ((window.CL.augment("What were they?")))
-    		window.CL.variables.outcome_title_relief_deadline = ((window.CL.augment("What is the deadline?")))
-    		window.CL.variables.outcome_title_bond = ((window.CL.augment("Did IJ grant bond?")))
-    		window.CL.variables.outcome_title_bond_amount = ((window.CL.augment("Amount")))
-    		window.CL.variables.outcome_title_bond_denial = ((window.CL.augment("Reason")))
-    		window.CL.variables.hearing_title = ((window.CL.augment("Hearing Information")))
-    		window.CL.variables.hearing_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.hearing_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.hearing_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.other_title = ((window.CL.augment("Other Information")))
-        
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-        if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
-          return window.CL.recomputeDerivedVariables();
-        }
-        window.CL.updateFieldVisibility();
-      };
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
 
-      window.CL.updateValue = function (variableName, variableValue) {
-        window.CL.variables[variableName] = variableValue;
-        window.CL.recomputeDerivedVariables();
-      };
-
-      window.CL.assignFieldChangeListeners = function () {
-        $('[data-variable-name]').each(function() {
-          var field = $(this);
-          var variableName = field.data('variable-name');
-          field.closest('.form-group').find('input, select, textarea').on('input change', function() {
-            if (this.type === 'checkbox') {
-              var $this = $(this);
-              var $id = $this.prop('id');
-              var $labelContainer = $('label[for="' + $id +'"]');
-              var $variableName = $labelContainer.find('.checkbox-producer').data('variable-name');
-              window.CL.updateValue($variableName, $this.is(':checked'));
-            } else {
-              window.CL.updateValue(variableName, this.value);
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
             }
-          });
-        });
-      };
+            k++;
+          }
 
-      window.CL.assignFieldChangeListeners();
-      window.CL.getExistingVariables(function(){
-        window.CL.recomputeDerivedVariables();
+          return false;
+        }
       });
-    });
+    }
 
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
 
-	</script>
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var outcome_output_bond_amount_field = $('#outcome_output_bond_amount').closest('.form-group');
+		var outcome_output_bond_denial_field = $('#outcome_output_bond_denial').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      variable_7: null,
+			outcome_output_bond: null,
+			outcome_output_bond_amount: null,
+			outcome_output_bond_denial: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: outcome_output_bond_amount, field: outcome_output_bond_amount_field, required: true, callback: function() { return allVariableValues['outcome_output_bond'] == "Yes" } },
+			{ shouldShow: false, variableName: outcome_output_bond_denial, field: outcome_output_bond_denial_field, required: true, callback: function() { return allVariableValues['outcome_output_bond'] == "No" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
 ---
 mandatory: |
-	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Master Calendar")))))
+	(((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()) == (augment("Master Calendar"))))
 question: |
 		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
 subquestion: |
 	# ${outcome_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_1" data-field-id="53448"><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
-			</span>
+			<p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_relief\" data-field-id=\"53449\">${outcome_title_relief}</span>": outcome_output_relief
+			<span hidden data-variable id='variable_1'/>
+
+	- "${outcome_title_relief}": outcome_output_relief
 		input type: dropdown
 		required: true
 		datatype: text
 		choices:
-			- "<span>Yes</span>": "Yes"
-			- "<span>No</span>": "No"
-			- "<span>Unknown</span>": "Unknown"
+			- "Yes": "Yes"
+			- "No": "No"
+			- "Unknown": "Unknown"
+		html: |
+			<span hidden data-variable id='outcome_output_relief'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_info\" data-field-id=\"53450\">${outcome_title_relief_info}</span>": outcome_output_relief_info
+	- "${outcome_title_relief_info}": outcome_output_relief_info
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='outcome_output_relief_info'/>
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_deadline\" data-field-id=\"53451\">${outcome_title_relief_deadline}</span>": outcome_output_relief_deadline
+	- "${outcome_title_relief_deadline}": outcome_output_relief_deadline
 		datatype: text
 		required: true
+		html: |
+			<span hidden data-variable id='outcome_output_relief_deadline'/>
 
 under: |
 	${___send_answers()}
 
 script: |
-	<script>
+  <script>
+    // Polyfills for Internet Explorer
+    if (!Object.values) Object.values = function(o) { return Object.keys(o).map(function(k) { return o[k] }) };
 
-    $(function(){
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(valueToFind, fromIndex) {
 
-      window.CL.quicklyHideConditionalFields();
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+          }
 
-      window.CL.updateFieldVisibility = function () {
-        if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.outcome_output_relief)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53450"); }
-    		if ((window.CL.isTruthy(((window.CL.augment(window.CL.variables.outcome_output_relief)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.showField("53451"); }
-        if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.outcome_output_relief)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53450"); }
-    		if ((window.CL.isFalsy(((window.CL.augment(window.CL.variables.outcome_output_relief)).stringEq(window.CL.augment("Yes"))).wrapped))) { window.CL.hideField("53451"); }
-      };
+          var o = Object(this);
+          var len = o.length >>> 0;
 
-      window.CL.recomputeDerivedVariables = function () {
-        var variablesBefore = $.extend(true, {}, window.CL.variables);
+          if (len === 0) {
+            return false;
+          }
 
-        window.CL.variables.___shortcut_82_choice = (window.CL.variables.context_output_anyone === "No")
-    		window.CL.variables.___shortcut_81_choice = (window.CL.variables.context_output_anyone === "Yes")
-    		window.CL.variables.___shortcut_91_choice = (window.CL.variables.context_output_illness === "No")
-    		window.CL.variables.___shortcut_90_choice = (window.CL.variables.context_output_illness === "Yes")
-    		window.CL.variables.___shortcut_87_choice = (window.CL.variables.context_output_interpretation === "No")
-    		window.CL.variables.___shortcut_86_choice = (window.CL.variables.context_output_interpretation === "Yes")
-    		window.CL.variables.___shortcut_48_choice = (window.CL.variables.detainee_output_appearance === "In Person")
-    		window.CL.variables.___shortcut_49_choice = (window.CL.variables.detainee_output_appearance === "Video Conference")
-    		window.CL.variables.___shortcut_52_choice = (window.CL.variables.detainee_output_location === "CoCo")
-    		window.CL.variables.___shortcut_53_choice = (window.CL.variables.detainee_output_location === "Mesa Verde")
-    		window.CL.variables.___shortcut_55_choice = (window.CL.variables.detainee_output_location === "Other")
-    		window.CL.variables.___shortcut_54_choice = (window.CL.variables.detainee_output_location === "Sacramento/Yuba")
-    		window.CL.variables.___shortcut_59_choice = (window.CL.variables.detainee_output_representation === "No")
-    		window.CL.variables.___shortcut_60_choice = (window.CL.variables.detainee_output_representation === "Unknown")
-    		window.CL.variables.___shortcut_58_choice = (window.CL.variables.detainee_output_representation === "Yes")
-    		window.CL.variables.___shortcut_65_choice = (window.CL.variables.detainee_output_representation_continuance === "No")
-    		window.CL.variables.___shortcut_66_choice = (window.CL.variables.detainee_output_representation_continuance === "Unknown")
-    		window.CL.variables.___shortcut_64_choice = (window.CL.variables.detainee_output_representation_continuance === "Yes")
-    		window.CL.variables.___shortcut_112_choice = (window.CL.variables.outcome_output_bond === "No")
-    		window.CL.variables.___shortcut_113_choice = (window.CL.variables.outcome_output_bond === "Unknown")
-    		window.CL.variables.___shortcut_110_choice = (window.CL.variables.outcome_output_bond === "Yes")
-    		window.CL.variables.___shortcut_136_choice = (window.CL.variables.outcome_output_relief === "No")
-    		window.CL.variables.___shortcut_137_choice = (window.CL.variables.outcome_output_relief === "Unknown")
-    		window.CL.variables.___shortcut_135_choice = (window.CL.variables.outcome_output_relief === "Yes")
-    		window.CL.variables.___shortcut_45_choice = (window.CL.variables.proceeding_output_type === "Bond Hearing")
-    		window.CL.variables.___shortcut_46_choice = (window.CL.variables.proceeding_output_type === "Master Calendar")
-    		window.CL.variables.___shortcut_131_false = (window.CL.negate(window.CL.variables.start))
-        window.CL.variables.you_title = ((window.CL.augment("Your Information")))
-    		window.CL.variables.you_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.you_title_assoc = ((window.CL.augment("School/Firm/etc.")))
-    		window.CL.variables.you_title_phone = ((window.CL.augment("Phone")))
-    		window.CL.variables.you_title_email = ((window.CL.augment("EMail")))
-    		window.CL.variables.proceeding_title = ((window.CL.augment("Proceeding Information")))
-    		window.CL.variables.proceeding_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.proceeding_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.proceeding_title_judge = ((window.CL.augment("Judge")))
-    		window.CL.variables.proceeding_title_case = ((window.CL.augment("Case")))
-    		window.CL.variables.proceeding_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.detainee_title = ((window.CL.augment("Detainee Information")))
-    		window.CL.variables.detainee_title_name = ((window.CL.augment("Name")))
-    		window.CL.variables.detainee_title_appearance = ((window.CL.augment("How did they appear?")))
-    		window.CL.variables.detainee_title_languages = ((window.CL.augment("Languages Spoken")))
-    		window.CL.variables.detainee_title_location = ((window.CL.augment("Where are they being detained?")))
-    		window.CL.variables.detainee_title_location_other = ((window.CL.augment("Other Location")))
-    		window.CL.variables.detainee_title_representation = ((window.CL.augment("Do they have representation?")))
-    		window.CL.variables.detainee_title_representation_who = ((window.CL.augment("Who?")))
-    		window.CL.variables.detainee_title_representation_continuance = ((window.CL.augment("Was a continuance to find representation granted?")))
-    		window.CL.variables.detainee_title_representation_continuance_length = ((window.CL.augment("How Long?")))
-    		window.CL.variables.detainee_title_representation_continuance_denial = ((window.CL.augment("Why?")))
-    		window.CL.variables.context_title = ((window.CL.augment("Context Information")))
-    		window.CL.variables.context_title_anyone = ((window.CL.augment("Did the detainee have trouble communicating with anyone?")))
-    		window.CL.variables.context_title_anyone_who = ((window.CL.augment("With who?")))
-    		window.CL.variables.context_title_anyone_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_interpretation = ((window.CL.augment("Did the detainee have issues with interpretation?")))
-    		window.CL.variables.context_title_interpretation_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness = ((window.CL.augment("Did the detainee show signs of suffering from mental illness?")))
-    		window.CL.variables.context_title_illness_info = ((window.CL.augment("How so?")))
-    		window.CL.variables.context_title_illness_addressed = ((window.CL.augment("How was it addressed?")))
-    		window.CL.variables.outcome_title = ((window.CL.augment("Outcome Information")))
-    		window.CL.variables.outcome_title_relief = ((window.CL.augment("Did detainee file any application for relief?")))
-    		window.CL.variables.outcome_title_relief_info = ((window.CL.augment("What were they?")))
-    		window.CL.variables.outcome_title_relief_deadline = ((window.CL.augment("What is the deadline?")))
-    		window.CL.variables.outcome_title_bond = ((window.CL.augment("Did IJ grant bond?")))
-    		window.CL.variables.outcome_title_bond_amount = ((window.CL.augment("Amount")))
-    		window.CL.variables.outcome_title_bond_denial = ((window.CL.augment("Reason")))
-    		window.CL.variables.hearing_title = ((window.CL.augment("Hearing Information")))
-    		window.CL.variables.hearing_title_date = ((window.CL.augment("Date")))
-    		window.CL.variables.hearing_title_time = ((window.CL.augment("Time")))
-    		window.CL.variables.hearing_title_type = ((window.CL.augment("Type")))
-    		window.CL.variables.other_title = ((window.CL.augment("Other Information")))
-        
+          var n = fromIndex | 0;
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-        if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
-          return window.CL.recomputeDerivedVariables();
-        }
-        window.CL.updateFieldVisibility();
-      };
+          function sameValueZero(x, y) {
+            return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+          }
 
-      window.CL.updateValue = function (variableName, variableValue) {
-        window.CL.variables[variableName] = variableValue;
-        window.CL.recomputeDerivedVariables();
-      };
-
-      window.CL.assignFieldChangeListeners = function () {
-        $('[data-variable-name]').each(function() {
-          var field = $(this);
-          var variableName = field.data('variable-name');
-          field.closest('.form-group').find('input, select, textarea').on('input change', function() {
-            if (this.type === 'checkbox') {
-              var $this = $(this);
-              var $id = $this.prop('id');
-              var $labelContainer = $('label[for="' + $id +'"]');
-              var $variableName = $labelContainer.find('.checkbox-producer').data('variable-name');
-              window.CL.updateValue($variableName, $this.is(':checked'));
-            } else {
-              window.CL.updateValue(variableName, this.value);
+          while (k < len) {
+            if (sameValueZero(o[k], valueToFind)) {
+              return true;
             }
-          });
-        });
-      };
+            k++;
+          }
 
-      window.CL.assignFieldChangeListeners();
-      window.CL.getExistingVariables(function(){
-        window.CL.recomputeDerivedVariables();
+          return false;
+        }
       });
-    });
+    }
 
+    if (typeof Object.assign != 'function') {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
 
-	</script>
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    // Those fields which should be conditionally shown
+    var outcome_output_relief_info_field = $('#outcome_output_relief_info').closest('.form-group');
+		var outcome_output_relief_deadline_field = $('#outcome_output_relief_deadline').closest('.form-group');
+
+    // We track the values of all in-page fields
+    var allVariableValues = {
+      variable_1: null,
+			outcome_output_relief: null,
+			outcome_output_relief_info: null,
+			outcome_output_relief_deadline: null,
+    };
+
+    // We need to be able to map in-page checkbox labels to their actual values
+    var checkboxLabelsAndValues = {
+      
+    }
+
+    var showIfCallbacks = [
+      { shouldShow: false, variableName: outcome_output_relief_info, field: outcome_output_relief_info_field, required: true, callback: function() { return allVariableValues['outcome_output_relief'] == "Yes" } },
+			{ shouldShow: false, variableName: outcome_output_relief_deadline, field: outcome_output_relief_deadline_field, required: true, callback: function() { return allVariableValues['outcome_output_relief'] == "Yes" } },
+    ];
+
+    hideAllConditionalFields();
+    findCurrentValuesForAllFields();
+    conditionallyShowFieldsBasedOnValues();
+    assignFieldChangeListeners();
+
+    function hideAllConditionalFields() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+        currentItem.field.hide();
+      }
+    }
+
+    function findCurrentValuesForAllFields() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').each(function() {
+          if (this.type === 'radio') {
+            if ($(this).is(':checked')) calculateInputValue(this, variableName);
+          } else {
+            calculateInputValue(this, variableName);
+          }
+        });
+      });
+    }
+
+    function showConditionalFieldsBasedOnCurrentValue(speed) {
+      if (!speed) speed = null;
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        var currentItem = showIfCallbacks[i];
+        if (currentItem.shouldShow) {
+          currentItem.field.find('input, select, textarea').removeAttr('disabled');
+          currentItem.field.show(speed);
+        } else {
+          currentItem.field.find('input, select, textarea').attr('disabled', 'disabled');
+          currentItem.field.hide(speed);
+        }
+      }
+    }
+
+    function conditionallyShowFieldsBasedOnValues() {
+      get_interview_variables(function(data) {
+        if (data.success) {
+          var variables = data.variables;
+          delete variables.nav;
+          delete variables.url_args;
+          delete variables._internal;
+
+          var variableKeys = Object.keys(variables);
+
+          for (var i = 0; i < variableKeys.length; i++) {
+            var currentKey = variableKeys[i];
+            var currentVariable = variables[currentKey];
+            if (typeof currentVariable === 'object' && currentVariable.elements) {
+              variables[currentKey] = currentVariable.elements;
+            }
+          }
+          allVariableValues = Object.assign(allVariableValues, data.variables);
+        }
+
+        calculateShouldShowValues();
+        showConditionalFieldsBasedOnCurrentValue();
+      });
+    }
+
+    function calculateShouldShowValues() {
+      for (var i = 0; i < showIfCallbacks.length; i++) {
+        currentValue = showIfCallbacks[i];
+        currentValue.shouldShow = currentValue.callback();
+      }
+    }
+
+    function assignFieldChangeListeners() {
+      $('[data-variable]').each(function() {
+        var field = $(this);
+        var variableName = field.attr('id');
+        field.closest('.form-group').find('input, select, textarea').on('input change', function() {
+          calculateInputValue(this, variableName);
+          calculateShouldShowValues();
+          showConditionalFieldsBasedOnCurrentValue('fast');
+        });
+      });
+    }
+
+    function calculateInputValue(el, variableName) {
+      if (el.type === 'checkbox') {
+        var checkboxValue = checkboxLabelsAndValues[variableName][el.alt];
+        allVariableValues[variableName][checkboxValue] = $(el).is(':checked');
+      } else {
+        allVariableValues[variableName] = el.value;
+      }
+    }
+  </script>
 ---
 code: |
-	hearing_title = primitive_value(((augment("Hearing Information"))))
+	hearing_title = ((augment("Hearing Information"))).primitive_value()
 ---
 code: |
-	hearing_title_date = primitive_value(((augment("Date"))))
+	hearing_title_date = ((augment("Date"))).primitive_value()
 ---
 code: |
-	hearing_title_time = primitive_value(((augment("Time"))))
+	hearing_title_time = ((augment("Time"))).primitive_value()
 ---
 code: |
-	hearing_title_type = primitive_value(((augment("Type"))))
+	hearing_title_type = ((augment("Type"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -1509,18 +1917,18 @@ subquestion: |
 	# ${hearing_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_6" data-field-id="53425"><p>Please enter information on the next hearing for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
-			</span>
+			<p>Please enter information on the next hearing for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_date\" data-field-id=\"53426\">${hearing_title_date}</span>": hearing_output_date
+
+	- "${hearing_title_date}": hearing_output_date
 		datatype: date
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_time\" data-field-id=\"53427\">${hearing_title_time}</span>": hearing_output_time
+	- "${hearing_title_time}": hearing_output_time
 		datatype: time
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_type\" data-field-id=\"53428\">${hearing_title_type}</span>": hearing_output_type
+	- "${hearing_title_type}": hearing_output_type
 		datatype: text
 		required: false
 
@@ -1528,7 +1936,7 @@ under: |
 	${___send_answers()}
 ---
 code: |
-	other_title = primitive_value(((augment("Other Information"))))
+	other_title = ((augment("Other Information"))).primitive_value()
 ---
 mandatory: |
 	True
@@ -1538,10 +1946,10 @@ subquestion: |
 	# ${other_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_8" data-field-id="53430"><p>Please enter anything else we should know ${you_output_name}!</p>
-			</span>
+			<p>Please enter anything else we should know ${you_output_name}!</p>
 
-	- "<span class=\"producer\" data-variable-name=\"other_output\" data-field-id=\"53431\"></span>": other_output
+
+	- "": other_output
 		datatype: area
 		required: false
 
@@ -1556,9 +1964,8 @@ subquestion: |
 	# Thanks for volunteering ${you_output_name}!
 
 under: |
-	${ ('' if defined("___already_sent_t_icop_email_26e207fc10a5") else (___send_t_icop_email_26e207fc10a5())) }
+	${ ('' if defined("___already_sent_icop_email_26e207fc10a5") else (___send_icop_email_26e207fc10a5())) }
 	${___send_answers()}
-
 css: |
   <style>
     button[type='submit'] {
@@ -1566,7 +1973,7 @@ css: |
     }
   </style>
 ---
-template: t_icop_template_af3e7002e7d6
+template: icop_template_af3e7002e7d6
 subject: |
   Observation of Hearing for ${detainee_output_name if defined("detainee_output_name") else ""}(${proceeding_output_case if defined("proceeding_output_case") else ""})
 content: |
@@ -1623,19 +2030,19 @@ content: |
 ---
 mandatory: True
 code: |
-	def ___send_t_icop_email_26e207fc10a5():
-		define("___already_sent_t_icop_email_26e207fc10a5", True)
-		background_action("___send_t_icop_email_26e207fc10a5_background")
+	def ___send_icop_email_26e207fc10a5():
+		define("___already_sent_icop_email_26e207fc10a5", True)
+		background_action("___send_icop_email_26e207fc10a5_background")
 		return ''
 ---
-event: ___send_t_icop_email_26e207fc10a5_background
+event: ___send_icop_email_26e207fc10a5_background
 code: |
 	if True:
 		import requests
 		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 3 })
 		data = permission_response.json()
 		if data['permitted']:
-			send_email(template=t_icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email), bcc="ari.c@berkeley.edu")
+			send_email(template=icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email), bcc="ari.c@berkeley.edu")
 			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 3 })
 	background_response()
 ---
