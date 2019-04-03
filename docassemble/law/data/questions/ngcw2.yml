@@ -1,5 +1,8 @@
-# Prepared by Community.lawyer on 3/19/2019
+# Prepared by Community.lawyer on 4/3/2019
 # Compatible with Docassemble version 0.3.11
+---
+modules:
+	- docassemble.base.util
 ---
 mandatory: True
 code: |
@@ -563,12 +566,15 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript: https://community.lawyer/static/system_d.js
+	css: https://community.lawyer/static/styles/default.css
 ---
 metadata:
 	title: |
 		Name & Gender Change Workshop
 	exit label: |
 		Powered by Community.lawyer
+	logo: |
+		<img class='app-logo' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg' alt='Name & Gender Change Workshop'/>
 ---
 mandatory: True
 code: |
@@ -582,8 +588,7 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# **_[THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)_**
 field: start
@@ -593,12 +598,11 @@ under: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# How can we help you today?
 fields:
-	- "<span class=\"producer\" data-variable-name=\"help_type\" data-field-id=\"59208\"></span>": help_type
+	- "<span class=\"producer\" data-variable-name=\"help_type\" data-field-id=\"59208\" ></span>": help_type
 		input type: radio
 		required: true
 		datatype: text
@@ -618,28 +622,27 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# Current Petitioner Information
 fields:
-	- "<span class=\"producer\" data-variable-name=\"current_name\" data-field-id=\"59210\">Full Legal Name</span>": current_name
+	- "<span class=\"producer\" data-variable-name=\"current_name\" data-field-id=\"59210\" >Full Legal Name</span>": current_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_1\" data-field-id=\"59219\">Also Known As</span>": current_aka_1
+	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_1\" data-field-id=\"59219\" >Also Known As</span>": current_aka_1
 		datatype: text
 		required: false
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_2\" data-field-id=\"59229\">Also Also Known As</span>": current_aka_2
+	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_2\" data-field-id=\"59229\" >Also Also Known As</span>": current_aka_2
 		datatype: text
 		required: false
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_3\" data-field-id=\"59230\">Also Also Also Known As</span>": current_aka_3
+	- "<span class=\"producer conditional-field\" data-variable-name=\"current_aka_3\" data-field-id=\"59230\" >Also Also Also Known As</span>": current_aka_3
 		datatype: text
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"current_gender\" data-field-id=\"59218\">Gender assigned by the state at birth</span>": current_gender
+	- "<span class=\"producer\" data-variable-name=\"current_gender\" data-field-id=\"59218\" >Gender assigned by the state at birth</span>": current_gender
 		input type: radio
 		required: true
 		datatype: text
@@ -647,33 +650,33 @@ fields:
 			- "<span>Male</span>": "Male"
 			- "<span>Female</span>": "Female"
 
-	- "<span class=\"producer\" data-variable-name=\"current_phone\" data-field-id=\"59214\">Phone</span>": current_phone
+	- "<span class=\"producer\" data-variable-name=\"current_phone\" data-field-id=\"59214\" >Phone</span>": current_phone
 		datatype: text
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"current_email\" data-field-id=\"59216\">Email</span>": current_email
+	- "<span class=\"producer\" data-variable-name=\"current_email\" data-field-id=\"59216\" >Email</span>": current_email
 		datatype: email
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"current_street\" data-field-id=\"59211\">Street</span>": current_street
+	- "<span class=\"producer\" data-variable-name=\"current_street\" data-field-id=\"59211\" >Street</span>": current_street
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"current_city\" data-field-id=\"59212\">City</span>": current_city
+	- "<span class=\"producer\" data-variable-name=\"current_city\" data-field-id=\"59212\" >City</span>": current_city
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"current_zip\" data-field-id=\"59213\">Zip</span>": current_zip
+	- "<span class=\"producer\" data-variable-name=\"current_zip\" data-field-id=\"59213\" >Zip</span>": current_zip
 		datatype: text
 		required: true
 		minlength: 5
 		maxlength: 5
 
-	- "<span class=\"producer\" data-variable-name=\"current_pob\" data-field-id=\"59221\">Place of Birth</span>": current_pob
+	- "<span class=\"producer\" data-variable-name=\"current_pob\" data-field-id=\"59221\" >Place of Birth</span>": current_pob
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"current_dob\" data-field-id=\"59222\">Date of Birth</span>": current_dob
+	- "<span class=\"producer\" data-variable-name=\"current_dob\" data-field-id=\"59222\" >Date of Birth</span>": current_dob
 		datatype: date
 		required: true
 
@@ -776,12 +779,11 @@ code: |
 ---
 mandatory: |
 	is_truthy((((augment(help_name) if defined("help_name") else Undefined()))))
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# Future Petitioner Name
 fields:
-	- "<span class=\"producer\" data-variable-name=\"future_name\" data-field-id=\"59223\">Full Future Name</span>": future_name
+	- "<span class=\"producer\" data-variable-name=\"future_name\" data-field-id=\"59223\" >Full Future Name</span>": future_name
 		datatype: text
 		required: true
 
@@ -790,12 +792,11 @@ under: |
 ---
 mandatory: |
 	is_truthy((((augment(help_gender) if defined("help_gender") else Undefined()))))
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# Future Petitioner Gender
 fields:
-	- "<span class=\"producer\" data-variable-name=\"future_gender\" data-field-id=\"59224\">Future state assigned gender</span>": future_gender
+	- "<span class=\"producer\" data-variable-name=\"future_gender\" data-field-id=\"59224\" >Future state assigned gender</span>": future_gender
 		input type: radio
 		required: true
 		datatype: text
@@ -809,12 +810,11 @@ under: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# Court Information
 fields:
-	- "<span class=\"producer\" data-variable-name=\"court_county\" data-field-id=\"59225\">Which county do you live in?</span>": court_county
+	- "<span class=\"producer\" data-variable-name=\"court_county\" data-field-id=\"59225\" >Which county do you live in?</span>": court_county
 		input type: dropdown
 		required: true
 		datatype: text
@@ -830,7 +830,7 @@ fields:
 			- "<span>Sonoma</span>": "Sonoma"
 			- "<span>Other</span>": "Other"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"court_other\" data-field-id=\"59226\">Full Superior Court Name and Address</span>": court_other
+	- "<span class=\"producer conditional-field\" data-variable-name=\"court_other\" data-field-id=\"59226\" >Full Superior Court Name and Address</span>": court_other
 		datatype: area
 		required: false
 
@@ -1004,8 +1004,7 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	Please sign as you would for any government document
 signature: signature
@@ -1053,8 +1052,7 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckVTIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9d646ab9874748ad6b9e4bc7c5c96097998079f/c0f9eb7ede1f3e0d7b96b0449e183986-rimg-w720-h373-gmir.jpg'/>
+question: ''
 subquestion: |
 	# **Thanks for volunteering!**
 
@@ -1065,11 +1063,11 @@ under: |
 	${___send_answers()}
 
 css: |
-  <style>
-    button[type='submit'] {
-      display: none;
-    }
-  </style>
+	<style>
+		button.btn-primary[type='submit'] {
+			display: none;
+		}
+	</style>
 ---
 code: |
 	if (augment(help_name) if defined("help_name") else Undefined()):

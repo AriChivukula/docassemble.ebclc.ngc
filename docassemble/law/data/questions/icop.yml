@@ -1,5 +1,8 @@
-# Prepared by Community.lawyer on 3/19/2019
+# Prepared by Community.lawyer on 4/3/2019
 # Compatible with Docassemble version 0.3.11
+---
+modules:
+	- docassemble.base.util
 ---
 mandatory: True
 code: |
@@ -561,12 +564,15 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript: https://community.lawyer/static/system_d.js
+	css: https://community.lawyer/static/styles/default.css
 ---
 metadata:
 	title: |
 		Immigration Court Observation Form
 	exit label: |
 		Powered by Community.lawyer
+	logo: |
+		<img class='app-logo' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png' alt='Immigration Court Observation Form'/>
 ---
 mandatory: True
 code: |
@@ -580,8 +586,7 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# _[THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)_
 field: start
@@ -606,28 +611,27 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${you_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_2" data-field-id="53250"><p>Please enter the observer&#39;s (your) information!</p>
+			<span class="producer" data-variable-name="variable_2" data-field-id="53250" ><p>Please enter the observer&#39;s (your) information!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_name\" data-field-id=\"53251\">${you_title_name}</span>": you_output_name
+	- "<span class=\"producer\" data-variable-name=\"you_output_name\" data-field-id=\"53251\" >${you_title_name}</span>": you_output_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_assoc\" data-field-id=\"53252\">${you_title_assoc}</span>": you_output_assoc
+	- "<span class=\"producer\" data-variable-name=\"you_output_assoc\" data-field-id=\"53252\" >${you_title_assoc}</span>": you_output_assoc
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_phone\" data-field-id=\"53253\">${you_title_phone}</span>": you_output_phone
+	- "<span class=\"producer\" data-variable-name=\"you_output_phone\" data-field-id=\"53253\" >${you_title_phone}</span>": you_output_phone
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_email\" data-field-id=\"53254\">${you_title_email}</span>": you_output_email
+	- "<span class=\"producer\" data-variable-name=\"you_output_email\" data-field-id=\"53254\" >${you_title_email}</span>": you_output_email
 		datatype: email
 		required: true
 
@@ -654,33 +658,32 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${proceeding_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_3" data-field-id="53256"><p>Please enter information on the proceeding you&#39;re observing ${you_output_name}!</p>
+			<span class="producer" data-variable-name="variable_3" data-field-id="53256" ><p>Please enter information on the proceeding you&#39;re observing ${you_output_name}!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_date\" data-field-id=\"53259\">${proceeding_title_date}</span>": proceeding_output_date
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_date\" data-field-id=\"53259\" >${proceeding_title_date}</span>": proceeding_output_date
 		datatype: date
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_time\" data-field-id=\"53261\">${proceeding_title_time}</span>": proceeding_output_time
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_time\" data-field-id=\"53261\" >${proceeding_title_time}</span>": proceeding_output_time
 		datatype: time
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_judge\" data-field-id=\"53262\">${proceeding_title_judge}</span>": proceeding_output_judge
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_judge\" data-field-id=\"53262\" >${proceeding_title_judge}</span>": proceeding_output_judge
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_case\" data-field-id=\"53264\">${proceeding_title_case}</span>": proceeding_output_case
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_case\" data-field-id=\"53264\" >${proceeding_title_case}</span>": proceeding_output_case
 		datatype: text
 		required: true
 		minlength: 0
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_type\" data-field-id=\"53268\">${proceeding_title_type}</span>": proceeding_output_type
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_type\" data-field-id=\"53268\" >${proceeding_title_type}</span>": proceeding_output_type
 		input type: dropdown
 		required: true
 		datatype: text
@@ -726,20 +729,19 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${detainee_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_4" data-field-id="53277"><p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
+			<span class="producer" data-variable-name="variable_4" data-field-id="53277" ><p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_name\" data-field-id=\"53279\">${detainee_title_name}</span>": detainee_output_name
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_name\" data-field-id=\"53279\" >${detainee_title_name}</span>": detainee_output_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_appearance\" data-field-id=\"53281\">${detainee_title_appearance}</span>": detainee_output_appearance
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_appearance\" data-field-id=\"53281\" >${detainee_title_appearance}</span>": detainee_output_appearance
 		input type: dropdown
 		required: true
 		datatype: text
@@ -747,11 +749,11 @@ fields:
 			- "<span>In Person</span>": "In Person"
 			- "<span>Video Conference</span>": "Video Conference"
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_languages\" data-field-id=\"53283\">${detainee_title_languages}</span>": detainee_output_languages
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_languages\" data-field-id=\"53283\" >${detainee_title_languages}</span>": detainee_output_languages
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_location\" data-field-id=\"53285\">${detainee_title_location}</span>": detainee_output_location
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_location\" data-field-id=\"53285\" >${detainee_title_location}</span>": detainee_output_location
 		input type: dropdown
 		required: true
 		datatype: text
@@ -761,11 +763,11 @@ fields:
 			- "<span>Sacramento/Yuba</span>": "Sacramento/Yuba"
 			- "<span>Other</span>": "Other"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_location_other\" data-field-id=\"53288\">${detainee_title_location_other}</span>": detainee_output_location_other
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_location_other\" data-field-id=\"53288\" >${detainee_title_location_other}</span>": detainee_output_location_other
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_representation\" data-field-id=\"53292\">${detainee_title_representation}</span>": detainee_output_representation
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_representation\" data-field-id=\"53292\" >${detainee_title_representation}</span>": detainee_output_representation
 		input type: dropdown
 		required: true
 		datatype: text
@@ -774,11 +776,11 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_who\" data-field-id=\"53294\">${detainee_title_representation_who}</span>": detainee_output_representation_who
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_who\" data-field-id=\"53294\" >${detainee_title_representation_who}</span>": detainee_output_representation_who
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance\" data-field-id=\"53298\">${detainee_title_representation_continuance}</span>": detainee_output_representation_continuance
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance\" data-field-id=\"53298\" >${detainee_title_representation_continuance}</span>": detainee_output_representation_continuance
 		input type: dropdown
 		required: true
 		datatype: text
@@ -787,11 +789,11 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_length\" data-field-id=\"53300\">${detainee_title_representation_continuance_length}</span>": detainee_output_representation_continuance_length
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_length\" data-field-id=\"53300\" >${detainee_title_representation_continuance_length}</span>": detainee_output_representation_continuance_length
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_denial\" data-field-id=\"53302\">${detainee_title_representation_continuance_denial}</span>": detainee_output_representation_continuance_denial
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_denial\" data-field-id=\"53302\" >${detainee_title_representation_continuance_denial}</span>": detainee_output_representation_continuance_denial
 		datatype: text
 		required: true
 
@@ -960,16 +962,15 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${context_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_5" data-field-id="53308"><p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_5" data-field-id="53308" ><p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_anyone\" data-field-id=\"53313\">${context_title_anyone}</span>": context_output_anyone
+	- "<span class=\"producer\" data-variable-name=\"context_output_anyone\" data-field-id=\"53313\" >${context_title_anyone}</span>": context_output_anyone
 		input type: dropdown
 		required: true
 		datatype: text
@@ -977,15 +978,15 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_who\" data-field-id=\"53318\">${context_title_anyone_who}</span>": context_output_anyone_who
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_who\" data-field-id=\"53318\" >${context_title_anyone_who}</span>": context_output_anyone_who
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_info\" data-field-id=\"53320\">${context_title_anyone_info}</span>": context_output_anyone_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_info\" data-field-id=\"53320\" >${context_title_anyone_info}</span>": context_output_anyone_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_interpretation\" data-field-id=\"53321\">${context_title_interpretation}</span>": context_output_interpretation
+	- "<span class=\"producer\" data-variable-name=\"context_output_interpretation\" data-field-id=\"53321\" >${context_title_interpretation}</span>": context_output_interpretation
 		input type: dropdown
 		required: true
 		datatype: text
@@ -993,11 +994,11 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_interpretation_info\" data-field-id=\"53322\">${context_title_interpretation_info}</span>": context_output_interpretation_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_interpretation_info\" data-field-id=\"53322\" >${context_title_interpretation_info}</span>": context_output_interpretation_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_illness\" data-field-id=\"53398\">${context_title_illness}</span>": context_output_illness
+	- "<span class=\"producer\" data-variable-name=\"context_output_illness\" data-field-id=\"53398\" >${context_title_illness}</span>": context_output_illness
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1005,11 +1006,11 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_info\" data-field-id=\"53401\">${context_title_illness_info}</span>": context_output_illness_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_info\" data-field-id=\"53401\" >${context_title_illness_info}</span>": context_output_illness_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_addressed\" data-field-id=\"53405\">${context_title_illness_addressed}</span>": context_output_illness_addressed
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_addressed\" data-field-id=\"53405\" >${context_title_illness_addressed}</span>": context_output_illness_addressed
 		datatype: text
 		required: true
 
@@ -1172,16 +1173,15 @@ code: |
 ---
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Bond Hearing")))))
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${outcome_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_7" data-field-id="53412"><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_7" data-field-id="53412" ><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_bond\" data-field-id=\"53418\">${outcome_title_bond}</span>": outcome_output_bond
+	- "<span class=\"producer\" data-variable-name=\"outcome_output_bond\" data-field-id=\"53418\" >${outcome_title_bond}</span>": outcome_output_bond
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1190,11 +1190,11 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_amount\" data-field-id=\"53420\">${outcome_title_bond_amount}</span>": outcome_output_bond_amount
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_amount\" data-field-id=\"53420\" >${outcome_title_bond_amount}</span>": outcome_output_bond_amount
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_denial\" data-field-id=\"53421\">${outcome_title_bond_denial}</span>": outcome_output_bond_denial
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_denial\" data-field-id=\"53421\" >${outcome_title_bond_denial}</span>": outcome_output_bond_denial
 		datatype: text
 		required: true
 
@@ -1330,16 +1330,15 @@ script: |
 ---
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Master Calendar")))))
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${outcome_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_1" data-field-id="53448"><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_1" data-field-id="53448" ><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_relief\" data-field-id=\"53449\">${outcome_title_relief}</span>": outcome_output_relief
+	- "<span class=\"producer\" data-variable-name=\"outcome_output_relief\" data-field-id=\"53449\" >${outcome_title_relief}</span>": outcome_output_relief
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1348,11 +1347,11 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_info\" data-field-id=\"53450\">${outcome_title_relief_info}</span>": outcome_output_relief_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_info\" data-field-id=\"53450\" >${outcome_title_relief_info}</span>": outcome_output_relief_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_deadline\" data-field-id=\"53451\">${outcome_title_relief_deadline}</span>": outcome_output_relief_deadline
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_deadline\" data-field-id=\"53451\" >${outcome_title_relief_deadline}</span>": outcome_output_relief_deadline
 		datatype: text
 		required: true
 
@@ -1500,24 +1499,23 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${hearing_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_6" data-field-id="53425"><p>Please enter information on the next hearing for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_6" data-field-id="53425" ><p>Please enter information on the next hearing for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_date\" data-field-id=\"53426\">${hearing_title_date}</span>": hearing_output_date
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_date\" data-field-id=\"53426\" >${hearing_title_date}</span>": hearing_output_date
 		datatype: date
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_time\" data-field-id=\"53427\">${hearing_title_time}</span>": hearing_output_time
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_time\" data-field-id=\"53427\" >${hearing_title_time}</span>": hearing_output_time
 		datatype: time
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_type\" data-field-id=\"53428\">${hearing_title_type}</span>": hearing_output_type
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_type\" data-field-id=\"53428\" >${hearing_title_type}</span>": hearing_output_type
 		datatype: text
 		required: false
 
@@ -1529,16 +1527,15 @@ code: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# ${other_title}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_8" data-field-id="53430"><p>Please enter anything else we should know ${you_output_name}!</p>
+			<span class="producer" data-variable-name="variable_8" data-field-id="53430" ><p>Please enter anything else we should know ${you_output_name}!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"other_output\" data-field-id=\"53431\"></span>": other_output
+	- "<span class=\"producer\" data-variable-name=\"other_output\" data-field-id=\"53431\" ></span>": other_output
 		datatype: area
 		required: false
 
@@ -1547,8 +1544,7 @@ under: |
 ---
 mandatory: |
 	True
-question: |
-		<img style='margin-top:-32px;max-width:250px;height:80px' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png'/>
+question: ''
 subquestion: |
 	# Thanks for volunteering ${you_output_name}!
 
@@ -1557,11 +1553,11 @@ under: |
 	${___send_answers()}
 
 css: |
-  <style>
-    button[type='submit'] {
-      display: none;
-    }
-  </style>
+	<style>
+		button.btn-primary[type='submit'] {
+			display: none;
+		}
+	</style>
 ---
 template: t_icop_template_af3e7002e7d6
 subject: |
