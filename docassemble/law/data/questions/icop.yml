@@ -1627,11 +1627,11 @@ event: ___send_t_icop_email_26e207fc10a5_background
 code: |
 	if True:
 		import requests
-		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 3 })
+		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 2 })
 		data = permission_response.json()
 		if data['permitted']:
-			send_email(template=t_icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email), bcc="ari.c@berkeley.edu")
-			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 3 })
+			send_email(template=t_icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email))
+			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 2 })
 	background_response()
 ---
 mandatory: |
