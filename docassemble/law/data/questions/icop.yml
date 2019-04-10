@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/3/2019
+# Prepared by Community.lawyer on 4/10/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -522,48 +522,10 @@ mandatory: |
 question: Sorry, you are not authorized to access this page.
 subquestion: Try signing into your account or contacting the App author.
 ---
-event: ___send_answers_background
-code: |
-	import requests
-	import json
-	import time
-	from docassemble.base.functions import get_config, all_variables, user_info, user_logged_in
-	from docassemble.base.core import DAFileList, DAFileCollection, DAFile, DADict
-	time.sleep(2)
-	___answers = all_variables(simplify=False)
-	answers_to_send = {}
-	files = {}
-	for q, a in ___answers.items():
-		if isinstance(a, DAFileList) or isinstance(a, DAFile) or isinstance(a, DAFileCollection):
-			s3_config = get_config('s3')
-			local_path = a.path().replace("/tmp/", "")
-			bucket_name = s3_config['bucket']
-			files[q] = "s3://%s/%s" % (bucket_name, local_path)
-		elif isinstance(a, DADict) and type(a.values()[0]) is bool:
-			checked_boxes = []
-			for box_name, box_value in a.items():
-				if box_value is True:
-					checked_boxes.append(box_name)
-			answers_to_send[q] = checked_boxes
-		else:
-			answers_to_send[q] = unicode(a)
-	answers_to_send = json.dumps(answers_to_send, default=lambda x: unicode(x))
-	files = json.dumps(files, default=lambda x: unicode(x))
-	timestamp = time.time()
-	params = { 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'answers': answers_to_send, 'files': files, 'docassemble_interview_id': '1103', 'session_id': ___answers_session_id, 'timestamp': timestamp }
-	response = requests.post('https://community.lawyer/builder_answers', data=params)
-	background_response()
----
-initial: True
-code: |
-	def ___send_answers():
-		background_action('___send_answers_background')
-		return ''
----
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d.js
+	javascript: https://community.lawyer/static/system_d-1.js
 	css: https://community.lawyer/static/styles/default.css
 ---
 metadata:
@@ -586,13 +548,17 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# _[THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)_
 field: start
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	you_title = primitive_value(((augment("Your Information"))))
@@ -611,7 +577,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${you_title}
 fields:
@@ -636,7 +607,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	proceeding_title = primitive_value(((augment("Proceeding Information"))))
@@ -658,7 +628,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${proceeding_title}
 fields:
@@ -692,7 +667,6 @@ fields:
 			- "<span>Master Calendar</span>": "Master Calendar"
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	detainee_title = primitive_value(((augment("Detainee Information"))))
@@ -729,7 +703,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${detainee_title}
 fields:
@@ -798,7 +777,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -962,7 +940,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${context_title}
 fields:
@@ -1015,7 +998,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -1173,7 +1155,12 @@ code: |
 ---
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Bond Hearing")))))
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${outcome_title}
 fields:
@@ -1199,7 +1186,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -1330,7 +1316,12 @@ script: |
 ---
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Master Calendar")))))
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${outcome_title}
 fields:
@@ -1356,7 +1347,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -1499,7 +1489,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${hearing_title}
 fields:
@@ -1520,14 +1515,18 @@ fields:
 		required: false
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	other_title = primitive_value(((augment("Other Information"))))
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# ${other_title}
 fields:
@@ -1540,17 +1539,20 @@ fields:
 		required: false
 
 under: |
-	${___send_answers()}
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
 	# Thanks for volunteering ${you_output_name}!
 
 under: |
 	${ ('' if defined("___already_sent_t_icop_email_26e207fc10a5") else (___send_t_icop_email_26e207fc10a5())) }
-	${___send_answers()}
 
 css: |
 	<style>
@@ -1634,7 +1636,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1103">
+
 subquestion: |
-	Thank you for using this app. Your session is complete. ${___send_answers()}
+	Thank you for using this app. Your session is complete.
 ---
