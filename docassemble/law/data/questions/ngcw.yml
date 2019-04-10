@@ -209,8 +209,10 @@ code: |
       documents_to_email.append(unofficial_name_and_gender_change)
       email_subject = email_subject + new_name
   documents_to_email.append(unofficial_fee_waiver)
-  send_email(to=["ngwberkeley@gmail.com", "ari.c@berkeley.edu"], subject=email_subject, body="See attached", attachments=documents_to_email)
-  thanks
+  success_sending_email = False
+  if not success_sending_email:
+      success_sending_email = send_email(to=["ngwberkeley@gmail.com"], subject=email_subject, body="See attached", attachments=documents_to_email)
+  message
 ---
 field: name_and_gender_form
 question: |
@@ -411,7 +413,6 @@ attachment:
 allow emailing: False
 ---
 code: |
-  thanks = "Yes"
   message = "Thanks!"
 ---
 mandatory: True

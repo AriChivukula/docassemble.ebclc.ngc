@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/3/2019
+# Prepared by Community.lawyer on 4/10/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -524,48 +524,10 @@ mandatory: |
 question: Sorry, you are not authorized to access this page.
 subquestion: Try signing into your account or contacting the App author.
 ---
-event: ___send_answers_background
-code: |
-	import requests
-	import json
-	import time
-	from docassemble.base.functions import get_config, all_variables, user_info, user_logged_in
-	from docassemble.base.core import DAFileList, DAFileCollection, DAFile, DADict
-	time.sleep(2)
-	___answers = all_variables(simplify=False)
-	answers_to_send = {}
-	files = {}
-	for q, a in ___answers.items():
-		if isinstance(a, DAFileList) or isinstance(a, DAFile) or isinstance(a, DAFileCollection):
-			s3_config = get_config('s3')
-			local_path = a.path().replace("/tmp/", "")
-			bucket_name = s3_config['bucket']
-			files[q] = "s3://%s/%s" % (bucket_name, local_path)
-		elif isinstance(a, DADict) and type(a.values()[0]) is bool:
-			checked_boxes = []
-			for box_name, box_value in a.items():
-				if box_value is True:
-					checked_boxes.append(box_name)
-			answers_to_send[q] = checked_boxes
-		else:
-			answers_to_send[q] = unicode(a)
-	answers_to_send = json.dumps(answers_to_send, default=lambda x: unicode(x))
-	files = json.dumps(files, default=lambda x: unicode(x))
-	timestamp = time.time()
-	params = { 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'answers': answers_to_send, 'files': files, 'docassemble_interview_id': '1123', 'session_id': ___answers_session_id, 'timestamp': timestamp }
-	response = requests.post('https://community.lawyer/builder_answers', data=params)
-	background_response()
----
-initial: True
-code: |
-	def ___send_answers():
-		background_action('___send_answers_background')
-		return ''
----
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d.js
+	javascript: https://community.lawyer/static/system_d-1.js
 	css: https://community.lawyer/static/styles/default.css
 ---
 metadata:
@@ -588,17 +550,26 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# **_[THIS IS CODE, NOT LEGAL ADVICE](https://github.com/AriChivukula/docassemble.law/blob/master/docassemble/law/data/questions/icop.yml)_**
 field: start
 
 under: |
-	${___send_answers()}
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# How can we help you today?
 fields:
@@ -612,7 +583,6 @@ fields:
 			- "<span>Name & Gender Change (18+ only)</span>": "Name & Gender Change (18+ only)"
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	help_name = primitive_value(((augment(___shortcut_15_choice).boolean_or(augment(___shortcut_14_choice)))))
@@ -622,7 +592,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# Current Petitioner Information
 fields:
@@ -681,7 +656,6 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -779,7 +753,12 @@ code: |
 ---
 mandatory: |
 	is_truthy((((augment(help_name) if defined("help_name") else Undefined()))))
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# Future Petitioner Name
 fields:
@@ -788,11 +767,15 @@ fields:
 		required: true
 
 under: |
-	${___send_answers()}
 ---
 mandatory: |
 	is_truthy((((augment(help_gender) if defined("help_gender") else Undefined()))))
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# Future Petitioner Gender
 fields:
@@ -806,11 +789,15 @@ fields:
 			- "<span>Non-Binary</span>": "Non-Binary"
 
 under: |
-	${___send_answers()}
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# Court Information
 fields:
@@ -835,7 +822,6 @@ fields:
 		required: false
 
 under: |
-	${___send_answers()}
 
 script: |
 	<script>
@@ -1004,13 +990,17 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	Please sign as you would for any government document
 signature: signature
 
 under: |
-	${___send_answers()}
 ---
 code: |
 	fax_gender = """CM-010 (1 page)
@@ -1052,7 +1042,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
 	# **Thanks for volunteering!**
 
@@ -1060,7 +1055,6 @@ attachment code: |
 	filter(bool, [ternary((augment(help_name) if defined("help_name") else Undefined()), t____nc110_pdf_1089_attachment_1372, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), t____nc130_pdf_1093_attachment_1374, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), t____nc200_pdf_1095_attachment_1375, ""), ternary((augment(___shortcut_15_choice) if defined("___shortcut_15_choice") else Undefined()), t____nc230_pdf_1096_attachment_1376, ""), ternary((augment(___shortcut_14_choice) if defined("___shortcut_14_choice") else Undefined()), t____nc100_pdf_1147_attachment_1383, ""), t____mc005_pdf_1100_attachment_1371, t____cm010_pdf_1087_attachment_1378, t____fw001_pdf_1099_attachment_1381, ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), t____nc300_pdf_1097_attachment_1377, ""), ternary((augment(help_name) if defined("help_name") else Undefined()), t____nc125_pdf_1092_attachment_1373, ""), ternary((augment(___shortcut_13_choice) if defined("___shortcut_13_choice") else Undefined()), t____nc330_pdf_1098_attachment_1379, "")])
 allow emailing: False
 under: |
-	${___send_answers()}
 
 css: |
 	<style>
@@ -1423,7 +1417,12 @@ code: |
 ---
 mandatory: |
 	True
-question: ''
+question: |
+	<span id="session-id" data-session-id="${user_info().session}">
+	<span id="sends-answers" data-sends-answers="false">
+	<span id="cl-endpoint" data-cl-endpoint="https://community.lawyer">
+	<span id="interview-id" data-interview-id="1123">
+
 subquestion: |
-	Thank you for using this app. Your session is complete. ${___send_answers()}
+	Thank you for using this app. Your session is complete.
 ---
