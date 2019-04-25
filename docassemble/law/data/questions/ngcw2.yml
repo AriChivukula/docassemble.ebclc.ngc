@@ -1,18 +1,18 @@
-# Prepared by Community.lawyer on 4/10/2019
+# Prepared by Community.lawyer on 4/25/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
-	- docassemble.base.util
+  - docassemble.base.util
 ---
 mandatory: True
 code: |
-	from docassemble.base.functions import get_uid
-	if not defined("___answers_session_id"):
-		define("___answers_session_id", get_uid())
+  from docassemble.base.functions import get_uid
+  if not defined("___answers_session_id"):
+    define("___answers_session_id", get_uid())
 ---
 mandatory: True
 code: |
-	define("Today", today())
+  define("Today", today())
 ---
 initial: True
 code: |
@@ -515,12 +515,12 @@ code: |
 ---
 mandatory: True
 code: |
-	import requests
-	import json
-	define("___authorized", json.loads(requests.get("https://community.lawyer/docassemble_builder/docassemble_interviews/authorize?id=1123&key=" + unicode(url_args.get('key'))).content)['authorized'])
+  import requests
+  import json
+  define("___authorized", json.loads(requests.get("https://community.lawyer/docassemble_builder/docassemble_interviews/authorize?id=1123&key=" + unicode(url_args.get('key'))).content)['authorized'])
 ---
 mandatory: |
-	not ___authorized
+  not ___authorized
 question: Sorry, you are not authorized to access this page.
 subquestion: Try signing into your account or contacting the App author.
 ---
@@ -540,8 +540,8 @@ metadata:
 ---
 mandatory: True
 code: |
-	from docassemble.base.util import device
-	___user_device = device().browser.family
+  from docassemble.base.util import device
+  ___user_device = device().browser.family
 ---
 mandatory: True
 code: |
