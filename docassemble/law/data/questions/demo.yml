@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/25/2019
+# Prepared by Community.lawyer on 4/30/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -311,7 +311,7 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript: https://community.lawyer/static/system_d-1.js
-	css: https://community.lawyer/static/styles/default.css
+	css: https://community.lawyer/static/styles/jcc.css
 ---
 metadata:
 	title: |
