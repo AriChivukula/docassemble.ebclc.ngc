@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/30/2019
+# Prepared by Community.lawyer on 5/9/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -26,6 +26,10 @@ code: |
       return primitive_value(true_value)
     else:
       return primitive_value(false_value)
+
+  def cl_array_access(array, _index):
+    index = _index - 1
+    return (array[index] if index < len(array) else None)
 
   def primitive_value(something):
     return augment(something).wrapped
@@ -66,6 +70,12 @@ code: |
       self.wrapped = something
     def __str__(self):
       return unicode(self.wrapped)
+    # array
+    def array_index(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(cl_array_access(self.wrapped, arg.wrapped))
     # boolean
     def boolean_and(self, _arg):
       arg = augment(_arg)
@@ -252,6 +262,11 @@ code: |
       if is_undefined(self):
         return self
       return augment(self.wrapped.any_true())
+    def dictionary_access(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return self
+      return augment(self.wrapped.get(arg.wrapped))
 ---
 initial: True
 code: |
@@ -273,6 +288,7 @@ code: |
 ---
 mandatory: True
 code: |
+
 	def ___define_until_idempotent():
 		original_dict = all_variables()
 		___define_all()
@@ -310,8 +326,10 @@ subquestion: Try signing into your account or contacting the App author.
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d-1.js
-	css: https://community.lawyer/static/styles/jcc.css
+	javascript:
+		- https://community.lawyer/static/system_d-2.js
+	css:
+		- https://community.lawyer/static/styles/jcc.css
 ---
 metadata:
 	title: |
@@ -329,6 +347,7 @@ code: |
   if ___user_device == "IE":
     log("This app may not run as expected on Internet Explorer - please consider using a more modern browser, such as those found <a href='http://outdatedbrowser.com/en'>here</a>.", "warning")
 ---
+id: 39025
 mandatory: |
 	True
 question: |
@@ -343,6 +362,7 @@ field: __continue
 
 under: |
 ---
+id: 39024
 mandatory: |
 	True
 question: |
@@ -364,6 +384,7 @@ fields:
 
 under: |
 ---
+id: 39023
 mandatory: |
 	True
 question: |
@@ -378,6 +399,7 @@ signature: signature
 
 under: |
 ---
+id: 39027
 mandatory: |
 	True
 question: |
@@ -400,6 +422,7 @@ css: |
 		button.btn-primary[type='submit'] {
 			display: none;
 		}
+
 	</style>
 ---
 code: |
