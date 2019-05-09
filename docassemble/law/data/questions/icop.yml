@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/30/2019
+# Prepared by Community.lawyer on 5/9/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -26,6 +26,10 @@ code: |
       return primitive_value(true_value)
     else:
       return primitive_value(false_value)
+
+  def cl_array_access(array, _index):
+    index = _index - 1
+    return (array[index] if index < len(array) else None)
 
   def primitive_value(something):
     return augment(something).wrapped
@@ -66,6 +70,12 @@ code: |
       self.wrapped = something
     def __str__(self):
       return unicode(self.wrapped)
+    # array
+    def array_index(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(cl_array_access(self.wrapped, arg.wrapped))
     # boolean
     def boolean_and(self, _arg):
       arg = augment(_arg)
@@ -252,6 +262,11 @@ code: |
       if is_undefined(self):
         return self
       return augment(self.wrapped.any_true())
+    def dictionary_access(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return self
+      return augment(self.wrapped.get(arg.wrapped))
 ---
 initial: True
 code: |
@@ -273,6 +288,7 @@ code: |
 ---
 mandatory: True
 code: |
+
 	def ___define_until_idempotent():
 		original_dict = all_variables()
 		___define_all()
@@ -525,8 +541,10 @@ subquestion: Try signing into your account or contacting the App author.
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d-1.js
-	css: https://community.lawyer/static/styles/jcc.css
+	javascript:
+		- https://community.lawyer/static/system_d-2.js
+	css:
+		- https://community.lawyer/static/styles/jcc.css
 ---
 metadata:
 	title: |
@@ -546,6 +564,7 @@ code: |
   if ___user_device == "IE":
     log("This app may not run as expected on Internet Explorer - please consider using a more modern browser, such as those found <a href='http://outdatedbrowser.com/en'>here</a>.", "warning")
 ---
+id: 27743
 mandatory: |
 	True
 question: |
@@ -560,21 +579,32 @@ field: start
 
 under: |
 ---
+id: 27651
+
 code: |
 	you_title = primitive_value(((augment("Your Information"))))
 ---
+id: 27656
+
 code: |
 	you_title_name = primitive_value(((augment("Name"))))
 ---
+id: 27657
+
 code: |
 	you_title_assoc = primitive_value(((augment("School/Firm/etc."))))
 ---
+id: 27658
+
 code: |
 	you_title_phone = primitive_value(((augment("Phone"))))
 ---
+id: 27659
+
 code: |
 	you_title_email = primitive_value(((augment("EMail"))))
 ---
+id: 27661
 mandatory: |
 	True
 question: |
@@ -608,24 +638,37 @@ fields:
 
 under: |
 ---
+id: 27663
+
 code: |
 	proceeding_title = primitive_value(((augment("Proceeding Information"))))
 ---
+id: 27664
+
 code: |
 	proceeding_title_date = primitive_value(((augment("Date"))))
 ---
+id: 27665
+
 code: |
 	proceeding_title_time = primitive_value(((augment("Time"))))
 ---
+id: 27666
+
 code: |
 	proceeding_title_judge = primitive_value(((augment("Judge"))))
 ---
+id: 27667
+
 code: |
 	proceeding_title_case = primitive_value(((augment("Case"))))
 ---
+id: 27668
+
 code: |
 	proceeding_title_type = primitive_value(((augment("Type"))))
 ---
+id: 27669
 mandatory: |
 	True
 question: |
@@ -668,39 +711,62 @@ fields:
 
 under: |
 ---
+id: 27670
+
 code: |
 	detainee_title = primitive_value(((augment("Detainee Information"))))
 ---
+id: 27671
+
 code: |
 	detainee_title_name = primitive_value(((augment("Name"))))
 ---
+id: 27672
+
 code: |
 	detainee_title_appearance = primitive_value(((augment("How did they appear?"))))
 ---
+id: 27673
+
 code: |
 	detainee_title_languages = primitive_value(((augment("Languages Spoken"))))
 ---
+id: 27674
+
 code: |
 	detainee_title_location = primitive_value(((augment("Where are they being detained?"))))
 ---
+id: 27675
+
 code: |
 	detainee_title_location_other = primitive_value(((augment("Other Location"))))
 ---
+id: 27676
+
 code: |
 	detainee_title_representation = primitive_value(((augment("Do they have representation?"))))
 ---
+id: 27677
+
 code: |
 	detainee_title_representation_who = primitive_value(((augment("Who?"))))
 ---
+id: 27678
+
 code: |
 	detainee_title_representation_continuance = primitive_value(((augment("Was a continuance to find representation granted?"))))
 ---
+id: 27679
+
 code: |
 	detainee_title_representation_continuance_length = primitive_value(((augment("How Long?"))))
 ---
+id: 27681
+
 code: |
 	detainee_title_representation_continuance_denial = primitive_value(((augment("Why?"))))
 ---
+id: 27682
 mandatory: |
 	True
 question: |
@@ -780,6 +846,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -909,35 +976,55 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 27684
+
 code: |
 	context_title = primitive_value(((augment("Context Information"))))
 ---
+id: 27685
+
 code: |
 	context_title_anyone = primitive_value(((augment("Did the detainee have trouble communicating with anyone?"))))
 ---
+id: 27687
+
 code: |
 	context_title_anyone_who = primitive_value(((augment("With who?"))))
 ---
+id: 27688
+
 code: |
 	context_title_anyone_info = primitive_value(((augment("How so?"))))
 ---
+id: 27689
+
 code: |
 	context_title_interpretation = primitive_value(((augment("Did the detainee have issues with interpretation?"))))
 ---
+id: 27690
+
 code: |
 	context_title_interpretation_info = primitive_value(((augment("How so?"))))
 ---
+id: 27691
+
 code: |
 	context_title_illness = primitive_value(((augment("Did the detainee show signs of suffering from mental illness?"))))
 ---
+id: 27693
+
 code: |
 	context_title_illness_info = primitive_value(((augment("How so?"))))
 ---
+id: 27694
+
 code: |
 	context_title_illness_addressed = primitive_value(((augment("How was it addressed?"))))
 ---
+id: 27695
 mandatory: |
 	True
 question: |
@@ -1001,6 +1088,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -1130,29 +1218,45 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 27709
+
 code: |
 	outcome_title = primitive_value(((augment("Outcome Information"))))
 ---
+id: 27710
+
 code: |
 	outcome_title_relief = primitive_value(((augment("Did detainee file any application for relief?"))))
 ---
+id: 27711
+
 code: |
 	outcome_title_relief_info = primitive_value(((augment("What were they?"))))
 ---
+id: 27713
+
 code: |
 	outcome_title_relief_deadline = primitive_value(((augment("What is the deadline?"))))
 ---
+id: 27714
+
 code: |
 	outcome_title_bond = primitive_value(((augment("Did IJ grant bond?"))))
 ---
+id: 27715
+
 code: |
 	outcome_title_bond_amount = primitive_value(((augment("Amount"))))
 ---
+id: 27716
+
 code: |
 	outcome_title_bond_denial = primitive_value(((augment("Reason"))))
 ---
+id: 27717
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Bond Hearing")))))
 question: |
@@ -1189,6 +1293,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -1312,8 +1417,10 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 27747
 mandatory: |
 	is_truthy((((augment(proceeding_output_type) if defined("proceeding_output_type") else Undefined()).string_eq(augment("Master Calendar")))))
 question: |
@@ -1350,6 +1457,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -1473,20 +1581,30 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 27720
+
 code: |
 	hearing_title = primitive_value(((augment("Hearing Information"))))
 ---
+id: 27721
+
 code: |
 	hearing_title_date = primitive_value(((augment("Date"))))
 ---
+id: 27722
+
 code: |
 	hearing_title_time = primitive_value(((augment("Time"))))
 ---
+id: 27723
+
 code: |
 	hearing_title_type = primitive_value(((augment("Type"))))
 ---
+id: 27725
 mandatory: |
 	True
 question: |
@@ -1516,9 +1634,12 @@ fields:
 
 under: |
 ---
+id: 27729
+
 code: |
 	other_title = primitive_value(((augment("Other Information"))))
 ---
+id: 27730
 mandatory: |
 	True
 question: |
@@ -1540,6 +1661,7 @@ fields:
 
 under: |
 ---
+id: 27731
 mandatory: |
 	True
 question: |
@@ -1559,6 +1681,7 @@ css: |
 		button.btn-primary[type='submit'] {
 			display: none;
 		}
+
 	</style>
 ---
 template: t_icop_template_af3e7002e7d6

@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 4/30/2019
+# Prepared by Community.lawyer on 5/9/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -26,6 +26,10 @@ code: |
       return primitive_value(true_value)
     else:
       return primitive_value(false_value)
+
+  def cl_array_access(array, _index):
+    index = _index - 1
+    return (array[index] if index < len(array) else None)
 
   def primitive_value(something):
     return augment(something).wrapped
@@ -66,6 +70,12 @@ code: |
       self.wrapped = something
     def __str__(self):
       return unicode(self.wrapped)
+    # array
+    def array_index(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(cl_array_access(self.wrapped, arg.wrapped))
     # boolean
     def boolean_and(self, _arg):
       arg = augment(_arg)
@@ -252,6 +262,11 @@ code: |
       if is_undefined(self):
         return self
       return augment(self.wrapped.any_true())
+    def dictionary_access(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return self
+      return augment(self.wrapped.get(arg.wrapped))
 ---
 initial: True
 code: |
@@ -273,6 +288,7 @@ code: |
 ---
 mandatory: True
 code: |
+
 	def ___define_until_idempotent():
 		original_dict = all_variables()
 		___define_all()
@@ -527,8 +543,10 @@ subquestion: Try signing into your account or contacting the App author.
 features:
 	debug: False
 	inverse navbar: False
-	javascript: https://community.lawyer/static/system_d-1.js
-	css: https://community.lawyer/static/styles/jcc.css
+	javascript:
+		- https://community.lawyer/static/system_d-2.js
+	css:
+		- https://community.lawyer/static/styles/jcc.css
 ---
 metadata:
 	title: |
@@ -548,6 +566,7 @@ code: |
   if ___user_device == "IE":
     log("This app may not run as expected on Internet Explorer - please consider using a more modern browser, such as those found <a href='http://outdatedbrowser.com/en'>here</a>.", "warning")
 ---
+id: 28068
 mandatory: |
 	True
 question: |
@@ -562,6 +581,7 @@ field: start
 
 under: |
 ---
+id: 29923
 mandatory: |
 	True
 question: |
@@ -584,12 +604,17 @@ fields:
 
 under: |
 ---
+id: 29941
+
 code: |
 	help_name = primitive_value(((augment(___shortcut_15_choice).boolean_or(augment(___shortcut_14_choice)))))
 ---
+id: 29942
+
 code: |
 	help_gender = primitive_value(((augment(___shortcut_13_choice).boolean_or(augment(___shortcut_15_choice)))))
 ---
+id: 29924
 mandatory: |
 	True
 question: |
@@ -659,6 +684,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -740,17 +766,25 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 29925
+
 code: |
 	current_state = """CA"""
 ---
+id: 29940
+
 code: |
 	current_case = primitive_value(((augment("In re:").string_join_with_space(augment(current_name)))))
 ---
+id: 29951
+
 code: |
 	current_address = """%s , %s , %s %s""" % (current_street,current_city,current_state,current_zip)
 ---
+id: 29926
 mandatory: |
 	is_truthy((((augment(help_name) if defined("help_name") else Undefined()))))
 question: |
@@ -768,6 +802,7 @@ fields:
 
 under: |
 ---
+id: 29927
 mandatory: |
 	is_truthy((((augment(help_gender) if defined("help_gender") else Undefined()))))
 question: |
@@ -790,6 +825,7 @@ fields:
 
 under: |
 ---
+id: 29928
 mandatory: |
 	True
 question: |
@@ -825,6 +861,7 @@ under: |
 
 script: |
 	<script>
+
 
     $(function(){
 
@@ -902,8 +939,11 @@ script: |
     });
 
 
+
 	</script>
 ---
+id: 29931
+
 code: |
 	court_alameda = """Alameda
 
@@ -913,6 +953,8 @@ code: |
 
 	Oakland, CA 94612"""
 ---
+id: 29932
+
 code: |
 	court_contra_costa = """Contra Costa
 
@@ -922,6 +964,8 @@ code: |
 
 	Martinez, CA 94553"""
 ---
+id: 29933
+
 code: |
 	court_marin = """Marin
 
@@ -931,6 +975,8 @@ code: |
 
 	San Rafael, CA 94903"""
 ---
+id: 29934
+
 code: |
 	court_napa = """Napa
 
@@ -940,6 +986,8 @@ code: |
 
 	Napa, CA 94559"""
 ---
+id: 29935
+
 code: |
 	court_san_francisco = """San Francisco
 
@@ -949,6 +997,8 @@ code: |
 
 	San Francisco, CA 94102"""
 ---
+id: 29936
+
 code: |
 	court_san_mateo = """San Mateo
 
@@ -958,6 +1008,8 @@ code: |
 
 	Redwood City, CA 94063"""
 ---
+id: 29937
+
 code: |
 	court_santa_clara = """Santa Clara
 
@@ -967,6 +1019,8 @@ code: |
 
 	San Jose, CA 95113"""
 ---
+id: 29938
+
 code: |
 	court_solano = """Solano
 
@@ -976,6 +1030,8 @@ code: |
 
 	Fairfield, CA 94533"""
 ---
+id: 29939
+
 code: |
 	court_sonoma = """Sonoma
 
@@ -985,9 +1041,12 @@ code: |
 
 	Santa Rosa, CA 95403"""
 ---
+id: 29930
+
 code: |
 	court_info = (ternary(___shortcut_40_choice, court_alameda, (ternary(___shortcut_41_choice, court_contra_costa, (ternary(___shortcut_42_choice, court_marin, (ternary(___shortcut_43_choice, court_napa, (ternary(___shortcut_44_choice, court_san_francisco, (ternary(___shortcut_45_choice, court_san_mateo, (ternary(___shortcut_46_choice, court_san_mateo, (ternary(___shortcut_47_choice, court_solano, (ternary(___shortcut_48_choice, court_sonoma, court_other))))))))))))))))))
 ---
+id: 29920
 mandatory: |
 	True
 question: |
@@ -1002,6 +1061,8 @@ signature: signature
 
 under: |
 ---
+id: 29945
+
 code: |
 	fax_gender = """CM-010 (1 page)
 
@@ -1011,6 +1072,8 @@ code: |
 
 	FW-001 (2 pages)"""
 ---
+id: 29944
+
 code: |
 	fax_name = """CM-010 (1 page)
 
@@ -1024,6 +1087,8 @@ code: |
 
 	FW-001 (2 pages)"""
 ---
+id: 29946
+
 code: |
 	fax_name_and_gender = """CM-010 (1 page)
 
@@ -1037,9 +1102,12 @@ code: |
 
 	FW-001 (2 pages)"""
 ---
+id: 29947
+
 code: |
 	fax_info = (ternary(___shortcut_13_choice, fax_gender, (ternary(___shortcut_14_choice, fax_name, fax_name_and_gender))))
 ---
+id: 28069
 mandatory: |
 	True
 question: |
@@ -1061,6 +1129,7 @@ css: |
 		button.btn-primary[type='submit'] {
 			display: none;
 		}
+
 	</style>
 ---
 code: |
