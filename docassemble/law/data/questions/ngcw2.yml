@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 5/9/2019
+# Prepared by Community.lawyer on 5/16/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -75,7 +75,31 @@ code: |
       arg = augment(_arg)
       if is_undefined(self) or is_undefined(arg):
         return Undefined()
-      return augment(cl_array_access(self.wrapped, arg.wrapped))
+      return augment(cl_array_access(self.wrapped, int(arg.wrapped)))
+    def array_size(self):
+      if is_undefined(self):
+        return self
+      return augment(len(self.wrapped))
+    def array_leading(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(self.wrapped[:int(arg.wrapped)])
+    def array_trailing(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(self.wrapped[int(-(arg.wrapped)):])
+    def array_excluding_leading(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(self.wrapped[int(arg.wrapped):])
+    def array_excluding_trailing(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(self.wrapped[:int(-(arg.wrapped))])
     # boolean
     def boolean_and(self, _arg):
       arg = augment(_arg)
@@ -267,6 +291,52 @@ code: |
       if is_undefined(self) or is_undefined(arg):
         return self
       return augment(self.wrapped.get(arg.wrapped))
+
+  # typecasting
+  def typecast_as_date(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return augment(as_datetime(arg.wrapped))
+  def typecast_as_number(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return augment(float(arg.wrapped))
+  def typecast_as_boolean(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    wrapped = arg.wrapped
+    if wrapped == 'True':
+      return augment(True)
+    if wrapped == 'False':
+      return augment(False)
+    return Undefined()
+  def typecast_as_string(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return augment(str(arg.wrapped))
+  def as_url_param_value(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return ''
+    return augment(typecast_as_string(arg.wrapped))
+
+  # array reducers
+
+  def number_add_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return reduce(lambda x, y: augment(x).number_add(augment(y)), arg.wrapped)
+
+  def cl_array_map(myfunc, _myiterable):
+    myiterable = augment(_myiterable)
+    if is_undefined(myiterable):
+      return myiterable
+    return map(myfunc, myiterable.wrapped)
 ---
 initial: True
 code: |
@@ -726,8 +796,6 @@ script: |
         window.CL.variables.help_name = ((window.CL.augment(window.CL.variables.___shortcut_15_choice)).booleanOr(window.CL.augment(window.CL.variables.___shortcut_14_choice)))
     		window.CL.variables.help_gender = ((window.CL.augment(window.CL.variables.___shortcut_13_choice)).booleanOr(window.CL.augment(window.CL.variables.___shortcut_15_choice)))
     		window.CL.variables.current_case = ((window.CL.augment("In re:")).stringJoinWithSpace(window.CL.augment(window.CL.variables.current_name)))
-    		window.CL.variables.court_info = (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_40_choice)), (window.CL.augment(window.CL.variables.court_alameda)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_41_choice)), (window.CL.augment(window.CL.variables.court_contra_costa)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_42_choice)), (window.CL.augment(window.CL.variables.court_marin)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_43_choice)), (window.CL.augment(window.CL.variables.court_napa)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_44_choice)), (window.CL.augment(window.CL.variables.court_san_francisco)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_45_choice)), (window.CL.augment(window.CL.variables.court_san_mateo)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_46_choice)), (window.CL.augment(window.CL.variables.court_san_mateo)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_47_choice)), (window.CL.augment(window.CL.variables.court_solano)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_48_choice)), (window.CL.augment(window.CL.variables.court_sonoma)), (window.CL.augment(window.CL.variables.court_other))))))))))))))))))))
-    		window.CL.variables.fax_info = (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_13_choice)), (window.CL.augment(window.CL.variables.fax_gender)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_14_choice)), (window.CL.augment(window.CL.variables.fax_name)), (window.CL.augment(window.CL.variables.fax_name_and_gender))))))
         
 
         if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
@@ -899,8 +967,6 @@ script: |
         window.CL.variables.help_name = ((window.CL.augment(window.CL.variables.___shortcut_15_choice)).booleanOr(window.CL.augment(window.CL.variables.___shortcut_14_choice)))
     		window.CL.variables.help_gender = ((window.CL.augment(window.CL.variables.___shortcut_13_choice)).booleanOr(window.CL.augment(window.CL.variables.___shortcut_15_choice)))
     		window.CL.variables.current_case = ((window.CL.augment("In re:")).stringJoinWithSpace(window.CL.augment(window.CL.variables.current_name)))
-    		window.CL.variables.court_info = (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_40_choice)), (window.CL.augment(window.CL.variables.court_alameda)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_41_choice)), (window.CL.augment(window.CL.variables.court_contra_costa)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_42_choice)), (window.CL.augment(window.CL.variables.court_marin)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_43_choice)), (window.CL.augment(window.CL.variables.court_napa)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_44_choice)), (window.CL.augment(window.CL.variables.court_san_francisco)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_45_choice)), (window.CL.augment(window.CL.variables.court_san_mateo)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_46_choice)), (window.CL.augment(window.CL.variables.court_san_mateo)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_47_choice)), (window.CL.augment(window.CL.variables.court_solano)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_48_choice)), (window.CL.augment(window.CL.variables.court_sonoma)), (window.CL.augment(window.CL.variables.court_other))))))))))))))))))))
-    		window.CL.variables.fax_info = (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_13_choice)), (window.CL.augment(window.CL.variables.fax_gender)), (window.CL.ternary((window.CL.augment(window.CL.variables.___shortcut_14_choice)), (window.CL.augment(window.CL.variables.fax_name)), (window.CL.augment(window.CL.variables.fax_name_and_gender))))))
         
 
         if (!window.CL.objectsEqual(variablesBefore, window.CL.variables)) {
