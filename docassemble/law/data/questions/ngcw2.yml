@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 5/16/2019
+# Prepared by Community.lawyer on 5/30/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -332,11 +332,88 @@ code: |
       return arg
     return reduce(lambda x, y: augment(x).number_add(augment(y)), arg.wrapped)
 
+  def number_multiply_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return reduce(lambda x, y: augment(x).number_multiply(augment(y)), arg.wrapped)
+
+  def number_mean_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    size = arg.array_size()
+    total = number_add_array_reducer(arg)
+    return total.number_divide(size)
+
+  def number_maximum_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return max(map(primitive_value, arg.wrapped))
+
+  def number_minimum_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return min(map(primitive_value, arg.wrapped))
+
+  def boolean_all_true_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return reduce(lambda x, y: augment(x).boolean_and(augment(y)), arg.wrapped)
+
+  def boolean_any_true_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return reduce(lambda x, y: augment(x).boolean_or(augment(y)), arg.wrapped)
+
+  def boolean_all_false_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return augment(boolean_any_true_array_reducer(arg)).boolean_not()
+
+  def boolean_any_false_array_reducer(_arg):
+    arg = augment(_arg)
+    if is_undefined(arg):
+      return arg
+    return augment(boolean_all_true_array_reducer(arg)).boolean_not()
+
   def cl_array_map(myfunc, _myiterable):
     myiterable = augment(_myiterable)
     if is_undefined(myiterable):
       return myiterable
     return map(myfunc, myiterable.wrapped)
+
+  def is_list(arg):
+    return type(augment(arg).wrapped) == type([])
+
+  def is_dict(arg):
+    return type(augment(arg).wrapped) == type({})
+
+  def as_url_param_kv_pair(key, _value):
+    value = augment(_value)
+    if is_list(value):
+      if is_dict(cl_array_access(value.wrapped, 1)):
+        return list_of_dicts_as_url_param_kv_pairs(key, value)
+      else:
+        pass
+        # no primitive arrays yet
+    else:
+      return '&' + primitive_value(key) + "=" + primitive_value(as_url_param_value(value))
+
+  def list_of_dicts_as_url_param_kv_pairs(key, value):
+    pairs = []
+    for i, mydict in enumerate(primitive_value(value)):
+      for k in primitive_value(mydict).keys():
+        key_for_pair = key + '[' + str(i) + ']' + '[' + str(k) + ']'
+        value_for_pair = mydict[k]
+        pair = '&' + str(key_for_pair) + '=' + str(value_for_pair)
+        pairs.append(pair)
+    return ''.join(pairs)
 ---
 initial: True
 code: |
