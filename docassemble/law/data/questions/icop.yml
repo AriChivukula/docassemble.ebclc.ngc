@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 5/30/2019
+# Prepared by Community.lawyer on 6/11/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -414,6 +414,9 @@ code: |
         pair = '&' + str(key_for_pair) + '=' + str(value_for_pair)
         pairs.append(pair)
     return ''.join(pairs)
+
+  def should_show_markdown_variable(var_name):
+    return (defined(var_name) and value(var_name) != "")
 ---
 initial: True
 code: |
@@ -443,91 +446,91 @@ code: |
 			re_run_logic()
 	def ___define_all():
 		vars = all_variables()
-		if ((not ("you_title" in vars)) and (is_not_undefined(((augment("Your Information")))))):
+		if ((not ("you_title" in vars))) and (is_not_undefined(((augment("Your Information"))))):
 			define("you_title", (primitive_value(((augment("Your Information"))))))
-		if ((not ("you_title_name" in vars)) and (is_not_undefined(((augment("Name")))))):
+		if ((not ("you_title_name" in vars))) and (is_not_undefined(((augment("Name"))))):
 			define("you_title_name", (primitive_value(((augment("Name"))))))
-		if ((not ("you_title_assoc" in vars)) and (is_not_undefined(((augment("School/Firm/etc.")))))):
+		if ((not ("you_title_assoc" in vars))) and (is_not_undefined(((augment("School/Firm/etc."))))):
 			define("you_title_assoc", (primitive_value(((augment("School/Firm/etc."))))))
-		if ((not ("you_title_phone" in vars)) and (is_not_undefined(((augment("Phone")))))):
+		if ((not ("you_title_phone" in vars))) and (is_not_undefined(((augment("Phone"))))):
 			define("you_title_phone", (primitive_value(((augment("Phone"))))))
-		if ((not ("you_title_email" in vars)) and (is_not_undefined(((augment("EMail")))))):
+		if ((not ("you_title_email" in vars))) and (is_not_undefined(((augment("EMail"))))):
 			define("you_title_email", (primitive_value(((augment("EMail"))))))
-		if ((not ("proceeding_title" in vars)) and (is_not_undefined(((augment("Proceeding Information")))))):
+		if ((not ("proceeding_title" in vars))) and (is_not_undefined(((augment("Proceeding Information"))))):
 			define("proceeding_title", (primitive_value(((augment("Proceeding Information"))))))
-		if ((not ("proceeding_title_date" in vars)) and (is_not_undefined(((augment("Date")))))):
+		if ((not ("proceeding_title_date" in vars))) and (is_not_undefined(((augment("Date"))))):
 			define("proceeding_title_date", (primitive_value(((augment("Date"))))))
-		if ((not ("proceeding_title_time" in vars)) and (is_not_undefined(((augment("Time")))))):
+		if ((not ("proceeding_title_time" in vars))) and (is_not_undefined(((augment("Time"))))):
 			define("proceeding_title_time", (primitive_value(((augment("Time"))))))
-		if ((not ("proceeding_title_judge" in vars)) and (is_not_undefined(((augment("Judge")))))):
+		if ((not ("proceeding_title_judge" in vars))) and (is_not_undefined(((augment("Judge"))))):
 			define("proceeding_title_judge", (primitive_value(((augment("Judge"))))))
-		if ((not ("proceeding_title_case" in vars)) and (is_not_undefined(((augment("Case")))))):
+		if ((not ("proceeding_title_case" in vars))) and (is_not_undefined(((augment("Case"))))):
 			define("proceeding_title_case", (primitive_value(((augment("Case"))))))
-		if ((not ("proceeding_title_type" in vars)) and (is_not_undefined(((augment("Type")))))):
+		if ((not ("proceeding_title_type" in vars))) and (is_not_undefined(((augment("Type"))))):
 			define("proceeding_title_type", (primitive_value(((augment("Type"))))))
-		if ((not ("detainee_title" in vars)) and (is_not_undefined(((augment("Detainee Information")))))):
+		if ((not ("detainee_title" in vars))) and (is_not_undefined(((augment("Detainee Information"))))):
 			define("detainee_title", (primitive_value(((augment("Detainee Information"))))))
-		if ((not ("detainee_title_name" in vars)) and (is_not_undefined(((augment("Name")))))):
+		if ((not ("detainee_title_name" in vars))) and (is_not_undefined(((augment("Name"))))):
 			define("detainee_title_name", (primitive_value(((augment("Name"))))))
-		if ((not ("detainee_title_appearance" in vars)) and (is_not_undefined(((augment("How did they appear?")))))):
+		if ((not ("detainee_title_appearance" in vars))) and (is_not_undefined(((augment("How did they appear?"))))):
 			define("detainee_title_appearance", (primitive_value(((augment("How did they appear?"))))))
-		if ((not ("detainee_title_languages" in vars)) and (is_not_undefined(((augment("Languages Spoken")))))):
+		if ((not ("detainee_title_languages" in vars))) and (is_not_undefined(((augment("Languages Spoken"))))):
 			define("detainee_title_languages", (primitive_value(((augment("Languages Spoken"))))))
-		if ((not ("detainee_title_location" in vars)) and (is_not_undefined(((augment("Where are they being detained?")))))):
+		if ((not ("detainee_title_location" in vars))) and (is_not_undefined(((augment("Where are they being detained?"))))):
 			define("detainee_title_location", (primitive_value(((augment("Where are they being detained?"))))))
-		if ((not ("detainee_title_location_other" in vars)) and (is_not_undefined(((augment("Other Location")))))):
+		if ((not ("detainee_title_location_other" in vars))) and (is_not_undefined(((augment("Other Location"))))):
 			define("detainee_title_location_other", (primitive_value(((augment("Other Location"))))))
-		if ((not ("detainee_title_representation" in vars)) and (is_not_undefined(((augment("Do they have representation?")))))):
+		if ((not ("detainee_title_representation" in vars))) and (is_not_undefined(((augment("Do they have representation?"))))):
 			define("detainee_title_representation", (primitive_value(((augment("Do they have representation?"))))))
-		if ((not ("detainee_title_representation_who" in vars)) and (is_not_undefined(((augment("Who?")))))):
+		if ((not ("detainee_title_representation_who" in vars))) and (is_not_undefined(((augment("Who?"))))):
 			define("detainee_title_representation_who", (primitive_value(((augment("Who?"))))))
-		if ((not ("detainee_title_representation_continuance" in vars)) and (is_not_undefined(((augment("Was a continuance to find representation granted?")))))):
+		if ((not ("detainee_title_representation_continuance" in vars))) and (is_not_undefined(((augment("Was a continuance to find representation granted?"))))):
 			define("detainee_title_representation_continuance", (primitive_value(((augment("Was a continuance to find representation granted?"))))))
-		if ((not ("detainee_title_representation_continuance_length" in vars)) and (is_not_undefined(((augment("How Long?")))))):
+		if ((not ("detainee_title_representation_continuance_length" in vars))) and (is_not_undefined(((augment("How Long?"))))):
 			define("detainee_title_representation_continuance_length", (primitive_value(((augment("How Long?"))))))
-		if ((not ("detainee_title_representation_continuance_denial" in vars)) and (is_not_undefined(((augment("Why?")))))):
+		if ((not ("detainee_title_representation_continuance_denial" in vars))) and (is_not_undefined(((augment("Why?"))))):
 			define("detainee_title_representation_continuance_denial", (primitive_value(((augment("Why?"))))))
-		if ((not ("context_title" in vars)) and (is_not_undefined(((augment("Context Information")))))):
+		if ((not ("context_title" in vars))) and (is_not_undefined(((augment("Context Information"))))):
 			define("context_title", (primitive_value(((augment("Context Information"))))))
-		if ((not ("context_title_anyone" in vars)) and (is_not_undefined(((augment("Did the detainee have trouble communicating with anyone?")))))):
+		if ((not ("context_title_anyone" in vars))) and (is_not_undefined(((augment("Did the detainee have trouble communicating with anyone?"))))):
 			define("context_title_anyone", (primitive_value(((augment("Did the detainee have trouble communicating with anyone?"))))))
-		if ((not ("context_title_anyone_who" in vars)) and (is_not_undefined(((augment("With who?")))))):
+		if ((not ("context_title_anyone_who" in vars))) and (is_not_undefined(((augment("With who?"))))):
 			define("context_title_anyone_who", (primitive_value(((augment("With who?"))))))
-		if ((not ("context_title_anyone_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
+		if ((not ("context_title_anyone_info" in vars))) and (is_not_undefined(((augment("How so?"))))):
 			define("context_title_anyone_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_interpretation" in vars)) and (is_not_undefined(((augment("Did the detainee have issues with interpretation?")))))):
+		if ((not ("context_title_interpretation" in vars))) and (is_not_undefined(((augment("Did the detainee have issues with interpretation?"))))):
 			define("context_title_interpretation", (primitive_value(((augment("Did the detainee have issues with interpretation?"))))))
-		if ((not ("context_title_interpretation_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
+		if ((not ("context_title_interpretation_info" in vars))) and (is_not_undefined(((augment("How so?"))))):
 			define("context_title_interpretation_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_illness" in vars)) and (is_not_undefined(((augment("Did the detainee show signs of suffering from mental illness?")))))):
+		if ((not ("context_title_illness" in vars))) and (is_not_undefined(((augment("Did the detainee show signs of suffering from mental illness?"))))):
 			define("context_title_illness", (primitive_value(((augment("Did the detainee show signs of suffering from mental illness?"))))))
-		if ((not ("context_title_illness_info" in vars)) and (is_not_undefined(((augment("How so?")))))):
+		if ((not ("context_title_illness_info" in vars))) and (is_not_undefined(((augment("How so?"))))):
 			define("context_title_illness_info", (primitive_value(((augment("How so?"))))))
-		if ((not ("context_title_illness_addressed" in vars)) and (is_not_undefined(((augment("How was it addressed?")))))):
+		if ((not ("context_title_illness_addressed" in vars))) and (is_not_undefined(((augment("How was it addressed?"))))):
 			define("context_title_illness_addressed", (primitive_value(((augment("How was it addressed?"))))))
-		if ((not ("outcome_title" in vars)) and (is_not_undefined(((augment("Outcome Information")))))):
+		if ((not ("outcome_title" in vars))) and (is_not_undefined(((augment("Outcome Information"))))):
 			define("outcome_title", (primitive_value(((augment("Outcome Information"))))))
-		if ((not ("outcome_title_relief" in vars)) and (is_not_undefined(((augment("Did detainee file any application for relief?")))))):
+		if ((not ("outcome_title_relief" in vars))) and (is_not_undefined(((augment("Did detainee file any application for relief?"))))):
 			define("outcome_title_relief", (primitive_value(((augment("Did detainee file any application for relief?"))))))
-		if ((not ("outcome_title_relief_info" in vars)) and (is_not_undefined(((augment("What were they?")))))):
+		if ((not ("outcome_title_relief_info" in vars))) and (is_not_undefined(((augment("What were they?"))))):
 			define("outcome_title_relief_info", (primitive_value(((augment("What were they?"))))))
-		if ((not ("outcome_title_relief_deadline" in vars)) and (is_not_undefined(((augment("What is the deadline?")))))):
+		if ((not ("outcome_title_relief_deadline" in vars))) and (is_not_undefined(((augment("What is the deadline?"))))):
 			define("outcome_title_relief_deadline", (primitive_value(((augment("What is the deadline?"))))))
-		if ((not ("outcome_title_bond" in vars)) and (is_not_undefined(((augment("Did IJ grant bond?")))))):
+		if ((not ("outcome_title_bond" in vars))) and (is_not_undefined(((augment("Did IJ grant bond?"))))):
 			define("outcome_title_bond", (primitive_value(((augment("Did IJ grant bond?"))))))
-		if ((not ("outcome_title_bond_amount" in vars)) and (is_not_undefined(((augment("Amount")))))):
+		if ((not ("outcome_title_bond_amount" in vars))) and (is_not_undefined(((augment("Amount"))))):
 			define("outcome_title_bond_amount", (primitive_value(((augment("Amount"))))))
-		if ((not ("outcome_title_bond_denial" in vars)) and (is_not_undefined(((augment("Reason")))))):
+		if ((not ("outcome_title_bond_denial" in vars))) and (is_not_undefined(((augment("Reason"))))):
 			define("outcome_title_bond_denial", (primitive_value(((augment("Reason"))))))
-		if ((not ("hearing_title" in vars)) and (is_not_undefined(((augment("Hearing Information")))))):
+		if ((not ("hearing_title" in vars))) and (is_not_undefined(((augment("Hearing Information"))))):
 			define("hearing_title", (primitive_value(((augment("Hearing Information"))))))
-		if ((not ("hearing_title_date" in vars)) and (is_not_undefined(((augment("Date")))))):
+		if ((not ("hearing_title_date" in vars))) and (is_not_undefined(((augment("Date"))))):
 			define("hearing_title_date", (primitive_value(((augment("Date"))))))
-		if ((not ("hearing_title_time" in vars)) and (is_not_undefined(((augment("Time")))))):
+		if ((not ("hearing_title_time" in vars))) and (is_not_undefined(((augment("Time"))))):
 			define("hearing_title_time", (primitive_value(((augment("Time"))))))
-		if ((not ("hearing_title_type" in vars)) and (is_not_undefined(((augment("Type")))))):
+		if ((not ("hearing_title_type" in vars))) and (is_not_undefined(((augment("Type"))))):
 			define("hearing_title_type", (primitive_value(((augment("Type"))))))
-		if ((not ("other_title" in vars)) and (is_not_undefined(((augment("Other Information")))))):
+		if ((not ("other_title" in vars))) and (is_not_undefined(((augment("Other Information"))))):
 			define("other_title", (primitive_value(((augment("Other Information"))))))
 		if ((not ("___shortcut_82_choice" in vars)) and (("context_output_anyone" in vars))):
 			define("___shortcut_82_choice", ((primitive_value(((augment(context_output_anyone) if ("context_output_anyone" in vars) else Undefined()).string_eq(augment("No")))))))
@@ -689,7 +692,7 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript:
-		- https://community.lawyer/static/system_d-2.js
+		- https://community.lawyer/static/system_d-5.js
 	css:
 		- https://community.lawyer/static/styles/jcc.css
 ---
