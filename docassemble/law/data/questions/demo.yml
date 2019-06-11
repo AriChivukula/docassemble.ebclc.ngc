@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 5/30/2019
+# Prepared by Community.lawyer on 6/11/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -414,6 +414,9 @@ code: |
         pair = '&' + str(key_for_pair) + '=' + str(value_for_pair)
         pairs.append(pair)
     return ''.join(pairs)
+
+  def should_show_markdown_variable(var_name):
+    return (defined(var_name) and value(var_name) != "")
 ---
 initial: True
 code: |
@@ -474,7 +477,7 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript:
-		- https://community.lawyer/static/system_d-2.js
+		- https://community.lawyer/static/system_d-5.js
 	css:
 		- https://community.lawyer/static/styles/jcc.css
 ---
@@ -579,7 +582,7 @@ code: |
 		import time
 		template_id = 1519
 		access_key = 'a9t6qmZUAW'
-		drawn_variables = {'59041': markdown_to_plaintext(unicode(__continue)), '58998': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '59069': unicode("DEMO, NOT FOR OFFICIAL USE"), '59068': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else ""))), '58999': markdown_to_plaintext(unicode(name))}
+		drawn_variables = {'58998': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '58999': markdown_to_plaintext(unicode(name)), '59041': markdown_to_plaintext(unicode(__continue)), '59068': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else ""))), '59069': unicode("DEMO, NOT FOR OFFICIAL USE")}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
