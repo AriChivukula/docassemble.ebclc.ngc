@@ -45,13 +45,13 @@ question: |
 subquestion: |
   Please enter your additional legal information.
 fields:
-  - AKA 1: petitioner_full_name2
+  - A/K/A 1: petitioner_full_name2
     required: False
     js hide if: val("help_type") == "Gender Change (18+ only)"
-  - AKA 2: petitioner_full_name3
+  - A/K/A 2: petitioner_full_name3
     required: False
     js hide if: val("help_type") == "Gender Change (18+ only)"
-  - AKA 3: petitioner_full_name4
+  - A/K/A 3: petitioner_full_name4
     required: False
     js hide if: val("help_type") == "Gender Change (18+ only)"
   - Place of Birth: petitioner_pob
@@ -115,11 +115,11 @@ code: |
     petitioner_full_name3 = petitioner_full_name3.upper()
     petitioner_full_name4 = petitioner_full_name4.upper()
     if petitioner_full_name2:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name2
+        petitioner_full_name_w_akas += " A/K/A " + petitioner_full_name2
     if petitioner_full_name3:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name3
+        petitioner_full_name_w_akas += " A/K/A " + petitioner_full_name3
     if petitioner_full_name4:
-        petitioner_full_name_w_akas += " AKA " + petitioner_full_name4
+        petitioner_full_name_w_akas += " A/K/A " + petitioner_full_name4
   petitioner_number_and_street = petitioner_number_and_street.upper()
   petitioner_city = petitioner_city.upper()
   petitioner_state = "CA"
