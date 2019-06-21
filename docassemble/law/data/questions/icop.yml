@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 6/11/2019
+# Prepared by Community.lawyer on 6/21/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -18,6 +18,9 @@ initial: True
 code: |
   import datetime
   import types
+
+  def empty_string():
+    return ""
 
   def ternary(condition, true_value, false_value):
     if is_undefined(condition):
@@ -591,87 +594,6 @@ initial: True
 code: |
 	___define_until_idempotent()
 ---
-code: |
-	___shortcut_82_choice = (context_output_anyone == "No")
----
-code: |
-	___shortcut_81_choice = (context_output_anyone == "Yes")
----
-code: |
-	___shortcut_91_choice = (context_output_illness == "No")
----
-code: |
-	___shortcut_90_choice = (context_output_illness == "Yes")
----
-code: |
-	___shortcut_87_choice = (context_output_interpretation == "No")
----
-code: |
-	___shortcut_86_choice = (context_output_interpretation == "Yes")
----
-code: |
-	___shortcut_48_choice = (detainee_output_appearance == "In Person")
----
-code: |
-	___shortcut_49_choice = (detainee_output_appearance == "Video Conference")
----
-code: |
-	___shortcut_52_choice = (detainee_output_location == "CoCo")
----
-code: |
-	___shortcut_53_choice = (detainee_output_location == "Mesa Verde")
----
-code: |
-	___shortcut_55_choice = (detainee_output_location == "Other")
----
-code: |
-	___shortcut_54_choice = (detainee_output_location == "Sacramento/Yuba")
----
-code: |
-	___shortcut_59_choice = (detainee_output_representation == "No")
----
-code: |
-	___shortcut_60_choice = (detainee_output_representation == "Unknown")
----
-code: |
-	___shortcut_58_choice = (detainee_output_representation == "Yes")
----
-code: |
-	___shortcut_65_choice = (detainee_output_representation_continuance == "No")
----
-code: |
-	___shortcut_66_choice = (detainee_output_representation_continuance == "Unknown")
----
-code: |
-	___shortcut_64_choice = (detainee_output_representation_continuance == "Yes")
----
-code: |
-	___shortcut_112_choice = (outcome_output_bond == "No")
----
-code: |
-	___shortcut_113_choice = (outcome_output_bond == "Unknown")
----
-code: |
-	___shortcut_110_choice = (outcome_output_bond == "Yes")
----
-code: |
-	___shortcut_136_choice = (outcome_output_relief == "No")
----
-code: |
-	___shortcut_137_choice = (outcome_output_relief == "Unknown")
----
-code: |
-	___shortcut_135_choice = (outcome_output_relief == "Yes")
----
-code: |
-	___shortcut_45_choice = (proceeding_output_type == "Bond Hearing")
----
-code: |
-	___shortcut_46_choice = (proceeding_output_type == "Master Calendar")
----
-code: |
-	___shortcut_131_false = (start == False)
----
 mandatory: True
 code: |
 	def passive_possible_variables():
@@ -694,13 +616,11 @@ features:
 	javascript:
 		- https://community.lawyer/static/system_d-5.js
 	css:
-		- https://community.lawyer/static/styles/jcc.css
+		- https://community.lawyer/static/styles/jcc-1.css
 ---
 metadata:
 	title: |
 		Immigration Court Observation Form
-	exit label: |
-		Powered by Community.lawyer
 	logo: |
 		<img class='app-logo' src='https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbkFSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--44b1d48d4c3c31e50d2d981b29359c8133e06266/download.png' alt='Immigration Court Observation Form'/>
 ---
@@ -728,31 +648,25 @@ subquestion: |
 field: start
 
 under: |
----
-id: 27651
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	you_title = primitive_value(((augment("Your Information"))))
+	</style>
 ---
-id: 27656
-
-code: |
-	you_title_name = primitive_value(((augment("Name"))))
----
-id: 27657
-
-code: |
-	you_title_assoc = primitive_value(((augment("School/Firm/etc."))))
----
-id: 27658
-
-code: |
-	you_title_phone = primitive_value(((augment("Phone"))))
----
-id: 27659
-
-code: |
-	you_title_email = primitive_value(((augment("EMail"))))
 ---
 id: 27661
 mandatory: |
@@ -764,59 +678,48 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${you_title}
+	# ${you_title if defined("you_title") else empty_string()}
 fields:
 	- html: |
 			<span class="producer" data-variable-name="variable_2" data-field-id="53250" ><p>Please enter the observer&#39;s (your) information!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_name\" data-field-id=\"53251\" >${you_title_name}</span>": you_output_name
+	- "<span class=\"producer\" data-variable-name=\"you_output_name\" data-field-id=\"53251\" >${you_title_name if defined(\"you_title_name\") else empty_string()}</span>": you_output_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_assoc\" data-field-id=\"53252\" >${you_title_assoc}</span>": you_output_assoc
+	- "<span class=\"producer\" data-variable-name=\"you_output_assoc\" data-field-id=\"53252\" >${you_title_assoc if defined(\"you_title_assoc\") else empty_string()}</span>": you_output_assoc
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_phone\" data-field-id=\"53253\" >${you_title_phone}</span>": you_output_phone
+	- "<span class=\"producer\" data-variable-name=\"you_output_phone\" data-field-id=\"53253\" >${you_title_phone if defined(\"you_title_phone\") else empty_string()}</span>": you_output_phone
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"you_output_email\" data-field-id=\"53254\" >${you_title_email}</span>": you_output_email
+	- "<span class=\"producer\" data-variable-name=\"you_output_email\" data-field-id=\"53254\" >${you_title_email if defined(\"you_title_email\") else empty_string()}</span>": you_output_email
 		datatype: email
 		required: true
 
 under: |
----
-id: 27663
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	proceeding_title = primitive_value(((augment("Proceeding Information"))))
+	</style>
 ---
-id: 27664
-
-code: |
-	proceeding_title_date = primitive_value(((augment("Date"))))
----
-id: 27665
-
-code: |
-	proceeding_title_time = primitive_value(((augment("Time"))))
----
-id: 27666
-
-code: |
-	proceeding_title_judge = primitive_value(((augment("Judge"))))
----
-id: 27667
-
-code: |
-	proceeding_title_case = primitive_value(((augment("Case"))))
----
-id: 27668
-
-code: |
-	proceeding_title_type = primitive_value(((augment("Type"))))
 ---
 id: 27669
 mandatory: |
@@ -828,30 +731,30 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${proceeding_title}
+	# ${proceeding_title if defined("proceeding_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_3" data-field-id="53256" ><p>Please enter information on the proceeding you&#39;re observing ${you_output_name}!</p>
+			<span class="producer" data-variable-name="variable_3" data-field-id="53256" ><p>Please enter information on the proceeding you&#39;re observing ${you_output_name if defined("you_output_name") else empty_string()}!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_date\" data-field-id=\"53259\" >${proceeding_title_date}</span>": proceeding_output_date
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_date\" data-field-id=\"53259\" >${proceeding_title_date if defined(\"proceeding_title_date\") else empty_string()}</span>": proceeding_output_date
 		datatype: date
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_time\" data-field-id=\"53261\" >${proceeding_title_time}</span>": proceeding_output_time
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_time\" data-field-id=\"53261\" >${proceeding_title_time if defined(\"proceeding_title_time\") else empty_string()}</span>": proceeding_output_time
 		datatype: time
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_judge\" data-field-id=\"53262\" >${proceeding_title_judge}</span>": proceeding_output_judge
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_judge\" data-field-id=\"53262\" >${proceeding_title_judge if defined(\"proceeding_title_judge\") else empty_string()}</span>": proceeding_output_judge
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_case\" data-field-id=\"53264\" >${proceeding_title_case}</span>": proceeding_output_case
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_case\" data-field-id=\"53264\" >${proceeding_title_case if defined(\"proceeding_title_case\") else empty_string()}</span>": proceeding_output_case
 		datatype: text
 		required: true
 		minlength: 0
 
-	- "<span class=\"producer\" data-variable-name=\"proceeding_output_type\" data-field-id=\"53268\" >${proceeding_title_type}</span>": proceeding_output_type
+	- "<span class=\"producer\" data-variable-name=\"proceeding_output_type\" data-field-id=\"53268\" >${proceeding_title_type if defined(\"proceeding_title_type\") else empty_string()}</span>": proceeding_output_type
 		input type: dropdown
 		required: true
 		datatype: text
@@ -860,61 +763,27 @@ fields:
 			- "<span>Master Calendar</span>": "Master Calendar"
 
 under: |
----
-id: 27670
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	detainee_title = primitive_value(((augment("Detainee Information"))))
+	</style>
 ---
-id: 27671
-
-code: |
-	detainee_title_name = primitive_value(((augment("Name"))))
 ---
-id: 27672
-
-code: |
-	detainee_title_appearance = primitive_value(((augment("How did they appear?"))))
 ---
-id: 27673
-
-code: |
-	detainee_title_languages = primitive_value(((augment("Languages Spoken"))))
----
-id: 27674
-
-code: |
-	detainee_title_location = primitive_value(((augment("Where are they being detained?"))))
----
-id: 27675
-
-code: |
-	detainee_title_location_other = primitive_value(((augment("Other Location"))))
----
-id: 27676
-
-code: |
-	detainee_title_representation = primitive_value(((augment("Do they have representation?"))))
----
-id: 27677
-
-code: |
-	detainee_title_representation_who = primitive_value(((augment("Who?"))))
----
-id: 27678
-
-code: |
-	detainee_title_representation_continuance = primitive_value(((augment("Was a continuance to find representation granted?"))))
----
-id: 27679
-
-code: |
-	detainee_title_representation_continuance_length = primitive_value(((augment("How Long?"))))
----
-id: 27681
-
-code: |
-	detainee_title_representation_continuance_denial = primitive_value(((augment("Why?"))))
 ---
 id: 27682
 mandatory: |
@@ -926,17 +795,17 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${detainee_title}
+	# ${detainee_title if defined("detainee_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_4" data-field-id="53277" ><p>Please enter information for detainee in proceeding ${proceeding_output_case}!</p>
+			<span class="producer" data-variable-name="variable_4" data-field-id="53277" ><p>Please enter information for detainee in proceeding ${proceeding_output_case if defined("proceeding_output_case") else empty_string()}!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_name\" data-field-id=\"53279\" >${detainee_title_name}</span>": detainee_output_name
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_name\" data-field-id=\"53279\" >${detainee_title_name if defined(\"detainee_title_name\") else empty_string()}</span>": detainee_output_name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_appearance\" data-field-id=\"53281\" >${detainee_title_appearance}</span>": detainee_output_appearance
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_appearance\" data-field-id=\"53281\" >${detainee_title_appearance if defined(\"detainee_title_appearance\") else empty_string()}</span>": detainee_output_appearance
 		input type: dropdown
 		required: true
 		datatype: text
@@ -944,11 +813,11 @@ fields:
 			- "<span>In Person</span>": "In Person"
 			- "<span>Video Conference</span>": "Video Conference"
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_languages\" data-field-id=\"53283\" >${detainee_title_languages}</span>": detainee_output_languages
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_languages\" data-field-id=\"53283\" >${detainee_title_languages if defined(\"detainee_title_languages\") else empty_string()}</span>": detainee_output_languages
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_location\" data-field-id=\"53285\" >${detainee_title_location}</span>": detainee_output_location
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_location\" data-field-id=\"53285\" >${detainee_title_location if defined(\"detainee_title_location\") else empty_string()}</span>": detainee_output_location
 		input type: dropdown
 		required: true
 		datatype: text
@@ -958,11 +827,11 @@ fields:
 			- "<span>Sacramento/Yuba</span>": "Sacramento/Yuba"
 			- "<span>Other</span>": "Other"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_location_other\" data-field-id=\"53288\" >${detainee_title_location_other}</span>": detainee_output_location_other
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_location_other\" data-field-id=\"53288\" >${detainee_title_location_other if defined(\"detainee_title_location_other\") else empty_string()}</span>": detainee_output_location_other
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"detainee_output_representation\" data-field-id=\"53292\" >${detainee_title_representation}</span>": detainee_output_representation
+	- "<span class=\"producer\" data-variable-name=\"detainee_output_representation\" data-field-id=\"53292\" >${detainee_title_representation if defined(\"detainee_title_representation\") else empty_string()}</span>": detainee_output_representation
 		input type: dropdown
 		required: true
 		datatype: text
@@ -971,11 +840,11 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_who\" data-field-id=\"53294\" >${detainee_title_representation_who}</span>": detainee_output_representation_who
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_who\" data-field-id=\"53294\" >${detainee_title_representation_who if defined(\"detainee_title_representation_who\") else empty_string()}</span>": detainee_output_representation_who
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance\" data-field-id=\"53298\" >${detainee_title_representation_continuance}</span>": detainee_output_representation_continuance
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance\" data-field-id=\"53298\" >${detainee_title_representation_continuance if defined(\"detainee_title_representation_continuance\") else empty_string()}</span>": detainee_output_representation_continuance
 		input type: dropdown
 		required: true
 		datatype: text
@@ -984,16 +853,16 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_length\" data-field-id=\"53300\" >${detainee_title_representation_continuance_length}</span>": detainee_output_representation_continuance_length
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_length\" data-field-id=\"53300\" >${detainee_title_representation_continuance_length if defined(\"detainee_title_representation_continuance_length\") else empty_string()}</span>": detainee_output_representation_continuance_length
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_denial\" data-field-id=\"53302\" >${detainee_title_representation_continuance_denial}</span>": detainee_output_representation_continuance_denial
+	- "<span class=\"producer conditional-field\" data-variable-name=\"detainee_output_representation_continuance_denial\" data-field-id=\"53302\" >${detainee_title_representation_continuance_denial if defined(\"detainee_title_representation_continuance_denial\") else empty_string()}</span>": detainee_output_representation_continuance_denial
 		datatype: text
 		required: true
 
 under: |
-
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
 script: |
 	<script>
 
@@ -1128,51 +997,26 @@ script: |
 
 
 	</script>
----
-id: 27684
 
-code: |
-	context_title = primitive_value(((augment("Context Information"))))
----
-id: 27685
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	context_title_anyone = primitive_value(((augment("Did the detainee have trouble communicating with anyone?"))))
+	</style>
 ---
-id: 27687
-
-code: |
-	context_title_anyone_who = primitive_value(((augment("With who?"))))
 ---
-id: 27688
-
-code: |
-	context_title_anyone_info = primitive_value(((augment("How so?"))))
----
-id: 27689
-
-code: |
-	context_title_interpretation = primitive_value(((augment("Did the detainee have issues with interpretation?"))))
----
-id: 27690
-
-code: |
-	context_title_interpretation_info = primitive_value(((augment("How so?"))))
----
-id: 27691
-
-code: |
-	context_title_illness = primitive_value(((augment("Did the detainee show signs of suffering from mental illness?"))))
----
-id: 27693
-
-code: |
-	context_title_illness_info = primitive_value(((augment("How so?"))))
----
-id: 27694
-
-code: |
-	context_title_illness_addressed = primitive_value(((augment("How was it addressed?"))))
 ---
 id: 27695
 mandatory: |
@@ -1184,13 +1028,13 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${context_title}
+	# ${context_title if defined("context_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_5" data-field-id="53308" ><p>Please enter information on what you observe in ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_5" data-field-id="53308" ><p>Please enter information on what you observe in ${detainee_output_name if defined("detainee_output_name") else empty_string()}&#39;s case (${proceeding_output_case if defined("proceeding_output_case") else empty_string()})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_anyone\" data-field-id=\"53313\" >${context_title_anyone}</span>": context_output_anyone
+	- "<span class=\"producer\" data-variable-name=\"context_output_anyone\" data-field-id=\"53313\" >${context_title_anyone if defined(\"context_title_anyone\") else empty_string()}</span>": context_output_anyone
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1198,15 +1042,15 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_who\" data-field-id=\"53318\" >${context_title_anyone_who}</span>": context_output_anyone_who
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_who\" data-field-id=\"53318\" >${context_title_anyone_who if defined(\"context_title_anyone_who\") else empty_string()}</span>": context_output_anyone_who
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_info\" data-field-id=\"53320\" >${context_title_anyone_info}</span>": context_output_anyone_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_anyone_info\" data-field-id=\"53320\" >${context_title_anyone_info if defined(\"context_title_anyone_info\") else empty_string()}</span>": context_output_anyone_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_interpretation\" data-field-id=\"53321\" >${context_title_interpretation}</span>": context_output_interpretation
+	- "<span class=\"producer\" data-variable-name=\"context_output_interpretation\" data-field-id=\"53321\" >${context_title_interpretation if defined(\"context_title_interpretation\") else empty_string()}</span>": context_output_interpretation
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1214,11 +1058,11 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_interpretation_info\" data-field-id=\"53322\" >${context_title_interpretation_info}</span>": context_output_interpretation_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_interpretation_info\" data-field-id=\"53322\" >${context_title_interpretation_info if defined(\"context_title_interpretation_info\") else empty_string()}</span>": context_output_interpretation_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"context_output_illness\" data-field-id=\"53398\" >${context_title_illness}</span>": context_output_illness
+	- "<span class=\"producer\" data-variable-name=\"context_output_illness\" data-field-id=\"53398\" >${context_title_illness if defined(\"context_title_illness\") else empty_string()}</span>": context_output_illness
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1226,16 +1070,16 @@ fields:
 			- "<span>Yes</span>": "Yes"
 			- "<span>No</span>": "No"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_info\" data-field-id=\"53401\" >${context_title_illness_info}</span>": context_output_illness_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_info\" data-field-id=\"53401\" >${context_title_illness_info if defined(\"context_title_illness_info\") else empty_string()}</span>": context_output_illness_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_addressed\" data-field-id=\"53405\" >${context_title_illness_addressed}</span>": context_output_illness_addressed
+	- "<span class=\"producer conditional-field\" data-variable-name=\"context_output_illness_addressed\" data-field-id=\"53405\" >${context_title_illness_addressed if defined(\"context_title_illness_addressed\") else empty_string()}</span>": context_output_illness_addressed
 		datatype: text
 		required: true
 
 under: |
-
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
 script: |
 	<script>
 
@@ -1370,41 +1214,26 @@ script: |
 
 
 	</script>
----
-id: 27709
 
-code: |
-	outcome_title = primitive_value(((augment("Outcome Information"))))
----
-id: 27710
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	outcome_title_relief = primitive_value(((augment("Did detainee file any application for relief?"))))
+	</style>
 ---
-id: 27711
-
-code: |
-	outcome_title_relief_info = primitive_value(((augment("What were they?"))))
 ---
-id: 27713
-
-code: |
-	outcome_title_relief_deadline = primitive_value(((augment("What is the deadline?"))))
----
-id: 27714
-
-code: |
-	outcome_title_bond = primitive_value(((augment("Did IJ grant bond?"))))
----
-id: 27715
-
-code: |
-	outcome_title_bond_amount = primitive_value(((augment("Amount"))))
----
-id: 27716
-
-code: |
-	outcome_title_bond_denial = primitive_value(((augment("Reason"))))
 ---
 id: 27717
 mandatory: |
@@ -1416,13 +1245,13 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${outcome_title}
+	# ${outcome_title if defined("outcome_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_7" data-field-id="53412" ><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_7" data-field-id="53412" ><p>Please enter information on outcomes for ${detainee_output_name if defined("detainee_output_name") else empty_string()}&#39;s case (${proceeding_output_case if defined("proceeding_output_case") else empty_string()})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_bond\" data-field-id=\"53418\" >${outcome_title_bond}</span>": outcome_output_bond
+	- "<span class=\"producer\" data-variable-name=\"outcome_output_bond\" data-field-id=\"53418\" >${outcome_title_bond if defined(\"outcome_title_bond\") else empty_string()}</span>": outcome_output_bond
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1431,16 +1260,16 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_amount\" data-field-id=\"53420\" >${outcome_title_bond_amount}</span>": outcome_output_bond_amount
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_amount\" data-field-id=\"53420\" >${outcome_title_bond_amount if defined(\"outcome_title_bond_amount\") else empty_string()}</span>": outcome_output_bond_amount
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_denial\" data-field-id=\"53421\" >${outcome_title_bond_denial}</span>": outcome_output_bond_denial
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_bond_denial\" data-field-id=\"53421\" >${outcome_title_bond_denial if defined(\"outcome_title_bond_denial\") else empty_string()}</span>": outcome_output_bond_denial
 		datatype: text
 		required: true
 
 under: |
-
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
 script: |
 	<script>
 
@@ -1569,6 +1398,24 @@ script: |
 
 
 	</script>
+
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
+
+	</style>
 ---
 id: 27747
 mandatory: |
@@ -1580,13 +1427,13 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${outcome_title}
+	# ${outcome_title if defined("outcome_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_1" data-field-id="53448" ><p>Please enter information on outcomes for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_1" data-field-id="53448" ><p>Please enter information on outcomes for ${detainee_output_name if defined("detainee_output_name") else empty_string()}&#39;s case (${proceeding_output_case if defined("proceeding_output_case") else empty_string()})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"outcome_output_relief\" data-field-id=\"53449\" >${outcome_title_relief}</span>": outcome_output_relief
+	- "<span class=\"producer\" data-variable-name=\"outcome_output_relief\" data-field-id=\"53449\" >${outcome_title_relief if defined(\"outcome_title_relief\") else empty_string()}</span>": outcome_output_relief
 		input type: dropdown
 		required: true
 		datatype: text
@@ -1595,16 +1442,16 @@ fields:
 			- "<span>No</span>": "No"
 			- "<span>Unknown</span>": "Unknown"
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_info\" data-field-id=\"53450\" >${outcome_title_relief_info}</span>": outcome_output_relief_info
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_info\" data-field-id=\"53450\" >${outcome_title_relief_info if defined(\"outcome_title_relief_info\") else empty_string()}</span>": outcome_output_relief_info
 		datatype: text
 		required: true
 
-	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_deadline\" data-field-id=\"53451\" >${outcome_title_relief_deadline}</span>": outcome_output_relief_deadline
+	- "<span class=\"producer conditional-field\" data-variable-name=\"outcome_output_relief_deadline\" data-field-id=\"53451\" >${outcome_title_relief_deadline if defined(\"outcome_title_relief_deadline\") else empty_string()}</span>": outcome_output_relief_deadline
 		datatype: text
 		required: true
 
 under: |
-
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
 script: |
 	<script>
 
@@ -1733,26 +1580,25 @@ script: |
 
 
 	</script>
----
-id: 27720
 
-code: |
-	hearing_title = primitive_value(((augment("Hearing Information"))))
----
-id: 27721
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	hearing_title_date = primitive_value(((augment("Date"))))
+	</style>
 ---
-id: 27722
-
-code: |
-	hearing_title_time = primitive_value(((augment("Time"))))
----
-id: 27723
-
-code: |
-	hearing_title_type = primitive_value(((augment("Type"))))
 ---
 id: 27725
 mandatory: |
@@ -1764,30 +1610,43 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${hearing_title}
+	# ${hearing_title if defined("hearing_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_6" data-field-id="53425" ><p>Please enter information on the next hearing for ${detainee_output_name}&#39;s case (${proceeding_output_case})!</p>
+			<span class="producer" data-variable-name="variable_6" data-field-id="53425" ><p>Please enter information on the next hearing for ${detainee_output_name if defined("detainee_output_name") else empty_string()}&#39;s case (${proceeding_output_case if defined("proceeding_output_case") else empty_string()})!</p>
 			</span>
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_date\" data-field-id=\"53426\" >${hearing_title_date}</span>": hearing_output_date
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_date\" data-field-id=\"53426\" >${hearing_title_date if defined(\"hearing_title_date\") else empty_string()}</span>": hearing_output_date
 		datatype: date
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_time\" data-field-id=\"53427\" >${hearing_title_time}</span>": hearing_output_time
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_time\" data-field-id=\"53427\" >${hearing_title_time if defined(\"hearing_title_time\") else empty_string()}</span>": hearing_output_time
 		datatype: time
 		required: false
 
-	- "<span class=\"producer\" data-variable-name=\"hearing_output_type\" data-field-id=\"53428\" >${hearing_title_type}</span>": hearing_output_type
+	- "<span class=\"producer\" data-variable-name=\"hearing_output_type\" data-field-id=\"53428\" >${hearing_title_type if defined(\"hearing_title_type\") else empty_string()}</span>": hearing_output_type
 		datatype: text
 		required: false
 
 under: |
----
-id: 27729
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
-code: |
-	other_title = primitive_value(((augment("Other Information"))))
+	</style>
 ---
 id: 27730
 mandatory: |
@@ -1799,10 +1658,10 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# ${other_title}
+	# ${other_title if defined("other_title") else empty_string()}
 fields:
 	- html: |
-			<span class="producer" data-variable-name="variable_8" data-field-id="53430" ><p>Please enter anything else we should know ${you_output_name}!</p>
+			<span class="producer" data-variable-name="variable_8" data-field-id="53430" ><p>Please enter anything else we should know ${you_output_name if defined("you_output_name") else empty_string()}!</p>
 			</span>
 
 	- "<span class=\"producer\" data-variable-name=\"other_output\" data-field-id=\"53431\" ></span>": other_output
@@ -1810,6 +1669,24 @@ fields:
 		required: false
 
 under: |
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
+
+	</style>
 ---
 id: 27731
 mandatory: |
@@ -1821,73 +1698,86 @@ question: |
 	<span id="interview-id" data-interview-id="1103">
 
 subquestion: |
-	# Thanks for volunteering ${you_output_name}!
+	# Thanks for volunteering ${you_output_name if defined("you_output_name") else empty_string()}!
 
 under: |
-	${ ('' if defined("___already_sent_t_icop_email_26e207fc10a5") else (___send_t_icop_email_26e207fc10a5())) }
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>	${ ('' if defined("___already_sent_t_icop_email_26e207fc10a5") else (___send_t_icop_email_26e207fc10a5())) }
 
 css: |
 	<style>
 		button.btn-primary[type='submit'] {
 			display: none;
 		}
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
 
 	</style>
 ---
 template: t_icop_template_af3e7002e7d6
 subject: |
-  Observation of Hearing for ${detainee_output_name if defined("detainee_output_name") else ""}(${proceeding_output_case if defined("proceeding_output_case") else ""})
+  Observation of Hearing for ${detainee_output_name if defined("detainee_output_name") else empty_string()}(${proceeding_output_case if defined("proceeding_output_case") else empty_string()})
 content: |
-  # ${you_title if defined("you_title") else ""}
-	- ${you_title_name if defined("you_title_name") else ""}: ${you_output_name if defined("you_output_name") else ""}
-	- ${you_title_assoc if defined("you_title_assoc") else ""}: ${you_output_assoc if defined("you_output_assoc") else ""}
-	- ${you_title_phone if defined("you_title_phone") else ""}: ${you_output_phone if defined("you_output_phone") else ""}
-	- ${you_title_email if defined("you_title_email") else ""}: ${you_output_email if defined("you_output_email") else ""}
+  # ${you_title if defined("you_title") else empty_string()}
+	- ${you_title_name if defined("you_title_name") else empty_string()}: ${you_output_name if defined("you_output_name") else empty_string()}
+	- ${you_title_assoc if defined("you_title_assoc") else empty_string()}: ${you_output_assoc if defined("you_output_assoc") else empty_string()}
+	- ${you_title_phone if defined("you_title_phone") else empty_string()}: ${you_output_phone if defined("you_output_phone") else empty_string()}
+	- ${you_title_email if defined("you_title_email") else empty_string()}: ${you_output_email if defined("you_output_email") else empty_string()}
 
-	# ${proceeding_title if defined("proceeding_title") else ""}
-	- ${proceeding_title_date if defined("proceeding_title_date") else ""}: ${proceeding_output_date if defined("proceeding_output_date") else ""}
-	- ${proceeding_title_time if defined("proceeding_title_time") else ""}: ${proceeding_output_time if defined("proceeding_output_time") else ""}
-	- ${proceeding_title_judge if defined("proceeding_title_judge") else ""}: ${proceeding_output_judge if defined("proceeding_output_judge") else ""}
-	- ${proceeding_title_case if defined("proceeding_title_case") else ""}: ${proceeding_output_case if defined("proceeding_output_case") else ""}
-	- ${proceeding_title_type if defined("proceeding_title_type") else ""}: ${proceeding_output_type if defined("proceeding_output_type") else ""}
+	# ${proceeding_title if defined("proceeding_title") else empty_string()}
+	- ${proceeding_title_date if defined("proceeding_title_date") else empty_string()}: ${proceeding_output_date if defined("proceeding_output_date") else empty_string()}
+	- ${proceeding_title_time if defined("proceeding_title_time") else empty_string()}: ${proceeding_output_time if defined("proceeding_output_time") else empty_string()}
+	- ${proceeding_title_judge if defined("proceeding_title_judge") else empty_string()}: ${proceeding_output_judge if defined("proceeding_output_judge") else empty_string()}
+	- ${proceeding_title_case if defined("proceeding_title_case") else empty_string()}: ${proceeding_output_case if defined("proceeding_output_case") else empty_string()}
+	- ${proceeding_title_type if defined("proceeding_title_type") else empty_string()}: ${proceeding_output_type if defined("proceeding_output_type") else empty_string()}
 
-	# ${detainee_title if defined("detainee_title") else ""}
-	- ${detainee_title_name if defined("detainee_title_name") else ""}: ${detainee_output_name if defined("detainee_output_name") else ""}
-	- ${detainee_title_appearance if defined("detainee_title_appearance") else ""}: ${detainee_output_appearance if defined("detainee_output_appearance") else ""}
-	- ${detainee_title_languages if defined("detainee_title_languages") else ""}: ${detainee_output_languages if defined("detainee_output_languages") else ""}
-	- ${detainee_title_location if defined("detainee_title_location") else ""}: ${detainee_output_location if defined("detainee_output_location") else ""}
-	- ${detainee_title_location_other if defined("detainee_title_location_other") else ""}: ${detainee_output_location_other if defined("detainee_output_location_other") else ""}
-	- ${detainee_title_representation if defined("detainee_title_representation") else ""}: ${detainee_output_representation if defined("detainee_output_representation") else ""}
-	- ${detainee_title_representation_who if defined("detainee_title_representation_who") else ""}: ${detainee_output_representation_who if defined("detainee_output_representation_who") else ""}
-	- ${detainee_title_representation_continuance if defined("detainee_title_representation_continuance") else ""}: ${detainee_output_representation_continuance if defined("detainee_output_representation_continuance") else ""}
-	- ${detainee_title_representation_continuance_length if defined("detainee_title_representation_continuance_length") else ""}: ${detainee_output_representation_continuance_length if defined("detainee_output_representation_continuance_length") else ""}
-	- ${detainee_title_representation_continuance_denial if defined("detainee_title_representation_continuance_denial") else ""}: ${detainee_output_representation_continuance_denial if defined("detainee_output_representation_continuance_denial") else ""}
+	# ${detainee_title if defined("detainee_title") else empty_string()}
+	- ${detainee_title_name if defined("detainee_title_name") else empty_string()}: ${detainee_output_name if defined("detainee_output_name") else empty_string()}
+	- ${detainee_title_appearance if defined("detainee_title_appearance") else empty_string()}: ${detainee_output_appearance if defined("detainee_output_appearance") else empty_string()}
+	- ${detainee_title_languages if defined("detainee_title_languages") else empty_string()}: ${detainee_output_languages if defined("detainee_output_languages") else empty_string()}
+	- ${detainee_title_location if defined("detainee_title_location") else empty_string()}: ${detainee_output_location if defined("detainee_output_location") else empty_string()}
+	- ${detainee_title_location_other if defined("detainee_title_location_other") else empty_string()}: ${detainee_output_location_other if defined("detainee_output_location_other") else empty_string()}
+	- ${detainee_title_representation if defined("detainee_title_representation") else empty_string()}: ${detainee_output_representation if defined("detainee_output_representation") else empty_string()}
+	- ${detainee_title_representation_who if defined("detainee_title_representation_who") else empty_string()}: ${detainee_output_representation_who if defined("detainee_output_representation_who") else empty_string()}
+	- ${detainee_title_representation_continuance if defined("detainee_title_representation_continuance") else empty_string()}: ${detainee_output_representation_continuance if defined("detainee_output_representation_continuance") else empty_string()}
+	- ${detainee_title_representation_continuance_length if defined("detainee_title_representation_continuance_length") else empty_string()}: ${detainee_output_representation_continuance_length if defined("detainee_output_representation_continuance_length") else empty_string()}
+	- ${detainee_title_representation_continuance_denial if defined("detainee_title_representation_continuance_denial") else empty_string()}: ${detainee_output_representation_continuance_denial if defined("detainee_output_representation_continuance_denial") else empty_string()}
 
-	# ${context_title if defined("context_title") else ""}
-	- ${context_title_anyone if defined("context_title_anyone") else ""}: ${context_output_anyone if defined("context_output_anyone") else ""}
-	- ${context_title_anyone_who if defined("context_title_anyone_who") else ""}: ${context_output_anyone_who if defined("context_output_anyone_who") else ""}
-	- ${context_title_anyone_info if defined("context_title_anyone_info") else ""}: ${context_output_anyone_info if defined("context_output_anyone_info") else ""}
-	- ${context_title_interpretation if defined("context_title_interpretation") else ""}: ${context_output_interpretation if defined("context_output_interpretation") else ""}
-	- ${context_title_interpretation_info if defined("context_title_interpretation_info") else ""}: ${context_output_interpretation_info if defined("context_output_interpretation_info") else ""}
-	- ${context_title_illness if defined("context_title_illness") else ""}: ${context_output_illness if defined("context_output_illness") else ""}
-	- ${context_title_illness_info if defined("context_title_illness_info") else ""}: ${context_output_illness_info if defined("context_output_illness_info") else ""}
-	- ${context_title_illness_addressed if defined("context_title_illness_addressed") else ""}: ${context_output_illness_addressed if defined("context_output_illness_addressed") else ""}
+	# ${context_title if defined("context_title") else empty_string()}
+	- ${context_title_anyone if defined("context_title_anyone") else empty_string()}: ${context_output_anyone if defined("context_output_anyone") else empty_string()}
+	- ${context_title_anyone_who if defined("context_title_anyone_who") else empty_string()}: ${context_output_anyone_who if defined("context_output_anyone_who") else empty_string()}
+	- ${context_title_anyone_info if defined("context_title_anyone_info") else empty_string()}: ${context_output_anyone_info if defined("context_output_anyone_info") else empty_string()}
+	- ${context_title_interpretation if defined("context_title_interpretation") else empty_string()}: ${context_output_interpretation if defined("context_output_interpretation") else empty_string()}
+	- ${context_title_interpretation_info if defined("context_title_interpretation_info") else empty_string()}: ${context_output_interpretation_info if defined("context_output_interpretation_info") else empty_string()}
+	- ${context_title_illness if defined("context_title_illness") else empty_string()}: ${context_output_illness if defined("context_output_illness") else empty_string()}
+	- ${context_title_illness_info if defined("context_title_illness_info") else empty_string()}: ${context_output_illness_info if defined("context_output_illness_info") else empty_string()}
+	- ${context_title_illness_addressed if defined("context_title_illness_addressed") else empty_string()}: ${context_output_illness_addressed if defined("context_output_illness_addressed") else empty_string()}
 
-	# ${outcome_title if defined("outcome_title") else ""}
-	- ${outcome_title_relief if defined("outcome_title_relief") else ""}: ${outcome_output_relief if defined("outcome_output_relief") else ""}
-	- ${outcome_title_relief_info if defined("outcome_title_relief_info") else ""}: ${outcome_output_relief_info if defined("outcome_output_relief_info") else ""}
-	- ${outcome_title_relief_deadline if defined("outcome_title_relief_deadline") else ""}: ${outcome_output_relief_deadline if defined("outcome_output_relief_deadline") else ""}
-	- ${outcome_title_bond if defined("outcome_title_bond") else ""}: ${outcome_output_bond if defined("outcome_output_bond") else ""}
-	- ${outcome_title_bond_amount if defined("outcome_title_bond_amount") else ""}: ${outcome_output_bond_amount if defined("outcome_output_bond_amount") else ""}
-	- ${outcome_title_bond_denial if defined("outcome_title_bond_denial") else ""}: ${outcome_output_bond_denial if defined("outcome_output_bond_denial") else ""}
+	# ${outcome_title if defined("outcome_title") else empty_string()}
+	- ${outcome_title_relief if defined("outcome_title_relief") else empty_string()}: ${outcome_output_relief if defined("outcome_output_relief") else empty_string()}
+	- ${outcome_title_relief_info if defined("outcome_title_relief_info") else empty_string()}: ${outcome_output_relief_info if defined("outcome_output_relief_info") else empty_string()}
+	- ${outcome_title_relief_deadline if defined("outcome_title_relief_deadline") else empty_string()}: ${outcome_output_relief_deadline if defined("outcome_output_relief_deadline") else empty_string()}
+	- ${outcome_title_bond if defined("outcome_title_bond") else empty_string()}: ${outcome_output_bond if defined("outcome_output_bond") else empty_string()}
+	- ${outcome_title_bond_amount if defined("outcome_title_bond_amount") else empty_string()}: ${outcome_output_bond_amount if defined("outcome_output_bond_amount") else empty_string()}
+	- ${outcome_title_bond_denial if defined("outcome_title_bond_denial") else empty_string()}: ${outcome_output_bond_denial if defined("outcome_output_bond_denial") else empty_string()}
 
-	# ${hearing_title if defined("hearing_title") else ""}
-	- ${hearing_title_date if defined("hearing_title_date") else ""}: ${hearing_output_date if defined("hearing_output_date") else ""}
-	- ${hearing_title_time if defined("hearing_title_time") else ""}: ${hearing_output_time if defined("hearing_output_time") else ""}
-	- ${hearing_title_type if defined("hearing_title_type") else ""}: ${hearing_output_type if defined("hearing_output_type") else ""}
+	# ${hearing_title if defined("hearing_title") else empty_string()}
+	- ${hearing_title_date if defined("hearing_title_date") else empty_string()}: ${hearing_output_date if defined("hearing_output_date") else empty_string()}
+	- ${hearing_title_time if defined("hearing_title_time") else empty_string()}: ${hearing_output_time if defined("hearing_output_time") else empty_string()}
+	- ${hearing_title_type if defined("hearing_title_type") else empty_string()}: ${hearing_output_type if defined("hearing_output_type") else empty_string()}
 
-	# ${other_title if defined("other_title") else ""}
-	> ${other_output if defined("other_output") else ""}
+	# ${other_title if defined("other_title") else empty_string()}
+	> ${other_output if defined("other_output") else empty_string()}
 ---
 mandatory: True
 code: |
@@ -1903,7 +1793,7 @@ code: |
 		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 2 })
 		data = permission_response.json()
 		if data['permitted']:
-			send_email(template=t_icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % (you_output_email))
+			send_email(template=t_icop_template_af3e7002e7d6, to="sf.icop@gmail.com", cc="%s" % ((augment(you_output_email) if defined("you_output_email") else empty_string())))
 			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 2 })
 	background_response()
 ---

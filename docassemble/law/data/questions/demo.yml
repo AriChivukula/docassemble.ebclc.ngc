@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 6/11/2019
+# Prepared by Community.lawyer on 6/21/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -18,6 +18,9 @@ initial: True
 code: |
   import datetime
   import types
+
+  def empty_string():
+    return ""
 
   def ternary(condition, true_value, false_value):
     if is_undefined(condition):
@@ -454,9 +457,6 @@ initial: True
 code: |
 	___define_until_idempotent()
 ---
-code: |
-	___shortcut_6_false = (__continue == False)
----
 mandatory: True
 code: |
 	def passive_possible_variables():
@@ -479,13 +479,11 @@ features:
 	javascript:
 		- https://community.lawyer/static/system_d-5.js
 	css:
-		- https://community.lawyer/static/styles/jcc.css
+		- https://community.lawyer/static/styles/jcc-1.css
 ---
 metadata:
 	title: |
 		Legal Automation Workshop Demo
-	exit label: |
-		Powered by Community.lawyer
 ---
 mandatory: True
 code: |
@@ -511,6 +509,24 @@ subquestion: |
 field: __continue
 
 under: |
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
+
+	</style>
 ---
 id: 39024
 mandatory: |
@@ -533,6 +549,24 @@ fields:
 		required: true
 
 under: |
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
+
+	</style>
 ---
 id: 39023
 mandatory: |
@@ -548,6 +582,24 @@ subquestion: |
 signature: signature
 
 under: |
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>
+css: |
+	<style>
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
+		}
+
+	</style>
 ---
 id: 39027
 mandatory: |
@@ -565,12 +617,25 @@ attachment code: |
 	filter(bool, [t____sr1_pdf_1519_attachment_1740])
 allow emailing: False
 under: |
-	${ ('' if defined("___already_sent_t_email_email_4e4652a186c7") else (___send_t_email_email_4e4652a186c7())) }
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>	${ ('' if defined("___already_sent_t_email_email_4e4652a186c7") else (___send_t_email_email_4e4652a186c7())) }
 
 css: |
 	<style>
 		button.btn-primary[type='submit'] {
 			display: none;
+		}
+		:root {
+			--body-color: #fff;
+			--navbar-color: #2D3C4E;
+			--text-color: #212529;
+			--primary-btn-background-color: #f4ac3b;
+			--primary-btn-background-color-hover: #ef970d;
+			--primary-btn-text-color: #212529;
+			--secondary-btn-background-color: #ffc107;
+			--secondary-btn-background-color-hover: #d39e00;
+			--secondary-btn-text-color: #212529;
+			--text-link-color: #007bff;
+			--hide-navbar-background-color: #fff;
 		}
 
 	</style>
@@ -582,7 +647,7 @@ code: |
 		import time
 		template_id = 1519
 		access_key = 'a9t6qmZUAW'
-		drawn_variables = {'58998': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else ""))), '58999': markdown_to_plaintext(unicode(name)), '59041': markdown_to_plaintext(unicode(__continue)), '59068': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else ""))), '59069': unicode("DEMO, NOT FOR OFFICIAL USE")}
+		drawn_variables = {'58998': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '58999': markdown_to_plaintext(unicode(name if defined("name") else "")), '59041': markdown_to_plaintext(unicode(__continue if defined("__continue") else "")), '59068': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "") if defined("signature") else "")), '59069': unicode("DEMO, NOT FOR OFFICIAL USE")}
 		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
 		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
 		task_id = fill_response.get('task_id')
@@ -611,7 +676,7 @@ template: t_email_template_d5f20bd99683
 subject: |
   Legal Automation Workshop Demo
 content: |
-  Spread the word ${name if defined("name") else ""}  <3
+  Spread the word ${name if defined("name") else empty_string()}  <3
 
 	[https://www.legalautomation.rocks/](https://www.legalautomation.rocks/)
 ---
@@ -629,7 +694,7 @@ code: |
 		permission_response = requests.get(url = 'https://community.lawyer/delivery_permitted', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'desired_deliveries': 2 })
 		data = permission_response.json()
 		if data['permitted']:
-			send_email(template=t_email_template_d5f20bd99683, to="%s" % (email), cc="law@law.berkeley.edu")
+			send_email(template=t_email_template_d5f20bd99683, to="%s" % ((augment(email) if defined("email") else empty_string())), cc="law@law.berkeley.edu")
 			requests.post(url = 'https://community.lawyer/increment_delivery', params = { 'id': 44, 'key': 'Raup_jZ0Eb13lMncLMtf6Q', 'increment': 2 })
 	background_response()
 ---
