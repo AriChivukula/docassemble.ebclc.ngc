@@ -1,4 +1,4 @@
-# Prepared by Community.lawyer on 6/21/2019
+# Prepared by Community.lawyer on 7/17/2019
 # Compatible with Docassemble version 0.3.11
 ---
 modules:
@@ -57,7 +57,7 @@ code: |
   def is_augmented(something):
     return something.__class__.__name__ == 'Augmented'
 
-  def augment(something):
+  def augment(something=None):
     if is_augmented(something):
       return something
     return Augmented(something)
@@ -294,6 +294,58 @@ code: |
       if is_undefined(self) or is_undefined(arg):
         return self
       return augment(self.wrapped.get(arg.wrapped))
+    # date math
+    def days_after(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.plus(days=self.wrapped))
+    def months_after(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.plus(months=self.wrapped))
+    def years_after(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.plus(years=self.wrapped))
+    def days_before(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.minus(days=self.wrapped))
+    def months_before(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.minus(months=self.wrapped))
+    def years_before(self, _arg):
+      arg = augment(_arg)
+      if is_undefined(self) or is_undefined(arg):
+        return Undefined()
+      return augment(arg.wrapped.minus(years=self.wrapped))
+    # date formatting
+    def date_format_ddmmyyyy(self):
+      if is_undefined(self):
+        return self
+      return augment(format_date(self.wrapped, format='d/M/yyyy'))
+    def date_format_mmddyyyy(self):
+      if is_undefined(self):
+        return self
+      return augment(format_date(self.wrapped, format='M/d/yyyy'))
+    def date_format_yyyymmdd(self):
+      if is_undefined(self):
+        return self
+      return augment(format_date(self.wrapped, format='yyyy/M/d'))
+    def date_format_mdy_month_name(self):
+      if is_undefined(self):
+        return self
+      return augment(format_date(self.wrapped, format='long'))
+    def date_format_mdy_month_name_day_name(self):
+      if is_undefined(self):
+        return self
+      return augment(format_date(self.wrapped, format='full'))
 
   # typecasting
   def typecast_as_date(_arg):
@@ -405,6 +457,8 @@ code: |
       else:
         pass
         # no primitive arrays yet
+    elif len(str(primitive_value(value))) == 0:
+      return ''
     else:
       return '&' + primitive_value(key) + "=" + primitive_value(as_url_param_value(value))
 
@@ -420,6 +474,14 @@ code: |
 
   def should_show_markdown_variable(var_name):
     return (defined(var_name) and value(var_name) != "")
+
+  def string_as_bool(something):
+    return something == 'True'
+
+  def merge_two_dicts(x, y):
+    z = x.copy()
+    z.update(y)
+    return z
 ---
 initial: True
 code: |
@@ -441,6 +503,13 @@ code: |
 ---
 mandatory: True
 code: |
+	import json
+
+	def ___pdf_template_1519_to_json():
+	  import json
+	  vars = all_variables()
+	  return {"template_data": {"url": "https://community.lawyer/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaEkxIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--37b1cfdc9ce08bf1f3c2ea0e99db2e45c8a51a87/sr1.pdf?disposition=attachment", "height": 1188, "width": 918, "page_count": 3}, "stamps": [{"x": 105.33333333333333, "y": 789.3333333333333, "width": 424.66666666666663, "height": 89.33333333333333, "page": 1, "value": "DEMO, NOT FOR OFFICIAL USE", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 50, "font_color": "ff0000"}, {"x": 355.3333333333333, "y": 64.0, "width": 114.66666666666666, "height": 25.333333333333332, "page": 1, "value": markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "") if defined("signature") else "")), "datatype": "signature", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 23.333333333333332, "y": 696.0, "width": 46.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 71.33333333333333, "y": 696.0, "width": 73.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 144.66666666666666, "y": 696.0, "width": 369.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 69.33333333333333, "y": 674.0, "width": 43.33333333333333, "height": 12.666666666666666, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 650.0, "width": 373.3333333333333, "height": 14.0, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 424.66666666666663, "y": 648.6666666666666, "width": 115.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 541.3333333333333, "y": 648.0, "width": 46.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 625.3333333333333, "width": 465.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 515.3333333333333, "y": 625.3333333333333, "width": 72.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 600.6666666666666, "width": 254.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 306.0, "y": 600.0, "width": 30.666666666666664, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 339.3333333333333, "y": 600.0, "width": 56.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 420.0, "y": 600.0, "width": 24.666666666666664, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 447.3333333333333, "y": 600.0, "width": 48.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 515.3333333333333, "y": 600.0, "width": 24.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 542.6666666666666, "y": 600.0, "width": 44.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 576.0, "width": 160.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 212.0, "y": 576.0, "width": 256.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 470.0, "y": 576.0, "width": 44.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 515.3333333333333, "y": 552.6666666666666, "width": 70.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 529.3333333333333, "width": 212.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 261.3333333333333, "y": 529.3333333333333, "width": 207.33333333333331, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 470.66666666666663, "y": 529.3333333333333, "width": 40.666666666666664, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 517.3333333333333, "y": 529.3333333333333, "width": 70.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 506.0, "width": 349.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 399.3333333333333, "y": 506.0, "width": 188.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 49.33333333333333, "y": 482.0, "width": 92.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 167.33333333333331, "y": 482.0, "width": 79.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 272.0, "y": 482.0, "width": 78.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 353.3333333333333, "y": 481.3333333333333, "width": 234.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 434.0, "width": 372.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 425.3333333333333, "y": 434.0, "width": 112.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 542.6666666666666, "y": 434.0, "width": 44.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 409.3333333333333, "width": 464.66666666666663, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 516.0, "y": 409.3333333333333, "width": 70.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 385.3333333333333, "width": 257.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 307.3333333333333, "y": 385.3333333333333, "width": 32.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 341.3333333333333, "y": 385.3333333333333, "width": 57.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 419.3333333333333, "y": 385.3333333333333, "width": 26.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 448.0, "y": 386.0, "width": 48.0, "height": 14.0, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 514.0, "y": 385.3333333333333, "width": 24.666666666666664, "height": 14.0, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 542.6666666666666, "y": 385.3333333333333, "width": 44.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 361.3333333333333, "width": 160.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 212.66666666666666, "y": 361.3333333333333, "width": 256.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 470.0, "y": 361.3333333333333, "width": 45.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 337.3333333333333, "width": 463.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 516.0, "y": 337.3333333333333, "width": 71.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 313.3333333333333, "width": 207.33333333333331, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 260.0, "y": 313.3333333333333, "width": 209.33333333333331, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 470.66666666666663, "y": 313.3333333333333, "width": 42.666666666666664, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 515.3333333333333, "y": 313.3333333333333, "width": 70.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 289.3333333333333, "width": 348.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 401.3333333333333, "y": 289.3333333333333, "width": 186.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 266.66666666666663, "width": 92.66666666666666, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 166.0, "y": 266.66666666666663, "width": 83.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 273.3333333333333, "y": 266.66666666666663, "width": 77.33333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 354.0, "y": 266.66666666666663, "width": 234.0, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 246.66666666666666, "width": 348.66666666666663, "height": 42.666666666666664, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 200.0, "width": 348.66666666666663, "height": 40.0, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 152.66666666666666, "width": 418.66666666666663, "height": 14.666666666666666, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 131.33333333333331, "width": 538.0, "height": 39.33333333333333, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 23.333333333333332, "y": 51.33333333333333, "width": 92.66666666666666, "height": 13.333333333333332, "page": 1, "value": markdown_to_plaintext(unicode(Today if defined("Today") else "")), "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 118.66666666666666, "y": 51.33333333333333, "width": 220.66666666666666, "height": 13.333333333333332, "page": 1, "value": markdown_to_plaintext(unicode(name if defined("name") else "")), "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 483.3333333333333, "y": 20.0, "width": 46.666666666666664, "height": 17.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 532.0, "y": 20.0, "width": 46.666666666666664, "height": 17.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.0, "y": 554.0, "width": 465.3333333333333, "height": 13.333333333333332, "page": 1, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 518.6666666666666, "y": 698.6666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 555.3333333333333, "y": 698.6666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 119.33333333333333, "y": 681.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 119.33333333333333, "y": 670.6666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 148.0, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 199.33333333333331, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 253.33333333333331, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 304.0, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 364.0, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 415.3333333333333, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 518.6666666666666, "y": 676.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 555.3333333333333, "y": 675.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 518.6666666666666, "y": 578.6666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 556.0, "y": 578.6666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 50.666666666666664, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 111.33333333333333, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 208.0, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 267.3333333333333, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 339.3333333333333, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 398.66666666666663, "y": 460.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 519.3333333333333, "y": 459.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 555.3333333333333, "y": 459.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 518.6666666666666, "y": 362.66666666666663, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 555.3333333333333, "y": 363.3333333333333, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 409.3333333333333, "y": 240.66666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 409.3333333333333, "y": 226.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 480.0, "y": 240.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 480.0, "y": 226.66666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 530.0, "y": 240.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 530.0, "y": 226.0, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 409.3333333333333, "y": 195.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 409.3333333333333, "y": 181.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 480.0, "y": 195.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 480.0, "y": 181.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 530.0, "y": 195.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 530.0, "y": 181.33333333333331, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 474.0, "y": 152.66666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 510.66666666666663, "y": 152.66666666666666, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(""), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 206.66666666666666, "y": 32.666666666666664, "width": 11.333333333333332, "height": 11.333333333333332, "page": 1, "value": string_as_bool(markdown_to_plaintext(unicode(__continue if defined("__continue") else ""))), "datatype": "checkbox", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 198.0, "y": 726.0, "width": 260.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 704.6666666666666, "width": 184.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 369.3333333333333, "y": 704.6666666666666, "width": 74.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 262.0, "y": 704.6666666666666, "width": 74.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 678.6666666666666, "width": 92.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 144.66666666666666, "y": 678.6666666666666, "width": 314.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 460.0, "y": 678.6666666666666, "width": 127.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 655.3333333333333, "width": 182.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 236.0, "y": 655.3333333333333, "width": 223.33333333333331, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 460.0, "y": 655.3333333333333, "width": 91.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 552.0, "y": 655.3333333333333, "width": 35.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 631.3333333333333, "width": 256.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 305.3333333333333, "y": 631.3333333333333, "width": 136.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 442.66666666666663, "y": 631.3333333333333, "width": 86.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 529.3333333333333, "y": 631.3333333333333, "width": 24.666666666666664, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 554.0, "y": 631.3333333333333, "width": 33.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 606.6666666666666, "width": 256.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 305.3333333333333, "y": 606.6666666666666, "width": 136.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 442.66666666666663, "y": 606.6666666666666, "width": 86.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 529.3333333333333, "y": 606.6666666666666, "width": 24.666666666666664, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 554.0, "y": 606.6666666666666, "width": 33.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 48.666666666666664, "y": 584.0, "width": 256.0, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 305.3333333333333, "y": 584.0, "width": 136.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 442.66666666666663, "y": 584.0, "width": 86.66666666666666, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 529.3333333333333, "y": 584.0, "width": 24.666666666666664, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}, {"x": 554.0, "y": 584.0, "width": 33.33333333333333, "height": 14.0, "page": 2, "value": "", "datatype": "text", "context_height": 792.0, "context_width": 612.0, "font_size": 12, "font_color": "000000"}], "should_watermark": False}
+
 
 	def ___define_until_idempotent():
 		original_dict = all_variables()
@@ -452,6 +521,13 @@ code: |
 
 		if ((not ("___shortcut_6_false" in vars)) and (("__continue" in vars))):
 			define("___shortcut_6_false", ((primitive_value(((augment(__continue) if ("__continue" in vars) else Undefined()).boolean_eq(augment(False)))))))
+
+
+	def rich_text_variable_dictionary():
+		vars = all_variables()
+		return {
+
+		}
 ---
 initial: True
 code: |
@@ -477,9 +553,9 @@ features:
 	debug: False
 	inverse navbar: False
 	javascript:
-		- https://community.lawyer/static/system_d-5.js
+		- https://community.lawyer/static/system_d-9.js
 	css:
-		- https://community.lawyer/static/styles/jcc-1.css
+		- https://community.lawyer/static/styles/jcc-3.css
 ---
 metadata:
 	title: |
@@ -540,11 +616,11 @@ question: |
 subquestion: |
 
 fields:
-	- "<span class=\"producer\" data-variable-name=\"name\" data-field-id=\"88320\" >What is your name?</span>": name
+	- "<span class=\"producer \" data-variable-name=\"name\" data-field-id=\"88320\" >What is your name?</span>": name
 		datatype: text
 		required: true
 
-	- "<span class=\"producer\" data-variable-name=\"email\" data-field-id=\"88322\" >What is your email?</span>": email
+	- "<span class=\"producer \" data-variable-name=\"email\" data-field-id=\"88322\" >What is your email?</span>": email
 		datatype: email
 		required: true
 
@@ -617,7 +693,7 @@ attachment code: |
 	filter(bool, [t____sr1_pdf_1519_attachment_1740])
 allow emailing: False
 under: |
-	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div></div>	${ ('' if defined("___already_sent_t_email_email_4e4652a186c7") else (___send_t_email_email_4e4652a186c7())) }
+	<hr>	<div style='display:flex;justify-content:space-between;'><div>Powered by [Community.lawyer](https://community.lawyer/)</div><span class="is-final-block" /></div>	${ ('' if defined("___already_sent_t_email_email_4e4652a186c7") else (___send_t_email_email_4e4652a186c7())) }
 
 css: |
 	<style>
@@ -641,36 +717,38 @@ css: |
 	</style>
 ---
 code: |
-	if True:
-		import requests
-		import json
-		import time
-		template_id = 1519
-		access_key = 'a9t6qmZUAW'
-		drawn_variables = {'58998': markdown_to_plaintext(unicode((Today.strftime('%m-%d-%Y') if Today != "" else "") if defined("Today") else "")), '58999': markdown_to_plaintext(unicode(name if defined("name") else "")), '59041': markdown_to_plaintext(unicode(__continue if defined("__continue") else "")), '59068': markdown_to_plaintext(unicode((signature.url_for() if signature != "" else "") if defined("signature") else "")), '59069': unicode("DEMO, NOT FOR OFFICIAL USE")}
-		post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables }
-		fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
-		task_id = fill_response.get('task_id')
-		filled_attachment_url = ""
-		done = False
-		pdf_attempts = 0
-		while not done and pdf_attempts < 250:
-			task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
-			done = task_response.get('status') == 'done'
-			filled_attachment_url = task_response.get('document')
-			pdf_attempts += 1
-			time.sleep(.2)
-		t____sr1_pdf_1519_attachment_1740 = DAFileCollection()
-		t____sr1_pdf_1519_attachment_1740.pdf = DAFile()
-		t____sr1_pdf_1519_attachment_1740.pdf.initialize(extension="pdf")
-		if done:
-			t____sr1_pdf_1519_attachment_1740.pdf.from_url(filled_attachment_url)
-			t____sr1_pdf_1519_attachment_1740.info = {'name': 'sr1', 'filename': 'sr1', 'description': ''}
-		else:
-			t____sr1_pdf_1519_attachment_1740.pdf.from_url('https://community.lawyer/static/blank.pdf')
-			t____sr1_pdf_1519_attachment_1740.info = {'name': 'We encountered a problem', 'filename': 'sr1', 'description': 'There was a problem filling your Pdf - please try again'}
-	else:
-		t____sr1_pdf_1519_attachment_1740 = ''
+  if True:
+    import requests
+    import json
+    import time
+    playa_base = "http://playa.community.lawyer"
+    playa_fill_endpoint = "http://playa.community.lawyer/task"
+    playa_status_endpoint = "http://playa.community.lawyer/tasks"
+    post_data = ___pdf_template_1519_to_json()
+    fill_response = requests.post(playa_fill_endpoint, json=post_data).json()
+    task_id = fill_response.get('id')
+    access_key = fill_response.get('key')
+    filled_attachment_url = ""
+    done = False
+    attempts_count = 0
+    while not done and attempts_count < 250:
+      status_url = playa_status_endpoint + '/' + str(task_id) + '?key=' + str(access_key)
+      task_response = requests.get(status_url).json()
+      done = task_response.get('status') == 'done'
+      filled_attachment_url = playa_base + '/' + task_response.get('document_url')
+      attempts_count += 1
+      time.sleep(.1)
+    t____sr1_pdf_1519_attachment_1740 = DAFileCollection()
+    t____sr1_pdf_1519_attachment_1740.pdf = DAFile()
+    t____sr1_pdf_1519_attachment_1740.pdf.initialize(extension="pdf")
+    if done:
+      t____sr1_pdf_1519_attachment_1740.pdf.from_url(filled_attachment_url)
+      t____sr1_pdf_1519_attachment_1740.info = {'name': 'sr1', 'filename': 'sr1', 'description': ''}
+    else:
+      t____sr1_pdf_1519_attachment_1740.pdf.from_url('https://community.lawyer/static/blank.pdf')
+      t____sr1_pdf_1519_attachment_1740.info = {'name': 'We encountered a problem', 'filename': 'sr1', 'description': 'There was a problem filling your PDF - please try again'}
+  else:
+    t____sr1_pdf_1519_attachment_1740 = ''
 ---
 template: t_email_template_d5f20bd99683
 subject: |
