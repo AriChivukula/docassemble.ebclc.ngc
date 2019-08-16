@@ -7,7 +7,6 @@ jobs:
     - uses: actions/setup-python@master
     - name: Setup and Test
       run: |
-        pip3 install --upgrade setuptools pip
         pip3 install yamllint
         sed -i $'s/\t/  /g' docassemble/law/data/questions/*.yml
         yamllint docassemble/law/data/questions
