@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+    - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@master
+    - name: Setup and Deploy
+      run: |
+        twine -u $PYPI_USER -p $PYPI_PASSWORD upload . 
+      env:
+        PYPI_USER: ${{ secrets.PYPI_USER }}
+        PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
