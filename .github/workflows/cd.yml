@@ -11,6 +11,7 @@ jobs:
     - name: Setup and Deploy
       run: |
         pip3 install twine
+        python setup.py sdist bdist_wheel
         twine upload -u $PYPI_USER -p $PYPI_PASSWORD *
       env:
         PYPI_USER: ${{ secrets.PYPI_USER }}
